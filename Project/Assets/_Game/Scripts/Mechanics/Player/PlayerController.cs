@@ -14,6 +14,8 @@ namespace Game.Mechanics.Player
     public class PlayerController : MonoBehaviour
     {
         #region public variables
+        public static PlayerController Instance { get; set; }
+        
         [HideInInspector]
         public Vector3 Velocity;
 
@@ -72,6 +74,7 @@ namespace Game.Mechanics.Player
         #region Monobehaviour
         void Awake()
         {
+            Instance = this;
             _controller = gameObject.GetComponent<CharacterController>();
 
             if (_useMainCamera)
