@@ -26,6 +26,7 @@ Project/[Uu]ser[Ss]ettings/
 # Visual Studio cache directory
 Project/.vs/
 Project/.idea/
+Project/.vsconfig
 
 # Gradle cache directory
 .gradle/
