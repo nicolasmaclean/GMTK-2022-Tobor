@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.Mechanics.Enemy;
 using Game.Mechanics.Player;
 using UnityEngine;
 
@@ -16,7 +17,7 @@ public class SwordCollision : MonoBehaviour
         Enemy em = other.transform.parent.GetComponent<Enemy>();
         if (!em) return;
     
-        em.EnemyDamaged((int) _player.Weapon.Damage);
+        em.Harm((int) _player.Weapon.Damage);
         Debug.Log("Hit Enemy");
     }
 }
