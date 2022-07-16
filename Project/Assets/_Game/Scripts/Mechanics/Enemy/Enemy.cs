@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace Game.Mechanics.Enemy
 {
+    [SelectionBase]
     public abstract class Enemy : MonoBehaviour
     {
         public float Health { get; protected set; }
@@ -46,9 +47,10 @@ namespace Game.Mechanics.Enemy
             }
         }
 
-        public virtual void Kill()
+        protected virtual void Kill()
         {
             Debug.Log("Enemy is dead");
+            gameObject.SetActive(false);
         }
     }
 }
