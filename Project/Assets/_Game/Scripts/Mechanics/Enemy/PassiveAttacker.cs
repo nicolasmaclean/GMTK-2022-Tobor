@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,22 +13,23 @@ namespace Game.Mechanics.Enemy
         GameObject _attackCollider;
 
         [SerializeField]
+        SOSpriteAnimation _transformAnimation;
+        
+        [SerializeField]
         SOSpriteAnimation _walkAnimation;
 
         [SerializeField]
         SOSpriteAnimation _attackAnimation;
 
-
         readonly float SEARCH_INTERVAL = 0.2f;
 
-        AnimatedSprite _anim;
         NavMeshAgent _agent;
+        bool _passive = true;
         float _stampForNextAttack;
 
         protected override void OnAwake()
         {
             base.OnAwake();
-            _anim = transform.GetComponentInChildren<AnimatedSprite>();
             _agent = GetComponent<NavMeshAgent>();
         }
 
@@ -35,9 +37,20 @@ namespace Game.Mechanics.Enemy
         {
             base.OnStart();
             _attackCollider.SetActive(false);
-            if (isHarmed)
+        }
+        
+        public override void Harm(int damage)
+        {
+            base.Harm(damage);
+            if (_passive)
             {
-                StartCoroutine(SeekLoop());
+                _passive = false;
+                _anim.LoadAnimation(_transformAnimation);
+                StartCoroutine(WaitThen(_anim.Length, () =>
+                {
+                    _anim.LoadAnimation(_walkAnimation);
+                    StartCoroutine(SeekLoop());
+                }));
             }
         }
 
@@ -80,13 +93,10 @@ namespace Game.Mechanics.Enemy
             }
 
             _anim.LoadAnimation(_attackAnimation);
-            StartCoroutine(SwapToWalk(_anim.Length));
-        }
-
-        IEnumerator SwapToWalk(float seconds)
-        {
-            yield return new WaitForSeconds(seconds);
-            _anim.LoadAnimation(_walkAnimation);
+            StartCoroutine(WaitThen(_anim.Length, () =>
+                {
+                    _anim.LoadAnimation(_walkAnimation);
+                }));
         }
     }
 }

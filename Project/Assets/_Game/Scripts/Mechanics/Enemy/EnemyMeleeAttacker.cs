@@ -21,14 +21,12 @@ namespace Game.Mechanics.Enemy
 
         readonly float SEARCH_INTERVAL = 0.2f;
 
-        AnimatedSprite _anim;
         NavMeshAgent _agent;
         float _stampForNextAttack;
         
         protected override void OnAwake()
         {
             base.OnAwake();
-            _anim = transform.GetComponentInChildren<AnimatedSprite>();
             _agent = GetComponent<NavMeshAgent>();
         }
         

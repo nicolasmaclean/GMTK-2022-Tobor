@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8191378d8f48c24dbd721f9734282a0, type: 3}
+  m_Name: Slime_Attack
+  m_EditorClassIdentifier: 
+  Frames:
+  - {fileID: 6586422051482944391, guid: 4911899c325f4e44c83fcb4d73d71a58, type: 3}
+  - {fileID: 3646529178095518969, guid: 4911899c325f4e44c83fcb4d73d71a58, type: 3}
+  - {fileID: 792736870363323813, guid: 4911899c325f4e44c83fcb4d73d71a58, type: 3}
+  - {fileID: 6846654261869486389, guid: 4911899c325f4e44c83fcb4d73d71a58, type: 3}
+  - {fileID: -9178341521980124875, guid: 4911899c325f4e44c83fcb4d73d71a58, type: 3}
+  - {fileID: 4406832343814817144, guid: 4911899c325f4e44c83fcb4d73d71a58, type: 3}
+  - {fileID: 2961917885028447372, guid: 4911899c325f4e44c83fcb4d73d71a58, type: 3}
+  Fps: 2
+  InitialFrame: 0
