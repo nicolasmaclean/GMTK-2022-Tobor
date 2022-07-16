@@ -16,8 +16,20 @@ namespace Game.Mechanics.Player
     public class FPSController : MonoBehaviour
     {
         #region public variables
-        public static FPSController Instance { get; set; }
-        
+        public static FPSController Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = FindObjectOfType<FPSController>();
+                }
+
+                return instance;
+            }
+        }
+        static FPSController instance = null;
+
         [HideInInspector]
         public Vector3 Velocity;
 
@@ -80,7 +92,7 @@ namespace Game.Mechanics.Player
         #region Monobehaviour
         void Awake()
         {
-            Instance = this;
+            instance = this;
             _controller = gameObject.GetComponent<CharacterController>();
 
             if (_useMainCamera)
