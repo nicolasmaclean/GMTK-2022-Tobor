@@ -1,13 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace Game.Mechanics.Enemy
 {
-    [RequireComponent(typeof(NavMeshAgent))]
-    public class EnemyMeleeAttacker : EnemyBase
+    public class PassiveAttacker : EnemyBase
     {
         [Header("Melee")]
         [SerializeField]
@@ -19,24 +17,28 @@ namespace Game.Mechanics.Enemy
         [SerializeField]
         SOSpriteAnimation _attackAnimation;
 
+
         readonly float SEARCH_INTERVAL = 0.2f;
 
         AnimatedSprite _anim;
         NavMeshAgent _agent;
         float _stampForNextAttack;
-        
+
         protected override void OnAwake()
         {
             base.OnAwake();
             _anim = transform.GetComponentInChildren<AnimatedSprite>();
             _agent = GetComponent<NavMeshAgent>();
         }
-        
+
         protected override void OnStart()
         {
             base.OnStart();
             _attackCollider.SetActive(false);
-            StartCoroutine(SeekLoop());
+            if (isHarmed)
+            {
+                StartCoroutine(SeekLoop());
+            }
         }
 
         IEnumerator SeekLoop()
@@ -76,7 +78,7 @@ namespace Game.Mechanics.Enemy
             {
                 Debug.Log("Attacked Player");
             }
-            
+
             _anim.LoadAnimation(_attackAnimation);
             StartCoroutine(SwapToWalk(_anim.Length));
         }
