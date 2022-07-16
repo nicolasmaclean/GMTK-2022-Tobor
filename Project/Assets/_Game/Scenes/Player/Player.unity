@@ -1289,13 +1289,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4000268308412713273}
     m_Modifications:
-    - target: {fileID: 2484010351864836311, guid: 863137060b0eced438f49cd1b0431248, type: 3}
-      propertyPath: _map.MinValue
+    - target: {fileID: 2145399735653040358, guid: 863137060b0eced438f49cd1b0431248, type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2484010351864836311, guid: 863137060b0eced438f49cd1b0431248, type: 3}
-      propertyPath: _stats.Agility
-      value: 8
+    - target: {fileID: 7543976461285829129, guid: 863137060b0eced438f49cd1b0431248, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8606638413123245488, guid: 863137060b0eced438f49cd1b0431248, type: 3}
       propertyPath: m_RootOrder
@@ -1349,21 +1349,5 @@ PrefabInstance:
       propertyPath: Cam
       value: 
       objectReference: {fileID: 1188982619}
-    - target: {fileID: 8606638413123245491, guid: 863137060b0eced438f49cd1b0431248, type: 3}
-      propertyPath: _jumpRange.MaxValue
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8606638413123245491, guid: 863137060b0eced438f49cd1b0431248, type: 3}
-      propertyPath: _jumpRange.MinValue
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8606638413123245491, guid: 863137060b0eced438f49cd1b0431248, type: 3}
-      propertyPath: _speedRange.MaxValue
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8606638413123245491, guid: 863137060b0eced438f49cd1b0431248, type: 3}
-      propertyPath: _speedRange.MinValue
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 863137060b0eced438f49cd1b0431248, type: 3}
