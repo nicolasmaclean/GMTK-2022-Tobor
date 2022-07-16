@@ -18,7 +18,7 @@ public class SwordCollision : MonoBehaviour
     {
         if (!other.transform.parent) return;
         
-        Enemy em = other.transform.parent.GetComponent<Enemy>();
+        EnemyBase em = other.transform.parent.GetComponent<EnemyBase>();
         if (!em) return;
     
         em.Harm((int) _player.Weapon.Damage);

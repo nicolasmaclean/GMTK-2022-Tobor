@@ -7,10 +7,11 @@ using UnityEngine;
 namespace Game.Mechanics.Enemy
 {
     [SelectionBase]
-    public abstract class Enemy : MonoBehaviour
+    public abstract class EnemyBase : MonoBehaviour
     {
         public float Health { get; protected set; }
-        
+        public Action<EnemyBase> OnKilled;
+
         [Header("Stats")]
         [SerializeField]
         protected float _baseHealth = 10f;
@@ -59,6 +60,7 @@ namespace Game.Mechanics.Enemy
         protected virtual void Kill()
         {
             Debug.Log("Enemy is dead");
+            OnKilled?.Invoke(this);
             gameObject.SetActive(false);
         }
     }
