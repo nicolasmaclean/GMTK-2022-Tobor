@@ -26,6 +26,8 @@ namespace Game.Mechanics.Enemy
 
         protected PlayerController _player;
 
+        protected bool isHarmed;
+
         void Awake()
         {
             OnAwake();
@@ -39,6 +41,7 @@ namespace Game.Mechanics.Enemy
         protected virtual void OnAwake()
         {
             Health = _baseHealth;
+            isHarmed = false;
         }
 
         protected virtual void OnStart()
@@ -49,6 +52,7 @@ namespace Game.Mechanics.Enemy
         public virtual void Harm(int damage)
         {
             Health -= damage;
+            isHarmed = true;
             
             if (Health <= 0)
             {
