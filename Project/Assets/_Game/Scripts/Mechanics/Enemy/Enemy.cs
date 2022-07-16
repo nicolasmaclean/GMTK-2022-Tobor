@@ -31,9 +31,18 @@ namespace Game.Mechanics.Enemy
             OnAwake();
         }
 
+        void Start()
+        {
+            OnStart();
+        }
+
         protected virtual void OnAwake()
         {
             Health = _baseHealth;
+        }
+
+        protected virtual void OnStart()
+        {
             _player = PlayerController.Instance;
         }
 

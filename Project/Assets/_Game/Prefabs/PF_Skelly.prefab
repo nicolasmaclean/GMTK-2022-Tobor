@@ -246,8 +246,8 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Speed: 2
+  m_Acceleration: Infinity
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 0
@@ -273,6 +273,7 @@ MonoBehaviour:
   _baseHealth: 10
   _attack: 1
   _damageRate: 2
-  _rangeOfAttack: 3
+  _rangeOfAttack: 2
   _attackCollider: {fileID: 9173503801023729773}
-  _attacksPerSecond: 0.2
+  _walkAnimation: {fileID: 11400000, guid: 8bbd12ff2708bc741ba956d27c1accc6, type: 2}
+  _attackAnimation: {fileID: 11400000, guid: 6759f58d6c155784bb8d1eb39e768db2, type: 2}

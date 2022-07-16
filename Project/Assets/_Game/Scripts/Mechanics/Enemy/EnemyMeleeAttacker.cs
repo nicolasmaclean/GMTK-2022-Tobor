@@ -10,27 +10,38 @@ namespace Game.Mechanics.Enemy
     public class EnemyMeleeAttacker : Enemy
     {
         [Header("Melee")]
-        [SerializeField] GameObject _attackCollider;
+        [SerializeField]
+        GameObject _attackCollider;
+
+        [SerializeField]
+        SOSpriteAnimation _walkAnimation;
+
+        [SerializeField]
+        SOSpriteAnimation _attackAnimation;
 
         readonly float SEARCH_INTERVAL = 0.2f;
-        
+
+        AnimatedSprite _anim;
         NavMeshAgent _agent;
         float _stampForNextAttack;
         
         protected override void OnAwake()
         {
             base.OnAwake();
+            _anim = transform.GetComponentInChildren<AnimatedSprite>();
             _agent = GetComponent<NavMeshAgent>();
         }
         
-        void Start()
+        protected override void OnStart()
         {
+            base.OnStart();
             _attackCollider.SetActive(false);
             StartCoroutine(SeekLoop());
         }
 
         IEnumerator SeekLoop()
         {
+            _anim.LoadAnimation(_walkAnimation);
             while (true)
             {
                 _agent.SetDestination(_player.transform.position);
@@ -65,6 +76,15 @@ namespace Game.Mechanics.Enemy
             {
                 Debug.Log("Attacked Player");
             }
+            
+            _anim.LoadAnimation(_attackAnimation);
+            StartCoroutine(SwapToWalk(_anim.Length));
+        }
+
+        IEnumerator SwapToWalk(float seconds)
+        {
+            yield return new WaitForSeconds(seconds);
+            _anim.LoadAnimation(_walkAnimation);
         }
     }
 }
