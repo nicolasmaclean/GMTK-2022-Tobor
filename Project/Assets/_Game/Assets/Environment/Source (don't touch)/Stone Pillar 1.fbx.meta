@@ -3,17 +3,7 @@ guid: 8cf8f17ce7e37ef46893620ed3b5f652
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Rock Texture
-    second: {fileID: 2100000, guid: 8f35ab1f53859bf48a08197b5c5a4240, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Stone Brick
-    second: {fileID: 2100000, guid: e4b7eb7076b385e43b4fd5a72a470795, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
