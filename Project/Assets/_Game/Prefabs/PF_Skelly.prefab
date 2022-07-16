@@ -275,4 +275,5 @@ MonoBehaviour:
   _damageRate: 2
   _rangeOfAttack: 3
   _attackCollider: {fileID: 9173503801023729773}
-  _attacksPerSecond: 0.2
+  _walkAnimation: {fileID: 11400000, guid: 8bbd12ff2708bc741ba956d27c1accc6, type: 2}
+  _attackAnimation: {fileID: 11400000, guid: 6759f58d6c155784bb8d1eb39e768db2, type: 2}

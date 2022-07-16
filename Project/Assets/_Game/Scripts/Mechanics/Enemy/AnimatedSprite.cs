@@ -10,6 +10,14 @@ namespace Game.Mechanics.Enemy
     [RequireComponent(typeof(SpriteRenderer))]
     public class AnimatedSprite : MonoBehaviour
     {
+        public float Length
+        {
+            get
+            {
+                return _animation.Frames.Length * _spf;
+            }
+        }
+        
         [SerializeField]
         SOSpriteAnimation _animation;
 
@@ -61,6 +69,12 @@ namespace Game.Mechanics.Enemy
             _renderer.sprite = _animation.Frames[_currentFrame];
         }
 
+        public void LoadAnimation(SOSpriteAnimation data)
+        {
+            _animation = data;
+            LoadAnimation();
+        }
+        
         void LoadAnimation()
         {
             _spf = 1f / _animation.Fps;
