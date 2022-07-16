@@ -20,6 +20,8 @@ namespace Game.Mechanics.Player
                     default:
                     case WeaponType.Sword:
                         return Sword;
+                    case WeaponType.Bow:
+                        return Bow;
                 }
             }
         }
@@ -38,6 +40,8 @@ namespace Game.Mechanics.Player
 
         FPSController _playerController;
         Animator _animator;
+        [SerializeField] GameObject _arrow;
+        [SerializeField] Transform _arrowSpawnPoint;
         
 
         void Awake()
@@ -84,7 +88,29 @@ namespace Game.Mechanics.Player
 
         void Attack()
         {
-            _animator.SetTrigger(AT_SWORD_PRIMARY);
+            if (_CurrentWeapon == WeaponType.Sword)
+            {
+                _animator.SetTrigger(AT_SWORD_PRIMARY);
+            }
+            else if (_CurrentWeapon == WeaponType.Bow)
+            {
+                Ray ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0f));
+                RaycastHit hit;
+                Vector3 targetPoint;
+                if (Physics.Raycast(ray, out hit))
+                {
+                    targetPoint = hit.point;
+                }
+                else
+                {
+                    targetPoint = ray.GetPoint(75);
+                }
+                Vector3 direction = targetPoint - _arrowSpawnPoint.transform.position;
+                GameObject currentBullet = Instantiate(_arrow, _arrowSpawnPoint.transform.position, _arrowSpawnPoint.transform.rotation);
+                currentBullet.transform.forward = direction.normalized;
+                
+            }
+
             LastAttackTime = 0;
         }
 
@@ -98,6 +124,10 @@ namespace Game.Mechanics.Player
                     _CurrentWeapon = WeaponType.Sword;
                     weapon = Sword;
                     _animator.SetTrigger(AT_SWORD_DRAW);
+                    break;
+                case WeaponType.Bow:
+                    _CurrentWeapon = WeaponType.Bow;
+                    weapon = Bow;
                     break;
             }
 
