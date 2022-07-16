@@ -5,10 +5,15 @@ using UnityEngine;
 public abstract class Enemy : MonoBehaviour
 {
     //stats
+    [SerializeField]
     protected int _health;
+    [SerializeField]
     protected int _attack;
+    [SerializeField]
     protected float _damageRate;
+    [SerializeField]
     protected float _rangeOfAttack;
+    [SerializeField]
     protected EnemyType _enemyType;
 
     protected enum EnemyType
@@ -27,15 +32,4 @@ public abstract class Enemy : MonoBehaviour
         Debug.Log("Enemy is dead");
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
