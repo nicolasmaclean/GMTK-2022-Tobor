@@ -7,8 +7,12 @@ using UnityEngine;
 
 public class SwordCollision : MonoBehaviour
 {
-    [SerializeField]
     PlayerController _player;
+
+    void Awake()
+    {
+        _player = PlayerController.Instance;        
+    }
     
     void OnTriggerEnter(Collider other)
     {
@@ -18,6 +22,5 @@ public class SwordCollision : MonoBehaviour
         if (!em) return;
     
         em.Harm((int) _player.Weapon.Damage);
-        Debug.Log("Hit Enemy");
     }
 }

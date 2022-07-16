@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,12 +12,10 @@ namespace Game.Mechanics.Enemy
         [Header("Melee")]
         [SerializeField] GameObject _attackCollider;
 
-        NavMeshAgent _agent;
+        readonly float SEARCH_INTERVAL = 0.2f;
         
-        float _timeStamp = 0f;
-        float _timeDelay = 0.2f;
-
-        float _nextAttack = 0f;
+        NavMeshAgent _agent;
+        float _stampForNextAttack;
         
         protected override void OnAwake()
         {
@@ -27,29 +26,29 @@ namespace Game.Mechanics.Enemy
         void Start()
         {
             _attackCollider.SetActive(false);
+            StartCoroutine(SeekLoop());
         }
 
-        void Update()
+        IEnumerator SeekLoop()
         {
-            // chase player
-            if (Time.time >= _timeStamp + _timeDelay)
+            while (true)
             {
                 _agent.SetDestination(_player.transform.position);
-                _timeStamp = Time.time;
                 DetectPlayer();
+
+                yield return new WaitForSeconds(SEARCH_INTERVAL);
             }
         }
 
-        private void DetectPlayer()
+        void DetectPlayer()
         {
             float currentTargetDistance = Vector3.Distance(transform.position, _player.transform.position);
             if (currentTargetDistance <= _rangeOfAttack)
             {
-                
                 _agent.isStopped = true;
-                if (Time.time > _nextAttack)
+                if (Time.time > _stampForNextAttack)
                 {
-                    _nextAttack = Time.time + _damageRate;
+                    _stampForNextAttack = Time.time + _damageRate;
                     EnemyAttack();
                 }
             }
@@ -59,12 +58,12 @@ namespace Game.Mechanics.Enemy
             }
         }
 
-        private void EnemyAttack()
+        void EnemyAttack()
         {
             Collider[] hitPlayers = Physics.OverlapBox(_attackCollider.transform.position, _attackCollider.transform.position);
-            foreach(Collider player in hitPlayers)
+            foreach (Collider player in hitPlayers)
             {
-                Debug.Log("Player attacked");
+                Debug.Log("Attacked Player");
             }
         }
     }
