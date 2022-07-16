@@ -16,11 +16,6 @@ public class EnemyMeleeAttacker : Enemy
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
-        _health = 25;
-        _attack = 12;
-        _rangeOfAttack = 3f;
-        _damageRate = 1.6f;
-        _enemyType = EnemyType.MeleeAttacker;
     }
     // Start is called before the first frame update
     void Start()
@@ -40,12 +35,12 @@ public class EnemyMeleeAttacker : Enemy
         }
 
         //check health
-        /*
+        
         if (_health <= 0)
         {
             EnemyDied();
         }
-        */
+        
 
         //check damage dealer
         /*
@@ -64,7 +59,6 @@ public class EnemyMeleeAttacker : Enemy
         {
             
             _agent.isStopped = true;
-            transform.LookAt(_player.position, Vector3.up);
             if (Time.time > _nextAttack)
             {
                 _nextAttack = Time.time + _damageRate;
@@ -79,7 +73,11 @@ public class EnemyMeleeAttacker : Enemy
 
     private void EnemyAttack()
     {
-        _attackCollider.SetActive(true);
+        Collider[] hitPlayers = Physics.OverlapBox(_attackCollider.transform.position, _attackCollider.transform.position);
+        foreach(Collider player in hitPlayers)
+        {
+            Debug.Log("Player attacked");
+        }
     }
 
 }
