@@ -7,7 +7,7 @@ using UnityEngine.AI;
 namespace Game.Mechanics.Enemy
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    public class EnemyMeleeAttacker : Enemy
+    public class EnemyMeleeAttacker : EnemyBase
     {
         [Header("Melee")]
         [SerializeField]
