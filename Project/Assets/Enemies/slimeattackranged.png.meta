@@ -1,13 +1,28 @@
 fileFormatVersion: 2
-guid: 12af6d5f752e556418972b1b87068dcd
+guid: 4911899c325f4e44c83fcb4d73d71a58
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4663055303882016461
-    second: enemieonewalk_0
+      213: 6586422051482944391
+    second: slimeattackranged_0
   - first:
-      213: 4052039412841888711
-    second: enemieonewalk_1
+      213: 3646529178095518969
+    second: slimeattackranged_1
+  - first:
+      213: 792736870363323813
+    second: slimeattackranged_2
+  - first:
+      213: 6846654261869486389
+    second: slimeattackranged_3
+  - first:
+      213: -9178341521980124875
+    second: slimeattackranged_4
+  - first:
+      213: 4406832343814817144
+    second: slimeattackranged_5
+  - first:
+      213: 2961917885028447372
+    second: slimeattackranged_6
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -38,7 +53,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -52,7 +67,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 20
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -121,7 +136,112 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: enemieonewalk_0
+      name: slimeattackranged_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 64
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 783c07f95fba76b50800000000000000
+      internalID: 6586422051482944391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slimeattackranged_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 320
+        width: 64
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f40b73a7f21b9230800000000000000
+      internalID: 3646529178095518969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slimeattackranged_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 64
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ad5c56cbfd500b00800000000000000
+      internalID: 792736870363323813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slimeattackranged_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 64
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53125aaa6c3340f50800000000000000
+      internalID: 6846654261869486389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slimeattackranged_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 64
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5311823c30bff9080800000000000000
+      internalID: -9178341521980124875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slimeattackranged_5
       rect:
         serializedVersion: 2
         x: 0
@@ -135,14 +255,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dc683ebc71086b040800000000000000
-      internalID: 4663055303882016461
+      spriteID: 875c8c51ba6382d30800000000000000
+      internalID: 4406832343814817144
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemieonewalk_1
+      name: slimeattackranged_6
       rect:
         serializedVersion: 2
         x: 0
@@ -156,8 +276,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7cbb25a906cbb3830800000000000000
-      internalID: 4052039412841888711
+      spriteID: c843ffe9f98da1920800000000000000
+      internalID: 2961917885028447372
       vertices: []
       indices: 
       edges: []
@@ -165,7 +285,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 807038b6eb4e866478d2eb33dab68421
+    spriteID: 3915d8a0de6ac114b8114741b29d0612
     internalID: 0
     vertices: []
     indices: 
