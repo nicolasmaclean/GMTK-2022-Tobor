@@ -1,40 +1,22 @@
 fileFormatVersion: 2
-guid: e9d4c632570b6a142adb160424790532
+guid: 3805da32fe3219e458bb6d116d6287df
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8309184090241591442
-    second: barrelwalking_0
+      213: 5589343535220409466
+    second: barrelattack_0
   - first:
-      213: -8934606848751057445
-    second: barrelwalking_1
+      213: -584193071336919428
+    second: barrelattack_1
   - first:
-      213: 2605285400068225851
-    second: barrelwalking_2
+      213: 7511991538471138540
+    second: barrelattack_2
   - first:
-      213: -5740689275604248914
-    second: barrelwalking_3
+      213: 6141588031845948590
+    second: barrelattack_3
   - first:
-      213: -6443510344872829479
-    second: barrelwalking_4
-  - first:
-      213: -7827380099028069930
-    second: barrelwalking_5
-  - first:
-      213: -5109406480788921210
-    second: barrelwalking_6
-  - first:
-      213: 7260940629166630256
-    second: barrelwalking_7
-  - first:
-      213: 6142308636721570220
-    second: barrelwalking_8
-  - first:
-      213: 5250902264425553557
-    second: barrelwalking_9
-  - first:
-      213: 4335022573637473226
-    second: barrelwalking_10
+      213: -6339008765639914708
+    second: barrelattack_4
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -79,7 +61,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 10
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -148,133 +130,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: barrelwalking_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 640
-        width: 64
-        height: 64
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e6792d70819dfac80800000000000000
-      internalID: -8309184090241591442
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: barrelwalking_1
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 576
-        width: 64
-        height: 64
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bd5cb6c9866e10480800000000000000
-      internalID: -8934606848751057445
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: barrelwalking_2
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 512
-        width: 64
-        height: 64
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b3bf3999445d72420800000000000000
-      internalID: 2605285400068225851
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: barrelwalking_3
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 448
-        width: 64
-        height: 64
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ea6d6b1f489f450b0800000000000000
-      internalID: -5740689275604248914
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: barrelwalking_4
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 384
-        width: 64
-        height: 64
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9dddc430b7d0496a0800000000000000
-      internalID: -6443510344872829479
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: barrelwalking_5
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 320
-        width: 64
-        height: 64
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6d1587b654f8f5390800000000000000
-      internalID: -7827380099028069930
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: barrelwalking_6
+      name: barrelattack_0
       rect:
         serializedVersion: 2
         x: 0
@@ -288,14 +144,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6846f7360edb719b0800000000000000
-      internalID: -5109406480788921210
+      spriteID: a744078e456519d40800000000000000
+      internalID: 5589343535220409466
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: barrelwalking_7
+      name: barrelattack_1
       rect:
         serializedVersion: 2
         x: 0
@@ -309,14 +165,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 075ada8380b04c460800000000000000
-      internalID: 7260940629166630256
+      spriteID: c7ee7be2f7784e7f0800000000000000
+      internalID: -584193071336919428
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: barrelwalking_8
+      name: barrelattack_2
       rect:
         serializedVersion: 2
         x: 0
@@ -330,14 +186,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ca16a98692ddd3550800000000000000
-      internalID: 6142308636721570220
+      spriteID: ce4ff460184ff3860800000000000000
+      internalID: 7511991538471138540
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: barrelwalking_9
+      name: barrelattack_3
       rect:
         serializedVersion: 2
         x: 0
@@ -351,14 +207,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 59e116df9c3fed840800000000000000
-      internalID: 5250902264425553557
+      spriteID: eacd7f286cd4b3550800000000000000
+      internalID: 6141588031845948590
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: barrelwalking_10
+      name: barrelattack_4
       rect:
         serializedVersion: 2
         x: 0
@@ -372,8 +228,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ac316f21018192c30800000000000000
-      internalID: 4335022573637473226
+      spriteID: c2b02f7fc115708a0800000000000000
+      internalID: -6339008765639914708
       vertices: []
       indices: 
       edges: []
@@ -381,7 +237,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 69868087d7ce4d645a2c7d0b621e0c9c
+    spriteID: 5e40daf4ecb2aca44b37602b84f212fc
     internalID: 0
     vertices: []
     indices: 
