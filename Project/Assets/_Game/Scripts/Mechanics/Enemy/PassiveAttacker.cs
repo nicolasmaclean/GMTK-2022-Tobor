@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 namespace Game.Mechanics.Enemy
 {
-    public class PassiveAttacker : Enemy
+    public class PassiveAttacker : EnemyBase
     {
         [Header("Melee")]
         [SerializeField]
