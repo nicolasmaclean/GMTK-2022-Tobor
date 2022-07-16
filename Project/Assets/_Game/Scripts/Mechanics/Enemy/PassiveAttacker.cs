@@ -13,9 +13,6 @@ namespace Game.Mechanics.Enemy
         GameObject _attackCollider;
 
         [SerializeField]
-        SOSpriteAnimation _idleAnimation;
-
-        [SerializeField]
         SOSpriteAnimation _transformAnimation;
         
         [SerializeField]
@@ -26,7 +23,6 @@ namespace Game.Mechanics.Enemy
 
         readonly float SEARCH_INTERVAL = 0.2f;
 
-        AnimatedSprite _anim;
         NavMeshAgent _agent;
         bool _passive = true;
         float _stampForNextAttack;
@@ -34,7 +30,6 @@ namespace Game.Mechanics.Enemy
         protected override void OnAwake()
         {
             base.OnAwake();
-            _anim = transform.GetComponentInChildren<AnimatedSprite>();
             _agent = GetComponent<NavMeshAgent>();
         }
 
@@ -102,12 +97,6 @@ namespace Game.Mechanics.Enemy
                 {
                     _anim.LoadAnimation(_walkAnimation);
                 }));
-        }
-
-        IEnumerator WaitThen(float seconds, Action callback)
-        {
-            yield return new WaitForSeconds(seconds);
-            callback?.Invoke();
         }
     }
 }

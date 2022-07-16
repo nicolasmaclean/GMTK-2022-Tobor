@@ -14,17 +14,19 @@ namespace Game.Mechanics.Enemy
         {
             get
             {
-                return _animation.Frames.Length * _spf;
+                return _animation.Frames.Length * Spf;
             }
         }
-        
+
+        public float Spf { get; private set; }
+
         [SerializeField]
         SOSpriteAnimation _animation;
 
         SpriteRenderer _renderer;
-        float _spf;
         float _timer = 0;
         int _currentFrame;
+        Action callback = null;
         
         void Awake()
         {
@@ -51,7 +53,7 @@ namespace Game.Mechanics.Enemy
         {
             _timer += Time.deltaTime;
 
-            if (_timer > _spf)
+            if (_timer > Spf)
             {
                 NextFrame();
                 _timer = 0;
@@ -65,10 +67,26 @@ namespace Game.Mechanics.Enemy
 
         void NextFrame()
         {
-            _currentFrame = (_currentFrame + 1) % _animation.Frames.Length;
+            _currentFrame++;
+            if (_currentFrame >= _animation.Frames.Length)
+            {
+                _currentFrame = 0;
+                if (callback != null)
+                {
+                    callback();
+                    callback = null;
+                    Spf = float.PositiveInfinity;
+                }
+            }
             _renderer.sprite = _animation.Frames[_currentFrame];
         }
 
+        public void PlayOneShot(SOSpriteAnimation data, Action callback)
+        {
+            LoadAnimation(data);
+            this.callback = callback;
+        }
+        
         public void LoadAnimation(SOSpriteAnimation data)
         {
             _animation = data;
@@ -77,7 +95,7 @@ namespace Game.Mechanics.Enemy
         
         void LoadAnimation()
         {
-            _spf = 1f / _animation.Fps;
+            Spf = 1f / _animation.Fps;
             _currentFrame = _animation.InitialFrame;
             _renderer.sprite = _animation.Frames[_currentFrame];
         }

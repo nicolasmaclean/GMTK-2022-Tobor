@@ -69,12 +69,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ad699b9f112c914897eb9b79021d0f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _baseHealth: 10
+  _baseHealth: 5
   _attack: 1
   _damageRate: 2
   _rangeOfAttack: 3
   _attackCollider: {fileID: 5076993583001805488}
-  _idleAnimation: {fileID: 11400000, guid: d977bd9e7724c7646af9c5a61e1aed18, type: 2}
   _transformAnimation: {fileID: 11400000, guid: 6cac4ee6cd3fba44ea790989a8e54f8e, type: 2}
   _walkAnimation: {fileID: 11400000, guid: aac03988a0a8387469621db8727b8c8b, type: 2}
   _attackAnimation: {fileID: 11400000, guid: cae1cf1ed2915b4479b90c715e864cc5, type: 2}

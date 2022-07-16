@@ -26,6 +26,7 @@ namespace Game.Mechanics.Enemy
         protected float _rangeOfAttack = 3f;
 
         protected PlayerController _player;
+        protected AnimatedSprite _anim;
         protected bool isHarmed;
 
         void Awake()
@@ -42,6 +43,7 @@ namespace Game.Mechanics.Enemy
         {
             Health = _baseHealth;
             isHarmed = false;
+            _anim = transform.GetComponentInChildren<AnimatedSprite>();
         }
 
         protected virtual void OnStart()
@@ -65,6 +67,12 @@ namespace Game.Mechanics.Enemy
             Debug.Log("Enemy is dead");
             OnKilled?.Invoke(this);
             gameObject.SetActive(false);
+        }
+        
+        protected static IEnumerator WaitThen(float seconds, Action callback)
+        {
+            yield return new WaitForSeconds(seconds);
+            callback?.Invoke();
         }
     }
 }
