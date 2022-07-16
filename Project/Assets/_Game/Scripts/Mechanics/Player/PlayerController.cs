@@ -7,6 +7,8 @@ namespace Game.Mechanics.Player
 {
     public class PlayerController : MonoBehaviour
     {
+        public static PlayerController Instance { get; private set; }
+        public static PlayerStats Stats;
         public float LastAttackTime = float.MaxValue;
         
         public SOWeapon Weapon
@@ -23,7 +25,6 @@ namespace Game.Mechanics.Player
         }
         
         [Header("Data")]
-        public PlayerStats _stats;
         public SOWeapon Sword;
         public SOWeapon Bow;
 
@@ -41,13 +42,32 @@ namespace Game.Mechanics.Player
 
         void Awake()
         {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+
+            Stats ??= PlayerStats.CreateRandom();
+            
             _playerController = GetComponent<FPSController>();
             _animator = GetComponent<Animator>();
         }
-        
+
+        void OnDestroy()
+        {
+            if (Instance == this)
+            {
+                Instance = null;
+            }
+        }
+
         void Start()
         {
-            _playerController.UpdateSpeed(_stats.Agility / 20f);
+            _playerController.UpdateSpeed(Stats.Agility / 20f);
             ChangeWeapon(_CurrentWeapon);
         }
 

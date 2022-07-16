@@ -10,15 +10,16 @@ namespace Game.Mechanics.Enemy
     [RequireComponent(typeof(SpriteRenderer))]
     public class AnimatedSprite : MonoBehaviour
     {
+        public float Length
+        {
+            get
+            {
+                return _animation.Frames.Length * _spf;
+            }
+        }
+        
         [SerializeField]
-        Sprite[] _frames;
-
-        [SerializeField]
-        [Tooltip("Frames per second")]
-        float _fps;
-
-        [SerializeField]
-        int _initialFrame = 0;
+        SOSpriteAnimation _animation;
 
         SpriteRenderer _renderer;
         float _spf;
@@ -32,14 +33,18 @@ namespace Game.Mechanics.Enemy
 
         void Start()
         {
-            _currentFrame = _initialFrame;
-            _renderer.sprite = _frames[_currentFrame];
-            UpdateSpf();
+            LoadAnimation();
         }
 
         void OnValidate()
         {
-            UpdateSpf();
+            if (!_renderer) _renderer = GetComponent<SpriteRenderer>();
+            if (!_animation)
+            {
+                _renderer.sprite = null;
+                return;
+            }
+            LoadAnimation();
         }
 
         void Update()
@@ -60,13 +65,21 @@ namespace Game.Mechanics.Enemy
 
         void NextFrame()
         {
-            _currentFrame = (_currentFrame + 1) % _frames.Length;
-            _renderer.sprite = _frames[_currentFrame];
+            _currentFrame = (_currentFrame + 1) % _animation.Frames.Length;
+            _renderer.sprite = _animation.Frames[_currentFrame];
         }
 
-        void UpdateSpf()
+        public void LoadAnimation(SOSpriteAnimation data)
         {
-            _spf = 1f / _fps;
+            _animation = data;
+            LoadAnimation();
+        }
+        
+        void LoadAnimation()
+        {
+            _spf = 1f / _animation.Fps;
+            _currentFrame = _animation.InitialFrame;
+            _renderer.sprite = _animation.Frames[_currentFrame];
         }
     }
 }
