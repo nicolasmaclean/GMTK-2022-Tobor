@@ -17,7 +17,7 @@ namespace Game.Mechanics.Player
         
         void Start()
         {
-            _playerController.UpdateSpeed(_stats.Agility);
+            _playerController.UpdateSpeed(_stats.Agility / 20f);
         }
     }
 }
