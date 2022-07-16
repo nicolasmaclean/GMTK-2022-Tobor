@@ -5,59 +5,51 @@ using UnityEngine.AI;
 
 namespace Game.Mechanics.Enemy
 {
-    [RequireComponent(typeof(NavMeshAgent))]
-    public class EnemyRangedAttacker : Enemy
+    public class PassiveAttacker : Enemy
     {
-        [Header("Ranged")]
+        [Header("Melee")]
         [SerializeField]
-        Transform _bulletSpawnPoint;
-        [SerializeField]
-        Transform _bulletSpawnPointAnchor;
+        GameObject _attackCollider;
 
         [SerializeField]
-        GameObject _bullet;
+        SOSpriteAnimation _walkAnimation;
+
+        [SerializeField]
+        SOSpriteAnimation _attackAnimation;
+
 
         readonly float SEARCH_INTERVAL = 0.2f;
 
+        AnimatedSprite _anim;
         NavMeshAgent _agent;
-        
-        float _timeStamp = 0f;
-        float _timeDelay = 0.2f;
-
         float _stampForNextAttack;
 
         protected override void OnAwake()
         {
             base.OnAwake();
+            _anim = transform.GetComponentInChildren<AnimatedSprite>();
             _agent = GetComponent<NavMeshAgent>();
         }
 
         protected override void OnStart()
         {
             base.OnStart();
-            StartCoroutine(SeekLoop());
+            _attackCollider.SetActive(false);
+            if (isHarmed)
+            {
+                StartCoroutine(SeekLoop());
+            }
         }
 
         IEnumerator SeekLoop()
         {
+            _anim.LoadAnimation(_walkAnimation);
             while (true)
             {
                 _agent.SetDestination(_player.transform.position);
                 DetectPlayer();
-                
-                yield return new WaitForSeconds(SEARCH_INTERVAL);
-            }
-        }
 
-        void Update()
-        {
-            _bulletSpawnPointAnchor.LookAt(_player.transform.position);
-            //chase player
-            if (Time.time >= _timeStamp + _timeDelay)
-            {
-                _agent.SetDestination(_player.transform.position);
-                _timeStamp = Time.time;
-                DetectPlayer();
+                yield return new WaitForSeconds(SEARCH_INTERVAL);
             }
         }
 
@@ -66,7 +58,6 @@ namespace Game.Mechanics.Enemy
             float currentTargetDistance = Vector3.Distance(transform.position, _player.transform.position);
             if (currentTargetDistance <= _rangeOfAttack)
             {
-                
                 _agent.isStopped = true;
                 if (Time.time > _stampForNextAttack)
                 {
@@ -82,7 +73,20 @@ namespace Game.Mechanics.Enemy
 
         void EnemyAttack()
         {
-            Instantiate(_bullet, _bulletSpawnPoint.transform.position, _bulletSpawnPoint.transform.rotation);
+            Collider[] hitPlayers = Physics.OverlapBox(_attackCollider.transform.position, _attackCollider.transform.position);
+            foreach (Collider player in hitPlayers)
+            {
+                Debug.Log("Attacked Player");
+            }
+
+            _anim.LoadAnimation(_attackAnimation);
+            StartCoroutine(SwapToWalk(_anim.Length));
+        }
+
+        IEnumerator SwapToWalk(float seconds)
+        {
+            yield return new WaitForSeconds(seconds);
+            _anim.LoadAnimation(_walkAnimation);
         }
     }
 }

@@ -8,20 +8,27 @@ namespace Game.Mechanics.Enemy
     public class EnemyBullet : MonoBehaviour
     {
         [SerializeField] float _bulletSpeed;
+        [SerializeField] Rigidbody rb;
 
+
+
+        private void OnTriggerEnter(Collider other)
+        {
+            CharacterController player = other.gameObject.GetComponentInParent<CharacterController>();
+            if (player != null)
+            {
+                Debug.Log("Player Shot");
+            }
+            Destroy(gameObject, .01f);
+        }
         void Awake()
         {
-            Rigidbody rb = GetComponent<Rigidbody>();
+           rb = gameObject.GetComponent<Rigidbody>();
         }
         
         void Start()
         {
-           // rb.velocity = Vector3.forward * _bulletSpeed;
-        }
-
-        void Update()
-        {
-            
+           rb.velocity = transform.forward * _bulletSpeed;
         }
     }
 }
