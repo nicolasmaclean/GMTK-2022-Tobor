@@ -23,9 +23,8 @@ namespace Game.Mechanics.Player
         public WeaponType Weapon = WeaponType.Sword;
     }
 
-}
-
-public enum WeaponType
-{
-    Sword = 0, Bow = 1, Magic = 2
+    public enum WeaponType
+    {
+        Sword = 0, Bow = 1, Magic = 2
+    }
 }
