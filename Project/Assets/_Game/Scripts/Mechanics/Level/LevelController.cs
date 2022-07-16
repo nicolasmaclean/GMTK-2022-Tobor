@@ -37,7 +37,6 @@ namespace Game.Mechanics.Level
 
         public void MoveToNext()
         {
-            Debug.Log("Next");
             // hide rooms
             if (_currentRoomIndex - 1 >= 0)
             {
