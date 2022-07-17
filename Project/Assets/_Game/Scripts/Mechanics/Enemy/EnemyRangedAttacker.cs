@@ -6,7 +6,7 @@ using UnityEngine.AI;
 namespace Game.Mechanics.Enemy
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    public class EnemyRangedAttacker : Enemy
+    public class EnemyRangedAttacker : EnemyBase
     {
         [Header("Ranged")]
         [SerializeField]
@@ -15,27 +15,39 @@ namespace Game.Mechanics.Enemy
         [SerializeField]
         GameObject _bullet;
 
+        [Header("Animation")]
+        [SerializeField]
+        SOSpriteAnimation _walkAnimation;
+        
+        [SerializeField]
+        SOSpriteAnimation _attackAnimation;
+
+        readonly float SEARCH_INTERVAL = 0.2f;
+
         NavMeshAgent _agent;
         
-        float _timeStamp = 0f;
-        float _timeDelay = 0.2f;
-
-        float _nextAttack = 0f;
+        float _stampForNextAttack;
 
         protected override void OnAwake()
         {
             base.OnAwake();
             _agent = GetComponent<NavMeshAgent>();
         }
-        
-        void Update()
+
+        protected override void OnStart()
         {
-            //chase player
-            if (Time.time >= _timeStamp + _timeDelay)
+            base.OnStart();
+            StartCoroutine(SeekLoop());
+        }
+
+        IEnumerator SeekLoop()
+        {
+            while (true)
             {
                 _agent.SetDestination(_player.transform.position);
-                _timeStamp = Time.time;
                 DetectPlayer();
+                
+                yield return new WaitForSeconds(SEARCH_INTERVAL);
             }
         }
 
@@ -44,11 +56,10 @@ namespace Game.Mechanics.Enemy
             float currentTargetDistance = Vector3.Distance(transform.position, _player.transform.position);
             if (currentTargetDistance <= _rangeOfAttack)
             {
-
                 _agent.isStopped = true;
-                if (Time.time > _nextAttack)
+                if (Time.time > _stampForNextAttack)
                 {
-                    _nextAttack = Time.time + _damageRate;
+                    _stampForNextAttack = Time.time + _damageRate;
                     EnemyAttack();
                 }
             }
@@ -60,7 +71,17 @@ namespace Game.Mechanics.Enemy
 
         void EnemyAttack()
         {
-            Instantiate(_bullet, _bulletSpawnPoint.transform.position, Quaternion.identity);
+            _anim.LoadAnimation(_attackAnimation);
+            _anim.PlayOneShot(_attackAnimation, () =>
+            {
+                _anim.LoadAnimation(_walkAnimation);
+            });
+
+            StartCoroutine(WaitThen(_anim.Spf * 3, () =>
+                {
+                    Instantiate(_bullet, _bulletSpawnPoint.transform.position, _bulletSpawnPoint.transform.rotation);
+                }
+            ));
         }
     }
 }

@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using Game.Mechanics.Player;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace Game.Mechanics.Enemy
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    public class EnemyMeleeAttacker : Enemy
+    public class EnemyMeleeAttacker : EnemyBase
     {
         [Header("Melee")]
         [SerializeField]
@@ -21,14 +22,12 @@ namespace Game.Mechanics.Enemy
 
         readonly float SEARCH_INTERVAL = 0.2f;
 
-        AnimatedSprite _anim;
         NavMeshAgent _agent;
         float _stampForNextAttack;
         
         protected override void OnAwake()
         {
             base.OnAwake();
-            _anim = transform.GetComponentInChildren<AnimatedSprite>();
             _agent = GetComponent<NavMeshAgent>();
         }
         
@@ -74,7 +73,13 @@ namespace Game.Mechanics.Enemy
             Collider[] hitPlayers = Physics.OverlapBox(_attackCollider.transform.position, _attackCollider.transform.position);
             foreach (Collider player in hitPlayers)
             {
-                Debug.Log("Attacked Player");
+                PlayerController hero = player.GetComponentInParent<PlayerController>();
+                if(hero != null)
+                {
+                    hero.Hurt(_attack);
+                    Debug.Log("Attacked Player");
+                }
+                
             }
             
             _anim.LoadAnimation(_attackAnimation);

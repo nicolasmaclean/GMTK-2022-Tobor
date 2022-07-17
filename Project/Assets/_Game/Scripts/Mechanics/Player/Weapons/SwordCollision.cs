@@ -16,9 +16,10 @@ public class SwordCollision : MonoBehaviour
     
     void OnTriggerEnter(Collider other)
     {
-        if (!other.transform.parent) return;
+        var parent = other.transform.parent;
+        if (!parent) return;
         
-        Enemy em = other.transform.parent.GetComponent<Enemy>();
+        EnemyBase em = parent.GetComponent<EnemyBase>();
         if (!em) return;
     
         em.Harm((int) _player.Weapon.Damage);

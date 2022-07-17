@@ -31,20 +31,25 @@ namespace Game.Core
             instance = go.AddComponent<SceneController>();
         }
 
-        Scene currentScene;
-        
+        Scene currentScene
+        {
+            get
+            {
+                return SceneManager.GetActiveScene();
+            }
+        }
+
         void Awake()
         {
             DontDestroyOnLoad(this);
-            currentScene = SceneManager.GetActiveScene();
         }
 
         public void LoadNextScene() => LoadScene(currentScene.buildIndex + 1);
+        public void LoadLastScene() => LoadScene(currentScene.buildIndex - 1);
 
         public void LoadScene(int buildIndex)
         {
             SceneManager.LoadScene(buildIndex);
-            currentScene = SceneManager.GetActiveScene();
         }
 
         public void Quit()
