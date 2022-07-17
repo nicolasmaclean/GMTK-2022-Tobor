@@ -98,8 +98,6 @@ namespace Game.Mechanics.Player
             
             if (Input.GetKeyDown(_primaryKey))
             {
-                Attack();
-                Hurt(2);
                 PrimaryAttack();
             }
             else if(Input.GetKeyDown(KeyCode.Escape))
