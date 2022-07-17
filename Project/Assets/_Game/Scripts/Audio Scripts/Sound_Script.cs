@@ -15,6 +15,7 @@ public class Sound_Script : MonoBehaviour
     AudioClip menuBGM;
     AudioClip levelBGM1;
     AudioClip levelBGM2;
+    
     private void Awake() {
         if(instances == null)
         {
@@ -35,16 +36,17 @@ public class Sound_Script : MonoBehaviour
 
     public void menuMusic()
     {
-
+        bgmSources.PlayOneShot(menuBGM);
     }
 
     public void bgmLevel()
     {
-
+        bgmSources.PlayOneShot(bgmLevel);
     }
 
     public void swordSlash()
     {
-
+        AudioClip sfxClip = sfxClips[Random.Range(0, sfxClips.Count)];
+        sfxSources.PlayOneShot(sfxClip);
     }
 }
