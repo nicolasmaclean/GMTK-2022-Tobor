@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using Game.Utility;
+using UnityEngine.UI;
 using UnityEngine;
 using Game.Mechanics;
 
@@ -11,6 +12,14 @@ namespace Game.Mechanics.Player
         public static PlayerController Instance { get; private set; }
         public static PlayerStats Stats;
         public float LastAttackTime { get; private set; } = float.MaxValue;
+        public float tempHealth = 5;
+        [SerializeField] Image hurtScreen;
+        [SerializeField] Color hurt;
+        [SerializeField] Color fine;
+        [SerializeField] GameObject pauseMenu;
+        [SerializeField] GameObject crosshairs;
+        [SerializeField] GameObject winMenu;
+        [SerializeField] GameObject loseMenu;
 
         public SOWeapon Weapon
         {
@@ -94,6 +103,10 @@ namespace Game.Mechanics.Player
             {
                 PrimaryAttack();
             }
+            else if(Input.GetKeyDown(KeyCode.Escape))
+            {
+                PauseGame();
+            }
             else if (Input.GetKeyDown(_secondaryKey))
             {
                 SecondaryAttack();
@@ -101,6 +114,33 @@ namespace Game.Mechanics.Player
         }
         #endregion
 
+        private void PauseGame()
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            Time.timeScale = 0;
+            pauseMenu.SetActive(true);
+            crosshairs.SetActive(false);
+        }
+
+        private void WinGame()
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            Time.timeScale = 0;
+            winMenu.SetActive(true);
+            crosshairs.SetActive(false);
+        }
+
+        private void LoseGame()
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            Time.timeScale = 0;
+            loseMenu.SetActive(true);
+            crosshairs.SetActive(false);
+        }
+        
         void PrimaryAttack()
         {
             if (_CurrentWeapon == WeaponType.Sword)
@@ -173,6 +213,41 @@ namespace Game.Mechanics.Player
             yield return new WaitForSeconds(seconds);
             callback?.Invoke();
         }
+
+        public void Hurt(float damage)
+        {
+            tempHealth -= damage;
+            Debug.Log("Hurting");
+           StartCoroutine(dispayHurtScreen(hurtScreen, fine, hurt, .3f));
+
+        }
+
+        static IEnumerator dispayHurtScreen(Graphic hurtScreen, Color from, Color to, float seconds)
+        {
+            float startTime = Time.time;
+            float TimeSinceStarted = Time.time - startTime;
+            float percentageComplete = TimeSinceStarted / seconds;
+            while (true)
+            {
+                TimeSinceStarted = Time.time - startTime;
+                percentageComplete = TimeSinceStarted / seconds;
+                hurtScreen.color = Color.Lerp(from, to, percentageComplete);
+                if (percentageComplete >= 1) break;
+                yield return new WaitForEndOfFrame();
+            }
+            float reverseStartTime = Time.time;
+            float reverseTimeSinceStarted = Time.time - reverseStartTime;
+            float reversePercentageComplete = reverseTimeSinceStarted / seconds;
+            while (true)
+            {
+                reverseTimeSinceStarted = Time.time - reverseStartTime;
+                reversePercentageComplete = reverseTimeSinceStarted / seconds;
+                hurtScreen.color = Color.Lerp(to, from, reversePercentageComplete);
+                if (reversePercentageComplete >= 1) break;
+                yield return new WaitForEndOfFrame();
+            }
+        }
+       
 
         readonly float HORIZON_DISTANCE = 75;
 

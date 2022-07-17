@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using Game.Mechanics.Player;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -72,7 +73,13 @@ namespace Game.Mechanics.Enemy
             Collider[] hitPlayers = Physics.OverlapBox(_attackCollider.transform.position, _attackCollider.transform.position);
             foreach (Collider player in hitPlayers)
             {
-                Debug.Log("Attacked Player");
+                PlayerController hero = player.GetComponentInParent<PlayerController>();
+                if(hero != null)
+                {
+                    hero.Hurt(_attack);
+                    Debug.Log("Attacked Player");
+                }
+                
             }
             
             _anim.LoadAnimation(_attackAnimation);

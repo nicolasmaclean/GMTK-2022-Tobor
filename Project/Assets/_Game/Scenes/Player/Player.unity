@@ -1356,6 +1356,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4000268308412713273}
     m_Modifications:
+    - target: {fileID: 2484010351864836311, guid: 863137060b0eced438f49cd1b0431248, type: 3}
+      propertyPath: _CurrentWeapon
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8606638413123245488, guid: 863137060b0eced438f49cd1b0431248, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1403,6 +1407,10 @@ PrefabInstance:
     - target: {fileID: 8606638413123245489, guid: 863137060b0eced438f49cd1b0431248, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8606638413123245489, guid: 863137060b0eced438f49cd1b0431248, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8606638413123245491, guid: 863137060b0eced438f49cd1b0431248, type: 3}
       propertyPath: Cam
