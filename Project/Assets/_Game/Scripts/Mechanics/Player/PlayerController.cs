@@ -9,10 +9,20 @@ namespace Game.Mechanics.Player
 {
     public class PlayerController : MonoBehaviour
     {
+        #region Public
         public static PlayerController Instance { get; private set; }
         public static PlayerStats Stats;
+        
         public float LastAttackTime { get; private set; } = float.MaxValue;
-        public float tempHealth = 5;
+        public float Health
+        {
+            get
+            {
+                return _health;
+            }
+        }
+        
+        [Header("UI")]
         [SerializeField] Image hurtScreen;
         [SerializeField] Color hurt;
         [SerializeField] Color fine;
@@ -35,12 +45,18 @@ namespace Game.Mechanics.Player
                 }
             }
         }
-        
-        [Header("Data")]
-        public SOWeapon Sword;
-        public SOWeapon Bow;
+        #endregion
 
+        #region Serialized or Private
         [Header("State")]
+        [SerializeField]
+        [ReadOnly]
+        float _health = 0;
+
+        [SerializeField]
+        [Min(0)]
+        float _startHealth = 5;
+        
         [SerializeField]
         WeaponType _CurrentWeapon;
         
@@ -50,8 +66,17 @@ namespace Game.Mechanics.Player
 
         [SerializeField]
         KeyCode _secondaryKey = KeyCode.Mouse1;
+        
+        [Header("Sword")]
+        public SOWeapon Sword;
+
+        [SerializeField]
+        [Min(0)]
+        float _maxTimeInChain = 1f;
 
         [Header("Bow")]
+        public SOWeapon Bow;
+        
         [SerializeField]
         GameObject PF_Arrow;
         
@@ -60,7 +85,10 @@ namespace Game.Mechanics.Player
         
         FPSController _playerController;
         Animator _animator;
-        RaycastHit hit;
+        RaycastHit _hitinfo;
+        int _curSwing = 0;
+        float _lastSwing = 0;
+        #endregion
 
         #region MonoBehaviour
         void Awake()
@@ -92,6 +120,7 @@ namespace Game.Mechanics.Player
         {
             _playerController.UpdateSpeed(Stats.Agility / 20f);
             ChangeWeapon(_CurrentWeapon);
+            _health = _startHealth;
         }
 
         void Update()
@@ -114,32 +143,35 @@ namespace Game.Mechanics.Player
         }
         #endregion
 
-        private void PauseGame()
+        #region UI
+        void PauseGame()
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            Time.timeScale = 0;
+            StopGame();
             pauseMenu.SetActive(true);
-            crosshairs.SetActive(false);
         }
 
-        private void WinGame()
+        void WinGame()
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            Time.timeScale = 0;
+            StopGame();
             winMenu.SetActive(true);
-            crosshairs.SetActive(false);
         }
 
-        private void LoseGame()
+        void LoseGame()
+        {
+            StopGame();
+            loseMenu.SetActive(true);
+        }
+
+        void StopGame()
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+            
             Time.timeScale = 0;
-            loseMenu.SetActive(true);
+            
             crosshairs.SetActive(false);
         }
+        #endregion
         
         void PrimaryAttack()
         {
@@ -157,7 +189,16 @@ namespace Game.Mechanics.Player
 
         void PrimaryAttackSword()
         {
-            _animator.SetTrigger(AT_SWORD_PRIMARY);
+            // reset chain
+            if (Time.time - _lastSwing >= _maxTimeInChain || _curSwing > 1)
+            {
+                _curSwing = 0;
+            }
+
+            LastAttackTime = _curSwing == 0 ? .33f : .55f;
+            _lastSwing = Time.time;
+            _animator.SetTrigger(AT_SWORD_PRIMARY_ + (_curSwing + 1).ToString());
+            _curSwing++;
         }
 
         void PrimaryAttackBow()
@@ -170,7 +211,7 @@ namespace Game.Mechanics.Player
                 
                 // shoot towards immediate object or directly forwards toward the horizon
                 Vector3 targetPoint;
-                targetPoint = Physics.Raycast(ray, out hit) ? hit.point : ray.GetPoint(HORIZON_DISTANCE);
+                targetPoint = Physics.Raycast(ray, out _hitinfo) ? _hitinfo.point : ray.GetPoint(HORIZON_DISTANCE);
                 
                 Vector3 direction = targetPoint - _arrowSpawn.transform.position;
                 GameObject currentBullet = Instantiate(PF_Arrow, _arrowSpawn.transform.position, _arrowSpawn.transform.rotation);
@@ -216,10 +257,8 @@ namespace Game.Mechanics.Player
 
         public void Hurt(float damage)
         {
-            tempHealth -= damage;
-            Debug.Log("Hurting");
-           StartCoroutine(dispayHurtScreen(hurtScreen, fine, hurt, .3f));
-
+            _health -= damage;
+            StartCoroutine(dispayHurtScreen(hurtScreen, fine, hurt, .3f));
         }
 
         static IEnumerator dispayHurtScreen(Graphic hurtScreen, Color from, Color to, float seconds)
@@ -227,6 +266,7 @@ namespace Game.Mechanics.Player
             float startTime = Time.time;
             float TimeSinceStarted = Time.time - startTime;
             float percentageComplete = TimeSinceStarted / seconds;
+            
             while (true)
             {
                 TimeSinceStarted = Time.time - startTime;
@@ -235,9 +275,11 @@ namespace Game.Mechanics.Player
                 if (percentageComplete >= 1) break;
                 yield return new WaitForEndOfFrame();
             }
+            
             float reverseStartTime = Time.time;
             float reverseTimeSinceStarted = Time.time - reverseStartTime;
             float reversePercentageComplete = reverseTimeSinceStarted / seconds;
+            
             while (true)
             {
                 reverseTimeSinceStarted = Time.time - reverseStartTime;
@@ -248,12 +290,10 @@ namespace Game.Mechanics.Player
             }
         }
        
-
         readonly float HORIZON_DISTANCE = 75;
 
         readonly String AT_SWORD_DRAW      = "Sword_Draw";
-        readonly String AT_SWORD_PRIMARY   = "Sword_Primary";
-        // readonly String AT_SWORD_SECONDARY = "Sword_Secondary";
+        readonly String AT_SWORD_PRIMARY_   = "Sword_Primary_";
         
         readonly String AT_BOW_DRAW   = "Bow_Draw";
         readonly String AT_BOW_FIRE   = "Bow_Fire";
