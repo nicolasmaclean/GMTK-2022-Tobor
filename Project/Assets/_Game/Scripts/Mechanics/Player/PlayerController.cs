@@ -10,8 +10,8 @@ namespace Game.Mechanics.Player
     {
         public static PlayerController Instance { get; private set; }
         public static PlayerStats Stats;
-        public float LastAttackTime = float.MaxValue;
-        
+        public float LastAttackTime { get; private set; } = float.MaxValue;
+
         public SOWeapon Weapon
         {
             get
