@@ -85,6 +85,7 @@ namespace Game.Mechanics.Player
         LayerMask _groundedMask = ~0;
 
         CharacterController _controller;
+        float _baseSpeed, _baseJump;
         #endregion
 
         #region Monobehaviour
@@ -101,7 +102,14 @@ namespace Game.Mechanics.Player
 
         void Start()
         {
-            _speed = PlayerStats.GetInRange(PlayerStats.Instance.Agility, PlayerStats.Instance.AgilityRange);
+            _speed = _baseSpeed = PlayerStats.GetInRange(PlayerStats.Instance.Agility, PlayerStats.Instance.AgilityRange);
+            _baseJump = _jumpHeight;
+            Modifiers.OnChange += ApplyModifers;
+        }
+
+        void OnDestroy()
+        {
+            Modifiers.OnChange -= ApplyModifers;
         }
 
         void Update()
@@ -124,6 +132,12 @@ namespace Game.Mechanics.Player
             Cursor.visible = true;
         }
         #endregion
+
+        void ApplyModifers()
+        {
+            _speed = _baseSpeed * Modifiers.SpeedMultiplier;
+            _jumpHeight = _baseJump * Modifiers.JumpMultiplier;
+        }
 
         #region Private Methods
         /// <summary>
