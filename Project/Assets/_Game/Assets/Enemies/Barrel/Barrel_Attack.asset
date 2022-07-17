@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8191378d8f48c24dbd721f9734282a0, type: 3}
+  m_Name: Barrel_Attack
+  m_EditorClassIdentifier: 
+  Frames:
+  - {fileID: 5589343535220409466, guid: 3805da32fe3219e458bb6d116d6287df, type: 3}
+  - {fileID: -584193071336919428, guid: 3805da32fe3219e458bb6d116d6287df, type: 3}
+  - {fileID: 7511991538471138540, guid: 3805da32fe3219e458bb6d116d6287df, type: 3}
+  - {fileID: 6141588031845948590, guid: 3805da32fe3219e458bb6d116d6287df, type: 3}
+  - {fileID: -6339008765639914708, guid: 3805da32fe3219e458bb6d116d6287df, type: 3}
+  Fps: 2
+  InitialFrame: 0
