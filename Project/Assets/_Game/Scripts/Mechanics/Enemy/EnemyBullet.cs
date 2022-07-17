@@ -1,13 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game.Core;
 using Game.Mechanics.Player;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Game.Mechanics.Enemy
 {
     [RequireComponent(typeof(Rigidbody))]
     public class EnemyBullet : MonoBehaviour
     {
+        public float _damage = 1;
+        
         [SerializeField]
         float _bulletSpeed;
 
@@ -19,7 +23,9 @@ namespace Game.Mechanics.Enemy
 
         Transform sprite;
         float _timeAlive;
-        
+
+        public UnityEvent OnHit;
+
         void Awake()
         {
             sprite = transform.GetChild(0);
@@ -59,8 +65,7 @@ namespace Game.Mechanics.Enemy
             
             if (player != null)
             {
-                
-                Debug.Log("Player Shot");
+                player.Hurt(_damage);
             }
             else
             {
@@ -77,7 +82,14 @@ namespace Game.Mechanics.Enemy
 
         void Die()
         {
+
+            OnHit?.Invoke();
             Destroy(gameObject, .01f);
+        }
+
+        public void PlaySFX(SOAudioClip clip)
+        {
+            SFXManager.PlaySFX(clip);
         }
     }
 }

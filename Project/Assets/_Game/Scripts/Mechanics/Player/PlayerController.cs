@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using Game.Core;
 using Game.Utility;
 using UnityEngine.UI;
 using Game.Mechanics.Enemy;
 using UnityEngine;
 using Game.Mechanics;
+using UnityEngine.Events;
 
 namespace Game.Mechanics.Player
 {
@@ -31,6 +34,12 @@ namespace Game.Mechanics.Player
         [SerializeField] Image crosshairsColor;
         [SerializeField] GameObject winMenu;
         [SerializeField] GameObject loseMenu;
+
+        [Header("SFX")]
+        public UnityEvent OnAttack;
+        public UnityEvent OnShoot;
+        public UnityEvent OnSwitch;
+        public UnityEvent OnHurt;
 
         public SOWeapon Weapon
         {
@@ -225,12 +234,14 @@ namespace Game.Mechanics.Player
             LastAttackTime = _curSwing == 0 ? .33f : .55f;
             _lastSwing = Time.time;
             _animator.SetTrigger(AT_SWORD_PRIMARY_ + (_curSwing + 1).ToString());
+            OnAttack?.Invoke();
             _curSwing++;
         }
 
         void PrimaryAttackBow()
         {
             _animator.SetTrigger(AT_BOW_FIRE);
+            OnShoot?.Invoke();
             StartCoroutine(WaitThen(.12f , () =>
             {
                 // target is horizon from center of screen
@@ -254,6 +265,7 @@ namespace Game.Mechanics.Player
         void SwitchWeapons()
         {
             ChangeWeapon(_currentWeapon == WeaponType.Sword ? WeaponType.Bow : WeaponType.Sword);
+            OnSwitch?.Invoke();
         }
 
         void ChangeWeapon(WeaponType weaponType)
@@ -286,7 +298,20 @@ namespace Game.Mechanics.Player
         public void Hurt(float damage)
         {
             _health -= damage * Modifiers.DamageMultiplier;
-            StartCoroutine(dispayHurtScreen(hurtScreen, fine, hurt, .3f));
+            OnHurt?.Invoke();
+
+            if (_health > 0)
+            {
+                StartCoroutine(dispayHurtScreen(hurtScreen, fine, hurt, .3f));
+            }
+            else
+            {
+                LoseGame();
+            }
+        }
+        public void PlaySFX(SOAudioClip clip)
+        {
+            SFXManager.PlaySFX(clip);
         }
 
         static IEnumerator dispayHurtScreen(Graphic hurtScreen, Color from, Color to, float seconds)
