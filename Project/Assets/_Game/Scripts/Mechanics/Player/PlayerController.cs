@@ -2,6 +2,7 @@
 using System.Collections;
 using Game.Utility;
 using UnityEngine.UI;
+using Game.Mechanics.Enemy;
 using UnityEngine;
 using Game.Mechanics;
 
@@ -27,6 +28,7 @@ namespace Game.Mechanics.Player
         [SerializeField] Color fine;
         [SerializeField] GameObject pauseMenu;
         [SerializeField] GameObject crosshairs;
+        [SerializeField] Image crosshairsColor;
         [SerializeField] GameObject winMenu;
         [SerializeField] GameObject loseMenu;
 
@@ -120,6 +122,7 @@ namespace Game.Mechanics.Player
         {
             LastAttackTime += Time.deltaTime;
             if (LastAttackTime < Weapon.Cooldown) return;
+            EnemyTargeted();
             
             if (Input.GetKeyDown(_primaryKey))
             {
@@ -167,6 +170,26 @@ namespace Game.Mechanics.Player
             Time.timeScale = 0;
             
             crosshairs.SetActive(false);
+        }
+
+        void EnemyTargeted()
+        {
+
+            Ray ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0f));
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
+            {
+                EnemyBase enemy = hit.transform.gameObject.GetComponentInParent<EnemyBase>();
+                if(enemy != null)
+                {
+                    crosshairsColor.color = Color.red;
+                }
+                else
+                {
+                    crosshairsColor.color = Color.white;
+                }
+            }
+            
         }
         #endregion
 

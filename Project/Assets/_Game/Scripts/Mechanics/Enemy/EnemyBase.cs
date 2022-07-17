@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.Core;
 using Game.Mechanics.Player;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.VFX;
 
 namespace Game.Mechanics.Enemy
 {
@@ -25,9 +28,14 @@ namespace Game.Mechanics.Enemy
         [SerializeField]
         protected float _rangeOfAttack = 3f;
 
+        [Header("Events")]
+        [SerializeField]
+        public UnityEvent OnHurt;
+        
         protected PlayerController _player;
         protected AnimatedSprite _anim;
         protected bool isHarmed;
+
 
         void Awake()
         {
@@ -55,6 +63,7 @@ namespace Game.Mechanics.Enemy
         {
             Health -= damage * Modifiers.DamageMultiplier;
             isHarmed = true;
+            OnHurt?.Invoke();
             
             if (Health <= 0)
             {
@@ -73,6 +82,11 @@ namespace Game.Mechanics.Enemy
         {
             yield return new WaitForSeconds(seconds);
             callback?.Invoke();
+        }
+
+        public void PlaySFX(SOAudioClip clip)
+        {
+            SFXManager.PlaySFX(clip);
         }
     }
 }
