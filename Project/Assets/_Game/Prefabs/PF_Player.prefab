@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 289671393}
   - component: {fileID: 289671391}
   - component: {fileID: 289671392}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,7 +83,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2085184027}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ArrowSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115,7 +115,7 @@ GameObject:
   - component: {fileID: 5801045669839037576}
   - component: {fileID: 407778129139191402}
   - component: {fileID: 2124566437593282664}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: TitleWin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -195,7 +195,7 @@ GameObject:
   - component: {fileID: 5434834396608838825}
   - component: {fileID: 3634534136477538992}
   - component: {fileID: 5209164381960884787}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Exit_btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -327,7 +327,7 @@ GameObject:
   - component: {fileID: 8213014531597984830}
   - component: {fileID: 3409938819009587428}
   - component: {fileID: 3337272525664648014}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Exit_txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -406,7 +406,7 @@ GameObject:
   - component: {fileID: 3811401182060233514}
   - component: {fileID: 5674724391876641585}
   - component: {fileID: 3094703844241482712}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: MainMenu_txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -484,7 +484,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6092520671133921757}
   - component: {fileID: 4320927506272709444}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -531,7 +531,7 @@ GameObject:
   - component: {fileID: 5012867906408867201}
   - component: {fileID: 6574542706834343132}
   - component: {fileID: 7379137125103132606}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Resume_txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -612,7 +612,7 @@ GameObject:
   - component: {fileID: 67486350591213082}
   - component: {fileID: 5919220720982231954}
   - component: {fileID: 1965233352969800142}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -727,7 +727,7 @@ GameObject:
   - component: {fileID: 4468993754577892461}
   - component: {fileID: 2936183162434065705}
   - component: {fileID: 1026781307585429278}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: LoseScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -805,7 +805,7 @@ GameObject:
   - component: {fileID: 5343131559670261138}
   - component: {fileID: 8906068914331242561}
   - component: {fileID: 4713670392456577077}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: TitlePauseMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -884,7 +884,7 @@ GameObject:
   - component: {fileID: 3001056753704487669}
   - component: {fileID: 5814688892716092092}
   - component: {fileID: 1137804242647460224}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: IMG_CrossHair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -908,7 +908,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 25, y: 25}
+  m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5814688892716092092
 CanvasRenderer:
@@ -957,7 +957,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6829815456119600730}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -991,7 +991,7 @@ GameObject:
   - component: {fileID: 4464145089919652927}
   - component: {fileID: 5282770025386993296}
   - component: {fileID: 7689643832350031319}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Exit_btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1124,7 +1124,7 @@ GameObject:
   - component: {fileID: 8996849204131080870}
   - component: {fileID: 4758313437196439909}
   - component: {fileID: 8008689630719781777}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Exit_btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1256,7 +1256,7 @@ GameObject:
   - component: {fileID: 2507722584808406145}
   - component: {fileID: 9189074422568413486}
   - component: {fileID: 2888051132051592196}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: MainMenu_txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1335,7 +1335,7 @@ GameObject:
   - component: {fileID: 584691758718335839}
   - component: {fileID: 6321254901243162081}
   - component: {fileID: 4235360334171380236}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Exit_txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1414,7 +1414,7 @@ GameObject:
   - component: {fileID: 992467738375543655}
   - component: {fileID: 6001120441483921953}
   - component: {fileID: 3042933462712151583}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Exit_txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1494,7 +1494,7 @@ GameObject:
   - component: {fileID: 7337851204423609837}
   - component: {fileID: 5363730270051919560}
   - component: {fileID: 7397417698727942409}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: MainMenu_btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1626,7 +1626,7 @@ GameObject:
   - component: {fileID: 3206134956917614828}
   - component: {fileID: 1565914677868454659}
   - component: {fileID: 368366004401665194}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: PauseMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1706,7 +1706,7 @@ GameObject:
   - component: {fileID: 1371242758834436791}
   - component: {fileID: 4802823103043503790}
   - component: {fileID: 4740899269276694216}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Resume_btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1861,7 +1861,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2204291686249139898}
   - component: {fileID: 6839080602958988325}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1905,7 +1905,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3603514666451701296}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ArrowSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1938,7 +1938,7 @@ GameObject:
   - component: {fileID: 8722701185683169065}
   - component: {fileID: 800941258645284040}
   - component: {fileID: 6092244265242643726}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: MainMenu_btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2071,7 +2071,7 @@ GameObject:
   - component: {fileID: 5232027772698348538}
   - component: {fileID: 2011245384080213597}
   - component: {fileID: 4980653801393890172}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: MainMenu_btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2203,7 +2203,7 @@ GameObject:
   - component: {fileID: 8107671282579721131}
   - component: {fileID: 290826600371340818}
   - component: {fileID: 6875755758988660411}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2269,7 +2269,7 @@ GameObject:
   - component: {fileID: 7762298168401813608}
   - component: {fileID: 2154308397163663054}
   - component: {fileID: 2254017785745539227}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: TitleLose
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2347,7 +2347,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6420295983817826195}
   - component: {fileID: 8099650425370833824}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sword_Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2477,7 +2477,7 @@ GameObject:
   - component: {fileID: 3766177900506273763}
   - component: {fileID: 8283225651913896917}
   - component: {fileID: 386366173674725371}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: MainMenu_txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2556,7 +2556,7 @@ GameObject:
   - component: {fileID: 2683219337712253899}
   - component: {fileID: 2601372674711454538}
   - component: {fileID: 8991308566895977904}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: WinScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2633,7 +2633,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8606638411617089732}
   - component: {fileID: 8606638411617089735}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: VCam_Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2708,7 +2708,7 @@ GameObject:
   - component: {fileID: 8606638413025338094}
   - component: {fileID: 8606638413025338091}
   - component: {fileID: 8606638413025338089}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2816,9 +2816,9 @@ GameObject:
   - component: {fileID: 8606638413123245490}
   - component: {fileID: 8606638413123245491}
   - component: {fileID: 2484010351864836311}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PF_Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2893,20 +2893,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Velocity: {x: 0, y: 0, z: 0}
+  isGrounded: 0
   Cam: {fileID: 0}
   _useMainCamera: 1
   _speed: 4
-  _jumpHeight: 1
+  _jumpHeight: 3
   _canRun: 0
   _runKeyCode: 304
   _runMultiplier: 1.3
   _horizontalAxis: Horizontal
   _verticalAxis: Vertical
-  _gravity: -8.27
+  _gravity: -30
   _groundedDistance: 0.1
   _groundedMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 823
 --- !u!114 &2484010351864836311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2923,7 +2924,7 @@ MonoBehaviour:
   hurt: {r: 0.9529412, g: 0.047058824, b: 0.047058824, a: 0.2}
   fine: {r: 0, g: 0, b: 0, a: 0}
   pauseMenu: {fileID: 5489347103867283839}
-  _IMG_Crosshair: {fileID: 0}
+  _IMG_Crosshair: {fileID: 1137804242647460224}
   winMenu: {fileID: 8495192305584315662}
   loseMenu: {fileID: 2980137860572522896}
   OnAttack:
@@ -3007,7 +3008,7 @@ GameObject:
   - component: {fileID: 8606638413195404761}
   - component: {fileID: 8606638413195404762}
   - component: {fileID: 8606638413195404763}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3088,7 +3089,7 @@ GameObject:
   - component: {fileID: 1259888513624535989}
   - component: {fileID: 8690505786301383693}
   - component: {fileID: 1682840285704146391}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: IMG_Damaged
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3161,7 +3162,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8414360649525306422}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3234,6 +3235,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6489556886104315977, guid: 64cd71d010aaee443996e8b76c0c6648, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -6130528455657144778, guid: 64cd71d010aaee443996e8b76c0c6648, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: -5551816905778057993, guid: 64cd71d010aaee443996e8b76c0c6648, type: 3}
       propertyPath: m_RendererPriority
       value: 1
@@ -3246,9 +3255,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0.0000050753256
       objectReference: {fileID: 0}
+    - target: {fileID: -807203396507462279, guid: 64cd71d010aaee443996e8b76c0c6648, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 64cd71d010aaee443996e8b76c0c6648, type: 3}
       propertyPath: m_Name
       value: Bow Anims
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 64cd71d010aaee443996e8b76c0c6648, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2859030372035499514, guid: 64cd71d010aaee443996e8b76c0c6648, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3114601224867451753, guid: 64cd71d010aaee443996e8b76c0c6648, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4289079909494717668, guid: 64cd71d010aaee443996e8b76c0c6648, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4443452903381625761, guid: 64cd71d010aaee443996e8b76c0c6648, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3265,6 +3294,14 @@ PrefabInstance:
     - target: {fileID: 4993247010217307183, guid: 64cd71d010aaee443996e8b76c0c6648, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0.0000036284787
+      objectReference: {fileID: 0}
+    - target: {fileID: 7036213049465896255, guid: 64cd71d010aaee443996e8b76c0c6648, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7909848542033764120, guid: 64cd71d010aaee443996e8b76c0c6648, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8879528566716807029, guid: 64cd71d010aaee443996e8b76c0c6648, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -3349,9 +3386,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8265058018874640334, guid: 61d6b3a4a6d9b31498a5440cb2574dc5, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -5568371526223589888, guid: 61d6b3a4a6d9b31498a5440cb2574dc5, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -4706452340541456491, guid: 61d6b3a4a6d9b31498a5440cb2574dc5, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 61d6b3a4a6d9b31498a5440cb2574dc5, type: 3}
       propertyPath: m_Name
       value: Sword Anims
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 61d6b3a4a6d9b31498a5440cb2574dc5, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4978380662862039387, guid: 61d6b3a4a6d9b31498a5440cb2574dc5, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8001932777390967382, guid: 61d6b3a4a6d9b31498a5440cb2574dc5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
