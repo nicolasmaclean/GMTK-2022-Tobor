@@ -27,8 +27,7 @@ namespace Game.Mechanics.Player
         [SerializeField] Color hurt;
         [SerializeField] Color fine;
         [SerializeField] GameObject pauseMenu;
-        [SerializeField] GameObject crosshairs;
-        [SerializeField] Image crosshairsColor;
+        [SerializeField] Image _IMG_Crosshair;
         [SerializeField] GameObject winMenu;
         [SerializeField] GameObject loseMenu;
 
@@ -168,8 +167,6 @@ namespace Game.Mechanics.Player
             Cursor.visible = true;
             
             Time.timeScale = 0;
-            
-            crosshairs.SetActive(false);
         }
 
         void EnemyTargeted()
@@ -182,11 +179,11 @@ namespace Game.Mechanics.Player
                 EnemyBase enemy = hit.transform.gameObject.GetComponentInParent<EnemyBase>();
                 if(enemy != null)
                 {
-                    crosshairsColor.color = Color.red;
+                    _IMG_Crosshair.color = Color.red;
                 }
                 else
                 {
-                    crosshairsColor.color = Color.white;
+                    _IMG_Crosshair.color = Color.white;
                 }
             }
             
