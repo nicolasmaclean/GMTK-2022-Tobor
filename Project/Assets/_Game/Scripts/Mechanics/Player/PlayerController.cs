@@ -9,10 +9,19 @@ namespace Game.Mechanics.Player
 {
     public class PlayerController : MonoBehaviour
     {
+        #region Public
         public static PlayerController Instance { get; private set; }
-        public static PlayerStats Stats;
+        
         public float LastAttackTime { get; private set; } = float.MaxValue;
-        public float tempHealth = 5;
+        public float Health
+        {
+            get
+            {
+                return _health;
+            }
+        }
+        
+        [Header("UI")]
         [SerializeField] Image hurtScreen;
         [SerializeField] Color hurt;
         [SerializeField] Color fine;
@@ -25,7 +34,7 @@ namespace Game.Mechanics.Player
         {
             get
             {
-                switch (_CurrentWeapon)
+                switch (_currentWeapon)
                 {
                     default:
                     case WeaponType.Sword:
@@ -35,14 +44,16 @@ namespace Game.Mechanics.Player
                 }
             }
         }
-        
-        [Header("Data")]
-        public SOWeapon Sword;
-        public SOWeapon Bow;
+        #endregion
 
+        #region Serialized or Private
         [Header("State")]
         [SerializeField]
-        WeaponType _CurrentWeapon;
+        [ReadOnly]
+        float _health = 0;
+
+        [SerializeField]
+        WeaponType _currentWeapon;
         
         [Header("Controls")]
         [SerializeField]
@@ -51,16 +62,30 @@ namespace Game.Mechanics.Player
         [SerializeField]
         KeyCode _secondaryKey = KeyCode.Mouse1;
 
+        [SerializeField]
+        KeyCode _switchKey = KeyCode.Q;
+        
+        [Header("Sword")]
+        public SOWeapon Sword;
+
+        [SerializeField]
+        [Min(0)]
+        float _maxTimeInChain = 1f;
+
         [Header("Bow")]
+        public SOWeapon Bow;
+        
         [SerializeField]
         GameObject PF_Arrow;
         
         [SerializeField]
         Transform _arrowSpawn;
         
-        FPSController _playerController;
         Animator _animator;
-        RaycastHit hit;
+        RaycastHit _hitinfo;
+        int _curSwing = 0;
+        float _lastSwing = 0;
+        #endregion
 
         #region MonoBehaviour
         void Awake()
@@ -74,9 +99,6 @@ namespace Game.Mechanics.Player
                 Destroy(gameObject);
             }
 
-            Stats ??= PlayerStats.CreateRandom();
-            
-            _playerController = GetComponent<FPSController>();
             _animator = GetComponent<Animator>();
         }
 
@@ -90,8 +112,8 @@ namespace Game.Mechanics.Player
 
         void Start()
         {
-            _playerController.UpdateSpeed(Stats.Agility / 20f);
-            ChangeWeapon(_CurrentWeapon);
+            ChangeWeapon(_currentWeapon);
+            SetHealth();
         }
 
         void Update()
@@ -103,51 +125,65 @@ namespace Game.Mechanics.Player
             {
                 PrimaryAttack();
             }
-            else if(Input.GetKeyDown(KeyCode.Escape))
-            {
-                PauseGame();
-            }
             else if (Input.GetKeyDown(_secondaryKey))
             {
                 SecondaryAttack();
             }
+            else if (Input.GetKeyDown(_switchKey))
+            {
+                SwitchWeapons();
+            }
+            else if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                PauseGame();
+            }
         }
         #endregion
 
-        private void PauseGame()
+        #region UI
+        void PauseGame()
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            Time.timeScale = 0;
+            StopGame();
             pauseMenu.SetActive(true);
-            crosshairs.SetActive(false);
         }
 
-        private void WinGame()
+        void WinGame()
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            Time.timeScale = 0;
+            StopGame();
             winMenu.SetActive(true);
-            crosshairs.SetActive(false);
         }
 
-        private void LoseGame()
+        void LoseGame()
+        {
+            StopGame();
+            loseMenu.SetActive(true);
+        }
+
+        void StopGame()
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+            
             Time.timeScale = 0;
-            loseMenu.SetActive(true);
+            
             crosshairs.SetActive(false);
         }
+        #endregion
+
+        #region Stats
+        void SetHealth()
+        {
+            _health = PlayerStats.GetInRange(PlayerStats.Instance.Constitution, PlayerStats.Instance.ConstitutionRange);
+        }
+        #endregion
         
         void PrimaryAttack()
         {
-            if (_CurrentWeapon == WeaponType.Sword)
+            if (_currentWeapon == WeaponType.Sword)
             {
                 PrimaryAttackSword();
             }
-            else if (_CurrentWeapon == WeaponType.Bow)
+            else if (_currentWeapon == WeaponType.Bow)
             {
                 PrimaryAttackBow();
             }
@@ -157,7 +193,16 @@ namespace Game.Mechanics.Player
 
         void PrimaryAttackSword()
         {
-            _animator.SetTrigger(AT_SWORD_PRIMARY);
+            // reset chain
+            if (Time.time - _lastSwing >= _maxTimeInChain || _curSwing > 1)
+            {
+                _curSwing = 0;
+            }
+
+            LastAttackTime = _curSwing == 0 ? .33f : .55f;
+            _lastSwing = Time.time;
+            _animator.SetTrigger(AT_SWORD_PRIMARY_ + (_curSwing + 1).ToString());
+            _curSwing++;
         }
 
         void PrimaryAttackBow()
@@ -165,16 +210,13 @@ namespace Game.Mechanics.Player
             _animator.SetTrigger(AT_BOW_FIRE);
             StartCoroutine(WaitThen(.12f , () =>
             {
-                // ray from center of screen going forwards
+                // target is horizon from center of screen
                 Ray ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0f));
-                
-                // shoot towards immediate object or directly forwards toward the horizon
-                Vector3 targetPoint;
-                targetPoint = Physics.Raycast(ray, out hit) ? hit.point : ray.GetPoint(HORIZON_DISTANCE);
-                
-                Vector3 direction = targetPoint - _arrowSpawn.transform.position;
-                GameObject currentBullet = Instantiate(PF_Arrow, _arrowSpawn.transform.position, _arrowSpawn.transform.rotation);
-                currentBullet.transform.forward = direction.normalized;
+                Vector3 targetPoint = ray.GetPoint(HORIZON_DISTANCE);
+
+                var pos = _arrowSpawn.transform.position;
+                GameObject currentBullet = Instantiate(PF_Arrow, pos, Quaternion.identity);
+                currentBullet.transform.forward = targetPoint - pos;
             }));
         }
 
@@ -186,6 +228,11 @@ namespace Game.Mechanics.Player
             // }
         }
 
+        void SwitchWeapons()
+        {
+            ChangeWeapon(_currentWeapon == WeaponType.Sword ? WeaponType.Bow : WeaponType.Sword);
+        }
+
         void ChangeWeapon(WeaponType weaponType)
         {
             SOWeapon weapon;
@@ -193,18 +240,17 @@ namespace Game.Mechanics.Player
             {
                 default:
                 case WeaponType.Sword:
-                    _CurrentWeapon = WeaponType.Sword;
                     weapon = Sword;
                     _animator.SetTrigger(AT_SWORD_DRAW);
                     break;
                 
                 case WeaponType.Bow:
-                    _CurrentWeapon = WeaponType.Bow;
                     weapon = Bow;
                     _animator.SetTrigger(AT_BOW_DRAW);
                     break;
             }
 
+            _currentWeapon = weaponType;
             _animator.speed = weapon.Speed;
         }
         
@@ -216,10 +262,8 @@ namespace Game.Mechanics.Player
 
         public void Hurt(float damage)
         {
-            tempHealth -= damage;
-            Debug.Log("Hurting");
-           StartCoroutine(dispayHurtScreen(hurtScreen, fine, hurt, .3f));
-
+            _health -= damage * Modifiers.DamageMultiplier;
+            StartCoroutine(dispayHurtScreen(hurtScreen, fine, hurt, .3f));
         }
 
         static IEnumerator dispayHurtScreen(Graphic hurtScreen, Color from, Color to, float seconds)
@@ -227,6 +271,7 @@ namespace Game.Mechanics.Player
             float startTime = Time.time;
             float TimeSinceStarted = Time.time - startTime;
             float percentageComplete = TimeSinceStarted / seconds;
+            
             while (true)
             {
                 TimeSinceStarted = Time.time - startTime;
@@ -235,9 +280,11 @@ namespace Game.Mechanics.Player
                 if (percentageComplete >= 1) break;
                 yield return new WaitForEndOfFrame();
             }
+            
             float reverseStartTime = Time.time;
             float reverseTimeSinceStarted = Time.time - reverseStartTime;
             float reversePercentageComplete = reverseTimeSinceStarted / seconds;
+            
             while (true)
             {
                 reverseTimeSinceStarted = Time.time - reverseStartTime;
@@ -248,12 +295,10 @@ namespace Game.Mechanics.Player
             }
         }
        
-
         readonly float HORIZON_DISTANCE = 75;
 
         readonly String AT_SWORD_DRAW      = "Sword_Draw";
-        readonly String AT_SWORD_PRIMARY   = "Sword_Primary";
-        // readonly String AT_SWORD_SECONDARY = "Sword_Secondary";
+        readonly String AT_SWORD_PRIMARY_   = "Sword_Primary_";
         
         readonly String AT_BOW_DRAW   = "Bow_Draw";
         readonly String AT_BOW_FIRE   = "Bow_Fire";

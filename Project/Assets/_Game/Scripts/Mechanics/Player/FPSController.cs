@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -48,9 +49,6 @@ namespace Game.Mechanics.Player
         bool _useMainCamera = true;
 
         [Header("Movement")]
-        [SerializeField]
-        Vector2 _speedRange = new Vector2(3, 10);
-        
         [Utility.ReadOnly]
         [SerializeField]
         float _speed = 4f;
@@ -87,6 +85,7 @@ namespace Game.Mechanics.Player
         LayerMask _groundedMask = ~0;
 
         CharacterController _controller;
+        float _baseSpeed, _baseJump;
         #endregion
 
         #region Monobehaviour
@@ -99,6 +98,18 @@ namespace Game.Mechanics.Player
             {
                 Cam = Camera.main.transform;
             }
+        }
+
+        void Start()
+        {
+            _speed = _baseSpeed = PlayerStats.GetInRange(PlayerStats.Instance.Agility, PlayerStats.Instance.AgilityRange);
+            _baseJump = _jumpHeight;
+            Modifiers.OnChange += ApplyModifers;
+        }
+
+        void OnDestroy()
+        {
+            Modifiers.OnChange -= ApplyModifers;
         }
 
         void Update()
@@ -122,16 +133,10 @@ namespace Game.Mechanics.Player
         }
         #endregion
 
-        public float UpdateSpeed(float fraction)
+        void ApplyModifers()
         {
-            _speed = UpdateRange(_speedRange, fraction);
-            return _speed;
-        }
-
-        float UpdateRange(Vector2 range, float fraction)
-        {
-            fraction = Mathf.Clamp(fraction, 0, 1);
-            return Mathf.Lerp(range.x, range.y, fraction);
+            _speed = _baseSpeed * Modifiers.SpeedMultiplier;
+            _jumpHeight = _baseJump * Modifiers.JumpMultiplier;
         }
 
         #region Private Methods

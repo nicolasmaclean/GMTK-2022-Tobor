@@ -9,17 +9,16 @@ namespace Game.Mechanics.Level
 {
     public class LevelController : MonoBehaviour
     {
+        public static RoomBase CurrentRoom { get; private set; }
+        
         [SerializeField]
         RoomBase[] _rooms;
         
-        [SerializeField]
-        [Utility.ReadOnly]
-        RoomBase _currentRoom;
-        int _currentRoomIndex;
+        static int _currentRoomIndex;
 
         void Awake()
         {
-            _currentRoom = _rooms[0];
+            CurrentRoom = _rooms[0];
             _currentRoomIndex = 0;
 
             DisableAllButStart();
@@ -44,12 +43,12 @@ namespace Game.Mechanics.Level
             }
             
             // close the last door
-            _currentRoom.Close();
+            CurrentRoom.Close();
             
             // update current room pointer
             _currentRoomIndex++;
             if (_currentRoomIndex >= _rooms.Length) return;
-            _currentRoom = _rooms[_currentRoomIndex];
+            CurrentRoom = _rooms[_currentRoomIndex];
 
             // load next room
             if (_currentRoomIndex + 1 < _rooms.Length)
