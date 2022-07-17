@@ -859,7 +859,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6147296196059549422}
   m_LocalRotation: {x: -0, y: -0, z: 0.13052596, w: 0.99144495}
-  m_LocalPosition: {x: -16.76916, y: 107.74297, z: -47.689285}
+  m_LocalPosition: {x: -15.7, y: 103.9, z: -47.689285}
   m_LocalScale: {x: 0.98328424, y: 0.98328424, z: 0.98328424}
   m_Children: []
   m_Father: {fileID: 6147296196256966805}
@@ -2024,7 +2024,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6147296196256966804}
-  m_LocalRotation: {x: -0, y: -0, z: -0.13052596, w: 0.99144495}
+  m_LocalRotation: {x: 0, y: 0, z: -0.13052624, w: 0.9914449}
   m_LocalPosition: {x: 2.113184, y: -6.254901, z: -92.5}
   m_LocalScale: {x: 1.017, y: 1.017, z: 1.017}
   m_Children:
@@ -2158,7 +2158,7 @@ Transform:
   - {fileID: 6147296197943831780}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -15}
 --- !u!1 &6147296196266927416
 GameObject:
   m_ObjectHideFlags: 0
@@ -5050,7 +5050,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6147296196804927556}
   m_LocalRotation: {x: -0, y: -0, z: 0.13052596, w: 0.99144495}
-  m_LocalPosition: {x: -11.885271, y: 72.71005, z: -47.689285}
+  m_LocalPosition: {x: -11.885271, y: 72.71005, z: 22.8}
   m_LocalScale: {x: 0.98328424, y: 0.98328424, z: 0.98328424}
   m_Children: []
   m_Father: {fileID: 6147296196256966805}
@@ -5076,13 +5076,13 @@ MonoBehaviour:
     volumeMask: {fileID: 0}
     textureScrollingSpeed: {x: 0, y: 0, z: 0}
     textureTiling: {x: 1, y: 1, z: 1}
-    positiveFade: {x: 0.25601637, y: 0.45620438, z: 0.1}
-    negativeFade: {x: 0.25601637, y: 0.45620438, z: 0.1}
+    positiveFade: {x: 0.25601637, y: 0.45620438, z: 0.16666667}
+    negativeFade: {x: 0.25601637, y: 0.45620438, z: 0.16666667}
     m_EditorUniformFade: 50
     m_EditorPositiveFade: {x: 0, y: 0, z: 0}
     m_EditorNegativeFade: {x: 0, y: 0, z: 0}
     m_EditorAdvancedFade: 0
-    size: {x: 195.3, y: 109.6, z: 500}
+    size: {x: 195.3, y: 109.6, z: 300}
     invertFade: 0
     distanceFadeStart: 10000
     distanceFadeEnd: 100000
