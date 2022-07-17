@@ -11,7 +11,7 @@ namespace Game.Mechanics.Player
     {
         public static PlayerController Instance { get; private set; }
         public static PlayerStats Stats;
-        public float LastAttackTime = float.MaxValue;
+        public float LastAttackTime { get; private set; } = float.MaxValue;
         public float tempHealth = 5;
         [SerializeField] Image hurtScreen;
         [SerializeField] Color hurt;
@@ -45,12 +45,21 @@ namespace Game.Mechanics.Player
         [SerializeField]
         KeyCode _primaryKey = KeyCode.Mouse0;
 
+        [SerializeField]
+        KeyCode _secondaryKey = KeyCode.Mouse1;
+
+        [Header("Bow")]
+        [SerializeField]
+        GameObject PF_Arrow;
+        
+        [SerializeField]
+        Transform _arrowSpawn;
+        
         FPSController _playerController;
         Animator _animator;
-        [SerializeField] GameObject _arrow;
-        [SerializeField] Transform _arrowSpawnPoint;
-        
+        RaycastHit hit;
 
+        #region MonoBehaviour
         void Awake()
         {
             if (Instance == null)
@@ -91,13 +100,18 @@ namespace Game.Mechanics.Player
             {
                 Attack();
                 Hurt(2);
+                PrimaryAttack();
             }
-
-            if(Input.GetKeyDown(KeyCode.Escape))
+            else if(Input.GetKeyDown(KeyCode.Escape))
             {
                 PauseGame();
             }
+            else if (Input.GetKeyDown(_secondaryKey))
+            {
+                SecondaryAttack();
+            }
         }
+        #endregion
 
         private void PauseGame()
         {
@@ -106,32 +120,49 @@ namespace Game.Mechanics.Player
             Time.timeScale = 0;
             pauseMenu.SetActive(true);
         }
-        void Attack()
+        void PrimaryAttack()
         {
             if (_CurrentWeapon == WeaponType.Sword)
             {
-                _animator.SetTrigger(AT_SWORD_PRIMARY);
+                PrimaryAttackSword();
             }
             else if (_CurrentWeapon == WeaponType.Bow)
             {
-                Ray ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0f));
-                RaycastHit hit;
-                Vector3 targetPoint;
-                if (Physics.Raycast(ray, out hit))
-                {
-                    targetPoint = hit.point;
-                }
-                else
-                {
-                    targetPoint = ray.GetPoint(75);
-                }
-                Vector3 direction = targetPoint - _arrowSpawnPoint.transform.position;
-                GameObject currentBullet = Instantiate(_arrow, _arrowSpawnPoint.transform.position, _arrowSpawnPoint.transform.rotation);
-                currentBullet.transform.forward = direction.normalized;
-                
+                PrimaryAttackBow();
             }
 
             LastAttackTime = 0;
+        }
+
+        void PrimaryAttackSword()
+        {
+            _animator.SetTrigger(AT_SWORD_PRIMARY);
+        }
+
+        void PrimaryAttackBow()
+        {
+            _animator.SetTrigger(AT_BOW_FIRE);
+            StartCoroutine(WaitThen(.12f , () =>
+            {
+                // ray from center of screen going forwards
+                Ray ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0f));
+                
+                // shoot towards immediate object or directly forwards toward the horizon
+                Vector3 targetPoint;
+                targetPoint = Physics.Raycast(ray, out hit) ? hit.point : ray.GetPoint(HORIZON_DISTANCE);
+                
+                Vector3 direction = targetPoint - _arrowSpawn.transform.position;
+                GameObject currentBullet = Instantiate(PF_Arrow, _arrowSpawn.transform.position, _arrowSpawn.transform.rotation);
+                currentBullet.transform.forward = direction.normalized;
+            }));
+        }
+
+        void SecondaryAttack()
+        {
+            // if (_CurrentWeapon == WeaponType.Sword)
+            // {
+            //     
+            // }
         }
 
         void ChangeWeapon(WeaponType weaponType)
@@ -145,13 +176,21 @@ namespace Game.Mechanics.Player
                     weapon = Sword;
                     _animator.SetTrigger(AT_SWORD_DRAW);
                     break;
+                
                 case WeaponType.Bow:
                     _CurrentWeapon = WeaponType.Bow;
                     weapon = Bow;
+                    _animator.SetTrigger(AT_BOW_DRAW);
                     break;
             }
 
             _animator.speed = weapon.Speed;
+        }
+        
+        static IEnumerator WaitThen(float seconds, Action callback)
+        {
+            yield return new WaitForSeconds(seconds);
+            callback?.Invoke();
         }
 
         public void Hurt(float damage)
@@ -186,12 +225,16 @@ namespace Game.Mechanics.Player
                 if (reversePercentageComplete >= 1) break;
                 yield return new WaitForEndOfFrame();
             }
-
-
         }
        
 
-        readonly String AT_SWORD_DRAW = "Sword_Draw";
-        readonly String AT_SWORD_PRIMARY = "Sword_Primary";
+        readonly float HORIZON_DISTANCE = 75;
+
+        readonly String AT_SWORD_DRAW      = "Sword_Draw";
+        readonly String AT_SWORD_PRIMARY   = "Sword_Primary";
+        // readonly String AT_SWORD_SECONDARY = "Sword_Secondary";
+        
+        readonly String AT_BOW_DRAW   = "Bow_Draw";
+        readonly String AT_BOW_FIRE   = "Bow_Fire";
     }
 }
