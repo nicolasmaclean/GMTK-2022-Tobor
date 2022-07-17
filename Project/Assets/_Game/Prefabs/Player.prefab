@@ -524,8 +524,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LastAttackTime: 3.4028235e+38
+  tempHealth: 5
+  hurtScreen: {fileID: 0}
   Sword: {fileID: 11400000, guid: ec6a2217d63610747a6a0d948e6f836b, type: 2}
-  Bow: {fileID: 0}
+  Bow: {fileID: 11400000, guid: 99b54ad30cbaed542ac2ad3c84f07530, type: 2}
   _CurrentWeapon: 0
   _primaryKey: 323
   _arrow: {fileID: 7938779356315524346, guid: 38144c3e190e36e4db8ccd9902428c6d, type: 3}

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using Game.Utility;
+using UnityEngine.UI;
 using UnityEngine;
 using Game.Mechanics;
 
@@ -10,7 +12,12 @@ namespace Game.Mechanics.Player
         public static PlayerController Instance { get; private set; }
         public static PlayerStats Stats;
         public float LastAttackTime = float.MaxValue;
-        
+        public float tempHealth = 5;
+        [SerializeField] Image hurtScreen;
+        [SerializeField] Color hurt;
+        [SerializeField] Color fine;
+        [SerializeField] GameObject pauseMenu;
+
         public SOWeapon Weapon
         {
             get
@@ -83,9 +90,22 @@ namespace Game.Mechanics.Player
             if (Input.GetKeyDown(_primaryKey))
             {
                 Attack();
+                Hurt(2);
+            }
+
+            if(Input.GetKeyDown(KeyCode.Escape))
+            {
+                PauseGame();
             }
         }
 
+        private void PauseGame()
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            Time.timeScale = 0;
+            pauseMenu.SetActive(true);
+        }
         void Attack()
         {
             if (_CurrentWeapon == WeaponType.Sword)
@@ -133,6 +153,43 @@ namespace Game.Mechanics.Player
 
             _animator.speed = weapon.Speed;
         }
+
+        public void Hurt(float damage)
+        {
+            tempHealth -= damage;
+            Debug.Log("Hurting");
+           StartCoroutine(dispayHurtScreen(hurtScreen, fine, hurt, .3f));
+
+        }
+
+        static IEnumerator dispayHurtScreen(Graphic hurtScreen, Color from, Color to, float seconds)
+        {
+            float startTime = Time.time;
+            float TimeSinceStarted = Time.time - startTime;
+            float percentageComplete = TimeSinceStarted / seconds;
+            while (true)
+            {
+                TimeSinceStarted = Time.time - startTime;
+                percentageComplete = TimeSinceStarted / seconds;
+                hurtScreen.color = Color.Lerp(from, to, percentageComplete);
+                if (percentageComplete >= 1) break;
+                yield return new WaitForEndOfFrame();
+            }
+            float reverseStartTime = Time.time;
+            float reverseTimeSinceStarted = Time.time - reverseStartTime;
+            float reversePercentageComplete = reverseTimeSinceStarted / seconds;
+            while (true)
+            {
+                reverseTimeSinceStarted = Time.time - reverseStartTime;
+                reversePercentageComplete = reverseTimeSinceStarted / seconds;
+                hurtScreen.color = Color.Lerp(to, from, reversePercentageComplete);
+                if (reversePercentageComplete >= 1) break;
+                yield return new WaitForEndOfFrame();
+            }
+
+
+        }
+       
 
         readonly String AT_SWORD_DRAW = "Sword_Draw";
         readonly String AT_SWORD_PRIMARY = "Sword_Primary";
