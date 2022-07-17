@@ -6,7 +6,17 @@ ModelImporter:
   - first:
       74: -623603649343465320
     second: Scene
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Dice
+    second: {fileID: 2100000, guid: 9adbf3cfe3b3bce4682097a53cdd36f0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Master Material
+    second: {fileID: 2100000, guid: 56d83936e5809d046b8aa21cbdf43fc6, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
