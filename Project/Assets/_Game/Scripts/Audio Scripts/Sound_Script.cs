@@ -6,10 +6,12 @@ using UnityEngine.Audio;
 public class Sound_Script : MonoBehaviour
 {
     [SerializeField] AudioMixer gameMixer;
-    [SerializeField] AudioSource sfxSources;
-    [SerializeField] List<AudioClip> sfxClips = new List<AudioClip>();
 
     public static Sound_Script instances;
+
+    AudioSource sfxSources;
+    AudioClip steps;
+    AudioClip slash;
 
     AudioSource bgmSources;
     AudioClip menuBGM;
@@ -30,8 +32,7 @@ public class Sound_Script : MonoBehaviour
 
     public void stepSound()
     {
-        AudioClip sfxClip = sfxClips[Random.Range(0, sfxClips.Count)];
-        sfxSources.PlayOneShot(sfxClip);
+        sfxSources.PlayOneShot(stepSound);
     }
 
     public void menuMusic()
@@ -46,7 +47,6 @@ public class Sound_Script : MonoBehaviour
 
     public void swordSlash()
     {
-        AudioClip sfxClip = sfxClips[Random.Range(0, sfxClips.Count)];
-        sfxSources.PlayOneShot(sfxClip);
+        sfxSources.PlayOneShot(slash);
     }
 }
