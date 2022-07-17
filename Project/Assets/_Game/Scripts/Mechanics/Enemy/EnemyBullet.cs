@@ -12,17 +12,16 @@ namespace Game.Mechanics.Enemy
         float _bulletSpeed;
 
         [SerializeField]
-        float _scaleFactor = .2f;
-        
-        [SerializeField]
-        float _scaleFrequency = .2f;
+        float _lifeSpan = 20f;
 
-        Rigidbody _rb;
+        // [SerializeField]
+        // float _acceleration;
+
         Transform sprite;
+        float _timeAlive;
         
         void Awake()
         {
-            _rb = gameObject.GetComponent<Rigidbody>();
             sprite = transform.GetChild(0);
         }
         
@@ -40,7 +39,12 @@ namespace Game.Mechanics.Enemy
 
         void Update()
         {
-            sprite.localScale = Vector3.one + Vector3.one * Mathf.Sin(_scaleFrequency * Time.time) * _scaleFactor;
+            if (_timeAlive > _lifeSpan)
+            {
+                Die();
+            }
+            
+            _timeAlive += Time.deltaTime;
         }
 
         void LookAtPlayer(Transform from)
@@ -57,8 +61,23 @@ namespace Game.Mechanics.Enemy
             {
                 
                 Debug.Log("Player Shot");
-                Destroy(gameObject, .01f);
             }
+            else
+            {
+                Transform parent = other.transform.parent;
+                if (parent)
+                {
+                    EnemyBase em = parent.GetComponentInParent<EnemyBase>();
+                    if (em) return;
+                }
+            }
+
+            Die();
+        }
+
+        void Die()
+        {
+            Destroy(gameObject, .01f);
         }
     }
 }
