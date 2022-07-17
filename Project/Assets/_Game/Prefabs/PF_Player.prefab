@@ -2929,16 +2929,64 @@ MonoBehaviour:
   loseMenu: {fileID: 2980137860572522896}
   OnAttack:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2484010351864836311}
+        m_TargetAssemblyTypeName: Game.Mechanics.Player.PlayerController, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: Game.Core.SOAudioClip, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnShoot:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2484010351864836311}
+        m_TargetAssemblyTypeName: Game.Mechanics.Player.PlayerController, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: Game.Core.SOAudioClip, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnSwitch:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2484010351864836311}
+        m_TargetAssemblyTypeName: Game.Mechanics.Player.PlayerController, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: Game.Core.SOAudioClip, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnHurt:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2484010351864836311}
+        m_TargetAssemblyTypeName: Game.Mechanics.Player.PlayerController, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: Game.Core.SOAudioClip, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _health: 0
   _currentWeapon: 0
   _primaryKey: 323
@@ -3229,14 +3277,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 64cd71d010aaee443996e8b76c0c6648, type: 3}
---- !u!4 &2101059896906541109 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 64cd71d010aaee443996e8b76c0c6648, type: 3}
-  m_PrefabInstance: {fileID: 1919324700271677406}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7019591451671847971 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -303897735137367043, guid: 64cd71d010aaee443996e8b76c0c6648, type: 3}
+  m_PrefabInstance: {fileID: 1919324700271677406}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2101059896906541109 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 64cd71d010aaee443996e8b76c0c6648, type: 3}
   m_PrefabInstance: {fileID: 1919324700271677406}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8606638413254347702
@@ -3320,13 +3368,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 61d6b3a4a6d9b31498a5440cb2574dc5, type: 3}
---- !u!4 &8140913233314491485 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 61d6b3a4a6d9b31498a5440cb2574dc5, type: 3}
-  m_PrefabInstance: {fileID: 8606638413254347702}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1764425335256924640 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8001932777390967382, guid: 61d6b3a4a6d9b31498a5440cb2574dc5, type: 3}
+  m_PrefabInstance: {fileID: 8606638413254347702}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8140913233314491485 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 61d6b3a4a6d9b31498a5440cb2574dc5, type: 3}
   m_PrefabInstance: {fileID: 8606638413254347702}
   m_PrefabAsset: {fileID: 0}
