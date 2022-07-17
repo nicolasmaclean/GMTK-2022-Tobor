@@ -262,7 +262,7 @@ namespace Game.Mechanics.Player
 
         public void Hurt(float damage)
         {
-            _health -= damage;
+            _health -= damage * Modifiers.DamageMultiplier;
             StartCoroutine(dispayHurtScreen(hurtScreen, fine, hurt, .3f));
         }
 

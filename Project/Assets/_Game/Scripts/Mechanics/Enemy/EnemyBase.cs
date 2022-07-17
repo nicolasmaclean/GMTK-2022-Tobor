@@ -53,7 +53,7 @@ namespace Game.Mechanics.Enemy
 
         public virtual void Harm(float damage)
         {
-            Health -= damage;
+            Health -= damage * Modifiers.DamageMultiplier;
             isHarmed = true;
             
             if (Health <= 0)

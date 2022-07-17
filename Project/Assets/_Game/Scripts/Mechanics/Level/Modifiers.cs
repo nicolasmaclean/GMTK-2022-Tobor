@@ -12,6 +12,8 @@ public static class Modifiers
     public static int JumpMultiplier { get; private set; } = 1;
     public static int BaseStatsMultiplier { get; private set; } = 1;
 
+    public static Action OnChange;
+
     public static void SetMultipliers(int enemy, int damage, int speed, int attack, int jump, int stats)
     {
         EnemyMultiplier =       (int) Mathf.Pow(2 , enemy);
@@ -20,5 +22,7 @@ public static class Modifiers
         AttackSpeedMultiplier = (int) Mathf.Pow(2 , attack);
         JumpMultiplier =        (int) Mathf.Pow(2 , jump);
         BaseStatsMultiplier =   (int) Mathf.Pow(2 , stats);
+        
+        OnChange?.Invoke();
     }
 }
