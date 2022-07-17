@@ -263,7 +263,14 @@ namespace Game.Mechanics.Player
         public void Hurt(float damage)
         {
             _health -= damage * Modifiers.DamageMultiplier;
-            StartCoroutine(dispayHurtScreen(hurtScreen, fine, hurt, .3f));
+            if (_health > 0)
+            {
+                StartCoroutine(dispayHurtScreen(hurtScreen, fine, hurt, .3f));
+            }
+            else
+            {
+                LoseGame();
+            }
         }
 
         static IEnumerator dispayHurtScreen(Graphic hurtScreen, Color from, Color to, float seconds)

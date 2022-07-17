@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.Mechanics.Player;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -23,6 +24,7 @@ namespace Game.Mechanics.Enemy
 
         readonly float SEARCH_INTERVAL = 0.2f;
 
+        PlayerTrigger _playerTrigger;
         NavMeshAgent _agent;
         bool _passive = true;
         float _stampForNextAttack;
@@ -31,14 +33,9 @@ namespace Game.Mechanics.Enemy
         {
             base.OnAwake();
             _agent = GetComponent<NavMeshAgent>();
+            _playerTrigger = GetComponentInChildren<PlayerTrigger>();
         }
 
-        protected override void OnStart()
-        {
-            base.OnStart();
-            _attackCollider.SetActive(false);
-        }
-        
         public override void Harm(float damage)
         {
             base.Harm(damage);
@@ -86,10 +83,9 @@ namespace Game.Mechanics.Enemy
 
         void EnemyAttack()
         {
-            Collider[] hitPlayers = Physics.OverlapBox(_attackCollider.transform.position, _attackCollider.transform.position);
-            foreach (Collider player in hitPlayers)
+            if (_playerTrigger.PlayerIsIn)
             {
-                Debug.Log("Attacked Player");
+                PlayerController.Instance.Hurt(_attack);
             }
 
             _anim.LoadAnimation(_attackAnimation);
