@@ -54,7 +54,10 @@ namespace Game.Mechanics.Level
             }
             
             _animator.SetTrigger(AT_Roll);
-            Debug.Log(String.Join(" ", rolls));
+            StartCoroutine(WaitThen(3.3f, () =>
+            {
+                LevelController.CurrentRoom.Done();
+            }));
         }
 
         void ShowDie(GameObject die, int num)
@@ -62,6 +65,12 @@ namespace Game.Mechanics.Level
             Renderer rend = die.GetComponent<Renderer>();
             Material mat = rend.material;
             mat.mainTexture = _diceValues[num-1];
+        }
+
+        IEnumerator WaitThen(float seconds, Action callback)
+        {
+            yield return new WaitForSeconds(seconds);
+            callback?.Invoke();
         }
 
         readonly String AT_Roll = "Roll";
