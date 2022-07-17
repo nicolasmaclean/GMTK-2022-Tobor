@@ -1,22 +1,19 @@
 fileFormatVersion: 2
-guid: fccf59a404926fd45aaa7c6eb7800560
+guid: 689099cf809439d46a0d0cc91ddb1ab0
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6662296334220216966
-    second: bossrangedseq_0
+      213: 3503515938040560269
+    second: bosswalk_0
   - first:
-      213: 2056543994058450741
-    second: bossrangedseq_1
+      213: -8322969952730367223
+    second: bosswalk_1
   - first:
-      213: -3686284585848979862
-    second: bossrangedseq_2
+      213: 4982062351173878583
+    second: bosswalk_2
   - first:
-      213: 2596134438542034482
-    second: bossrangedseq_3
-  - first:
-      213: 8212642088334427140
-    second: bossrangedseq_4
+      213: -8036172337833241399
+    second: bosswalk_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -47,7 +44,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -61,7 +58,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 10
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -130,28 +127,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bossrangedseq_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 256
-        width: 64
-        height: 64
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 68a4595b73b357c50800000000000000
-      internalID: 6662296334220216966
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: bossrangedseq_1
+      name: bosswalk_0
       rect:
         serializedVersion: 2
         x: 0
@@ -165,14 +141,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 53721d6dddf4a8c10800000000000000
-      internalID: 2056543994058450741
+      spriteID: d8ab3d7ee2dfe9030800000000000000
+      internalID: 3503515938040560269
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bossrangedseq_2
+      name: bosswalk_1
       rect:
         serializedVersion: 2
         x: 0
@@ -186,14 +162,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a6e397f23bfa7dcc0800000000000000
-      internalID: -3686284585848979862
+      spriteID: 90bb14bcceede7c80800000000000000
+      internalID: -8322969952730367223
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bossrangedseq_3
+      name: bosswalk_2
       rect:
         serializedVersion: 2
         x: 0
@@ -207,14 +183,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 236c4765482570420800000000000000
-      internalID: 2596134438542034482
+      spriteID: 7330192ff47d32540800000000000000
+      internalID: 4982062351173878583
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bossrangedseq_4
+      name: bosswalk_3
       rect:
         serializedVersion: 2
         x: 0
@@ -228,8 +204,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4048896877a29f170800000000000000
-      internalID: 8212642088334427140
+      spriteID: 9c411a116d7c97090800000000000000
+      internalID: -8036172337833241399
       vertices: []
       indices: 
       edges: []
@@ -237,7 +213,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: c4622866fe87a214ea285ec6339584f9
+    spriteID: 688486227847aed49a7b05754817218a
     internalID: 0
     vertices: []
     indices: 

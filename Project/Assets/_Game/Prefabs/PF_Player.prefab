@@ -908,7 +908,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 40, y: 40}
+  m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5814688892716092092
 CanvasRenderer:
@@ -2791,7 +2791,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f991838be89045778d18fd1d630754cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tempHealth: 5
   hurtScreen: {fileID: 1682840285704146391}
   hurt: {r: 0.9529412, g: 0.047058824, b: 0.047058824, a: 0.2}
   fine: {r: 0, g: 0, b: 0, a: 0}
@@ -2799,11 +2798,15 @@ MonoBehaviour:
   crosshairs: {fileID: 3273211183499205843}
   winMenu: {fileID: 8495192305584315662}
   loseMenu: {fileID: 2980137860572522896}
-  Sword: {fileID: 11400000, guid: ec6a2217d63610747a6a0d948e6f836b, type: 2}
-  Bow: {fileID: 11400000, guid: 99b54ad30cbaed542ac2ad3c84f07530, type: 2}
-  _CurrentWeapon: 1
+  _health: 0
+  _startHealth: 5
+  _currentWeapon: 0
   _primaryKey: 323
   _secondaryKey: 324
+  _switchKey: 113
+  Sword: {fileID: 11400000, guid: ec6a2217d63610747a6a0d948e6f836b, type: 2}
+  _maxTimeInChain: 1
+  Bow: {fileID: 11400000, guid: 99b54ad30cbaed542ac2ad3c84f07530, type: 2}
   PF_Arrow: {fileID: 2582692282013095460, guid: c33fa1dd8a487dc4092c1cd2e6d17d83, type: 3}
   _arrowSpawn: {fileID: 2085184027}
 --- !u!1 &8606638413195404766
