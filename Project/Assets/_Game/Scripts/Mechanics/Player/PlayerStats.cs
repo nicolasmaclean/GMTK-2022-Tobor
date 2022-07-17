@@ -4,27 +4,48 @@ using Random = UnityEngine.Random;
 
 namespace Game.Mechanics.Player
 {
-    [System.Serializable]
+    [Serializable]
     public class PlayerStats
     {
+        public static PlayerStats Instance
+        {
+            get
+            {
+                if (instance == null) instance = CreateRandom();
+                return instance;
+            }
+            set
+            {
+                instance = value;
+            }
+        }
+        static PlayerStats instance = null;
+
         public String PlayerName = "Player";
-        
+
+        #region Data
         [Range(1, 20)]
         public int Constitution = 1;
+        public Vector2 ConstitutionRange = new Vector2(1, 10);
 
         [Range(1, 20)]
         public int Strength = 1;
+        public Vector2 StrengthRange = new Vector2(1, 5);
 
         [Range(1, 20)]
         public int Agility = 1;
+        public Vector2 AgilityRange = new Vector2(1, 10);
 
         [Range(1, 20)]
         public int Luck = 1;
+        public Vector2 LuckRange = new Vector2(1, 10);
 
         [Range(1, 20)]
         public int Perception = 1;
+        public Vector2 PerceptionRange = new Vector2(.4f, .1f);
 
         public WeaponType Weapon = WeaponType.Sword;
+        #endregion
         
         public static PlayerStats CreateRandom()
         {
@@ -47,8 +68,13 @@ namespace Game.Mechanics.Player
                 nameof(Agility),
                 nameof(Constitution),
                 nameof(Perception),
-                nameof(Luck)
+                // nameof(Luck)
             };
+        }
+
+        public static float GetInRange(int val, Vector2 range)
+        {
+            return Mathf.LerpUnclamped(range.x, range.y, val / 20f);
         }
     }
 

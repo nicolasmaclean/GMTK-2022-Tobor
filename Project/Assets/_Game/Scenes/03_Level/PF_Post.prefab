@@ -478,6 +478,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1891143047296949645}
   - component: {fileID: 1891143047296949644}
+  - component: {fileID: 3910891501392243149}
   m_Layer: 0
   m_Name: V_SkyFog
   m_TagString: Untagged
@@ -516,3 +517,15 @@ MonoBehaviour:
   blendDistance: 0
   weight: 1
   sharedProfile: {fileID: 11400000, guid: b9353343cc76224439e6f82adc80294d, type: 2}
+--- !u!114 &3910891501392243149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1891143047296949634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6ea53f249dc0f44ab311f02b9f9122, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -11,7 +11,6 @@ namespace Game.Mechanics.Player
     {
         #region Public
         public static PlayerController Instance { get; private set; }
-        public static PlayerStats Stats;
         
         public float LastAttackTime { get; private set; } = float.MaxValue;
         public float Health
@@ -54,10 +53,6 @@ namespace Game.Mechanics.Player
         float _health = 0;
 
         [SerializeField]
-        [Min(0)]
-        float _startHealth = 5;
-        
-        [SerializeField]
         WeaponType _currentWeapon;
         
         [Header("Controls")]
@@ -86,7 +81,6 @@ namespace Game.Mechanics.Player
         [SerializeField]
         Transform _arrowSpawn;
         
-        FPSController _playerController;
         Animator _animator;
         RaycastHit _hitinfo;
         int _curSwing = 0;
@@ -105,9 +99,6 @@ namespace Game.Mechanics.Player
                 Destroy(gameObject);
             }
 
-            Stats ??= PlayerStats.CreateRandom();
-            
-            _playerController = GetComponent<FPSController>();
             _animator = GetComponent<Animator>();
         }
 
@@ -121,9 +112,8 @@ namespace Game.Mechanics.Player
 
         void Start()
         {
-            _playerController.UpdateSpeed(Stats.Agility / 20f);
             ChangeWeapon(_currentWeapon);
-            _health = _startHealth;
+            SetHealth();
         }
 
         void Update()
@@ -177,6 +167,13 @@ namespace Game.Mechanics.Player
             Time.timeScale = 0;
             
             crosshairs.SetActive(false);
+        }
+        #endregion
+
+        #region Stats
+        void SetHealth()
+        {
+            _health = PlayerStats.GetInRange(PlayerStats.Instance.Constitution, PlayerStats.Instance.ConstitutionRange);
         }
         #endregion
         

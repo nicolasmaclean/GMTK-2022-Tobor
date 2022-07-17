@@ -1377,9 +1377,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7783ad62f4418149981f0eaddebab47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IN_name: {fileID: 1515340702}
   _charactersParent: {fileID: 1637075369}
   PF_Character: {fileID: 82576903525786661, guid: 68cac24c4f000b2418429c606518e66a, type: 3}
-  PF_Stat: {fileID: 4957654538759145561, guid: e3e225896d2edd84a8b5d69f61a15ef4, type: 3}
   _btn_play: {fileID: 197380071}
 --- !u!1 &1515340700
 GameObject:
@@ -1922,5 +1922,6 @@ PrefabInstance:
       propertyPath: sharedProfile
       value: 
       objectReference: {fileID: 11400000, guid: 8a1036cf1db4f53438269443fadbc5fb, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2263134768015598947, guid: 294de15952fc30745861f5bc6932ce6d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 294de15952fc30745861f5bc6932ce6d, type: 3}

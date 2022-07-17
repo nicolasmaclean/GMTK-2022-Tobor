@@ -9,6 +9,20 @@ namespace Game.Mechanics.Enemy
     [RequireComponent(typeof(Rigidbody))]
     public class ArrowBullet : MonoBehaviour
     {
+        static float Damage
+        {
+            get
+            {
+                if (damage == -1)
+                {
+                    damage = PlayerStats.GetInRange(PlayerStats.Instance.Strength, PlayerStats.Instance.StrengthRange);
+                }
+
+                return damage;
+            }
+        }
+        static float damage = -1f;
+        
         [SerializeField]
         float _arrowSpeed;
 
@@ -52,7 +66,7 @@ namespace Game.Mechanics.Enemy
                 return;
             }
             
-            em.Harm((int)_player.Weapon.Damage);
+            em.Harm(Damage);
         }
 
         void Die()

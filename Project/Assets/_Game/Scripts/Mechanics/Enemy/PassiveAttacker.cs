@@ -39,7 +39,7 @@ namespace Game.Mechanics.Enemy
             _attackCollider.SetActive(false);
         }
         
-        public override void Harm(int damage)
+        public override void Harm(float damage)
         {
             base.Harm(damage);
             if (_passive)

@@ -12,7 +12,7 @@ using Random = UnityEngine.Random;
 public class CharacterMenuController : MonoBehaviour
 {
     [SerializeField]
-    InputField IN_name;
+    TMP_InputField IN_name;
     
     [SerializeField]
     GameObject _charactersParent;
@@ -44,6 +44,7 @@ public class CharacterMenuController : MonoBehaviour
             PlayerStats stats = PlayerStats.CreateRandom();
             Transform statsView = CreateStatsView(stats);
             statsView.SetParent(_charactersParent.transform);
+            statsView.localScale = Vector3.one;
             
             Toggle toggle = statsView.GetComponentInChildren<Toggle>();
             toggle.group = g;
@@ -62,14 +63,14 @@ public class CharacterMenuController : MonoBehaviour
     
     public void Play()
     {
-        PlayerController.Stats = group.ActiveToggles().First().transform.parent.GetComponent<StatsView>().Stats;
+        PlayerStats.Instance = group.ActiveToggles().First().transform.parent.GetComponent<StatsView>().Stats;
         String playerName = IN_name.text;
         if (string.IsNullOrEmpty(playerName))
         {
             playerName = names[Random.Range(0, names.Length)];
         }
         
-        PlayerController.Stats.PlayerName = playerName;
+        PlayerStats.Instance.PlayerName = playerName;
         
         SceneController.Instance.LoadNextScene();
     }
