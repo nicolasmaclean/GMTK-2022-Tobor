@@ -243,7 +243,52 @@ MonoBehaviour:
   _attack: 1
   _damageRate: 2
   _rangeOfAttack: 15
+  OnHurt:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5836525155943502470}
+        m_TargetAssemblyTypeName: Game.Mechanics.Enemy.EnemyBase, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: Game.Core.SOAudioClip, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnDead:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5836525155943502470}
+        m_TargetAssemblyTypeName: Game.Mechanics.Enemy.EnemyBase, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: Game.Core.SOAudioClip, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _bulletSpawnPoint: {fileID: 5836525155098644751}
+  OnShoot:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5836525155943502470}
+        m_TargetAssemblyTypeName: Game.Mechanics.Enemy.EnemyBase, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: Game.Core.SOAudioClip, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _bullet: {fileID: 7938779356315524346, guid: 589dae44a499a234299c6a878553a93d, type: 3}
   _walkAnimation: {fileID: 11400000, guid: 65e6e36dad167174a8e97275eed90261, type: 2}
   _attackAnimation: {fileID: 11400000, guid: 10b7465b9e868164aafe85960831db25, type: 2}

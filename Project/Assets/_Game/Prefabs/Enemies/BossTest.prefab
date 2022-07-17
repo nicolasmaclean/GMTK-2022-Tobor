@@ -305,6 +305,36 @@ MonoBehaviour:
   _attack: 1
   _damageRate: 2
   _rangeOfAttack: 3
+  OnHurt:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -4564735689383185519}
+        m_TargetAssemblyTypeName: Game.Mechanics.Enemy.EnemyBase, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: Game.Core.SOAudioClip, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnDead:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -4564735689383185519}
+        m_TargetAssemblyTypeName: Game.Mechanics.Enemy.EnemyBase, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: Game.Core.SOAudioClip, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _attackCollider: {fileID: 9173503801023729773}
   _walkAnimation: {fileID: 11400000, guid: d3c4daeda6c38094b9827c6284716d37, type: 2}
   _attackAnimation: {fileID: 11400000, guid: 254b2ce763c45af43b6cfd7093de9055, type: 2}
