@@ -1299,6 +1299,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PF_Slime
       objectReference: {fileID: 0}
+    - target: {fileID: 5836525155943502468, guid: a8801fbe2ce8e4c4c89e4996dc5453ec, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5836525155943502469, guid: a8801fbe2ce8e4c4c89e4996dc5453ec, type: 3}
       propertyPath: m_RootOrder
       value: 2
