@@ -4,14 +4,8 @@ ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
-      74: -3234276998838745900
-    second: Sword|Armature.001Action
-  - first:
-      74: -941422532141238747
-    second: Sword|CameraAction
-  - first:
-      74: 3439177009540967209
-    second: Sword|CylinderAction
+      74: -623603649343465320
+    second: Scene
   - first:
       74: -3100369314251171874
     second: Idle
@@ -59,40 +53,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Sword|Armature.001Action
-      takeName: Sword|Armature.001Action
+      name: Idle
+      takeName: Scene
       internalID: 0
       firstFrame: 1
-      lastFrame: 55
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Idle
-      takeName: Sword|Armature.001Action
-      internalID: 0
-      firstFrame: 0
-      lastFrame: 53
+      lastFrame: 54
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -118,7 +83,7 @@ ModelImporter:
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: Swing 1
-      takeName: Sword|Armature.001Action
+      takeName: Scene
       internalID: 0
       firstFrame: 55
       lastFrame: 63
@@ -147,10 +112,10 @@ ModelImporter:
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: Swing 2
-      takeName: Sword|Armature.001Action
+      takeName: Scene
       internalID: 0
       firstFrame: 64
-      lastFrame: 71
+      lastFrame: 73
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -176,9 +141,9 @@ ModelImporter:
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: Swing 3
-      takeName: Sword|Armature.001Action
+      takeName: Scene
       internalID: 0
-      firstFrame: 72
+      firstFrame: 73
       lastFrame: 86
       wrapMode: 0
       orientationOffsetY: 0
@@ -205,10 +170,10 @@ ModelImporter:
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: Recovery
-      takeName: Sword|Armature.001Action
+      takeName: Scene
       internalID: 0
-      firstFrame: 87
-      lastFrame: 99
+      firstFrame: 88
+      lastFrame: 100
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -234,10 +199,10 @@ ModelImporter:
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: Equip
-      takeName: Sword|Armature.001Action
+      takeName: Scene
       internalID: 0
       firstFrame: 101
-      lastFrame: 115
+      lastFrame: 116
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
