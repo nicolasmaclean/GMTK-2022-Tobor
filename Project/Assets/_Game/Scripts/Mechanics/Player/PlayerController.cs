@@ -158,7 +158,7 @@ namespace Game.Mechanics.Player
             pauseMenu.SetActive(true);
         }
 
-        void WinGame()
+        public void WinGame()
         {
             StopGame();
             winMenu.SetActive(true);

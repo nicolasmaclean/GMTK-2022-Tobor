@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Game.Mechanics.Player;
 using UnityEditor;
 using UnityEngine;
 
@@ -36,6 +37,11 @@ namespace Game.Mechanics.Level
 
         public void MoveToNext()
         {
+            if (_currentRoomIndex == _rooms.Length - 1)
+            {
+                PlayerController.Instance.WinGame();
+            }
+            
             // hide rooms
             if (_currentRoomIndex - 1 >= 0)
             {

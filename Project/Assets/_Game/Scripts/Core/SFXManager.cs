@@ -48,6 +48,7 @@ namespace Game.Core
 
         public static void PlaySFX(SOAudioClip clip)
         {
+            if (clip == null || clip.Clip == null) return;
             AudioClipOneshot.Create(clip);
         }
     }
