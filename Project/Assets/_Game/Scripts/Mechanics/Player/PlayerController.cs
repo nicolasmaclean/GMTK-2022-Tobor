@@ -213,16 +213,13 @@ namespace Game.Mechanics.Player
             _animator.SetTrigger(AT_BOW_FIRE);
             StartCoroutine(WaitThen(.12f , () =>
             {
-                // ray from center of screen going forwards
+                // target is horizon from center of screen
                 Ray ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0f));
-                
-                // shoot towards immediate object or directly forwards toward the horizon
-                Vector3 targetPoint;
-                targetPoint = Physics.Raycast(ray, out _hitinfo) ? _hitinfo.point : ray.GetPoint(HORIZON_DISTANCE);
-                
-                Vector3 direction = targetPoint - _arrowSpawn.transform.position;
-                GameObject currentBullet = Instantiate(PF_Arrow, _arrowSpawn.transform.position, _arrowSpawn.transform.rotation);
-                currentBullet.transform.forward = direction.normalized;
+                Vector3 targetPoint = ray.GetPoint(HORIZON_DISTANCE);
+
+                var pos = _arrowSpawn.transform.position;
+                GameObject currentBullet = Instantiate(PF_Arrow, pos, Quaternion.identity);
+                currentBullet.transform.forward = targetPoint - pos;
             }));
         }
 
