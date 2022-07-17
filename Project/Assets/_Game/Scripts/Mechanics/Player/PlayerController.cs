@@ -1,248 +1,306 @@
+﻿using System;
 using System.Collections;
-using System.Collections.Generic;
+using Game.Utility;
+using UnityEngine.UI;
 using UnityEngine;
-using UnityEngine.Serialization;
-
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
+using Game.Mechanics;
 
 namespace Game.Mechanics.Player
 {
-    [SelectionBase]
-    [RequireComponent(typeof(CharacterController))]
     public class PlayerController : MonoBehaviour
     {
-        #region public variables
-        public static PlayerController Instance { get; set; }
+        #region Public
+        public static PlayerController Instance { get; private set; }
         
-        [HideInInspector]
-        public Vector3 Velocity;
+        public float LastAttackTime { get; private set; } = float.MaxValue;
+        public float Health
+        {
+            get
+            {
+                return _health;
+            }
+        }
+        
+        [Header("UI")]
+        [SerializeField] Image hurtScreen;
+        [SerializeField] Color hurt;
+        [SerializeField] Color fine;
+        [SerializeField] GameObject pauseMenu;
+        [SerializeField] GameObject crosshairs;
+        [SerializeField] GameObject winMenu;
+        [SerializeField] GameObject loseMenu;
 
-        /// <summary>
-        /// Grounded check is from transform.position, so the bottom
-        /// of the player collider should be at transform.position. 
-        /// </summary>
-        public bool isGrounded { get; private set; }
-
-        public Transform Cam;
+        public SOWeapon Weapon
+        {
+            get
+            {
+                switch (_currentWeapon)
+                {
+                    default:
+                    case WeaponType.Sword:
+                        return Sword;
+                    case WeaponType.Bow:
+                        return Bow;
+                }
+            }
+        }
         #endregion
 
-        #region private variables
-        [Header("Camera")]
+        #region Serialized or Private
+        [Header("State")]
         [SerializeField]
-        bool _useMainCamera = true;
+        [ReadOnly]
+        float _health = 0;
+
+        [SerializeField]
+        WeaponType _currentWeapon;
         
-        [Header("Movement")]
+        [Header("Controls")]
         [SerializeField]
-        float _playerSpeed = 2.0f;
+        KeyCode _primaryKey = KeyCode.Mouse0;
 
         [SerializeField]
-        float _jumpHeight = 1.0f;
+        KeyCode _secondaryKey = KeyCode.Mouse1;
 
         [SerializeField]
-        bool _canRun = true;
+        KeyCode _switchKey = KeyCode.Q;
+        
+        [Header("Sword")]
+        public SOWeapon Sword;
 
         [SerializeField]
-        KeyCode _runKeyCode = KeyCode.LeftShift;
+        [Min(0)]
+        float _maxTimeInChain = 1f;
 
+        [Header("Bow")]
+        public SOWeapon Bow;
+        
         [SerializeField]
-        float _runMultiplier = 1.3f;
-
+        GameObject PF_Arrow;
+        
         [SerializeField]
-        [Tooltip("Input Manager virtual axis for horizontal movement.")]
-        string _horizontalAxis = "Horizontal";
-
-        [SerializeField]
-        [Tooltip("Input Manager virtual axis for vertical movement.")]
-        string _verticalAxis = "Vertical";
-
-        [Header("Physics")]
-        [SerializeField]
-        float _gravity = -9.81f;
-
-        [SerializeField]
-        float _groundedDistance = 0.1f;
-
-        [SerializeField]
-        [Tooltip("Layers to be considered by isGrounded check. Default is everything")]
-        LayerMask _groundedMask = ~0;
-
-        CharacterController _controller;
+        Transform _arrowSpawn;
+        
+        Animator _animator;
+        RaycastHit _hitinfo;
+        int _curSwing = 0;
+        float _lastSwing = 0;
         #endregion
 
-        #region Monobehaviour
+        #region MonoBehaviour
         void Awake()
         {
-            Instance = this;
-            _controller = gameObject.GetComponent<CharacterController>();
-
-            if (_useMainCamera)
+            if (Instance == null)
             {
-                Cam = Camera.main.transform;
+                Instance = this;
             }
+            else
+            {
+                Destroy(gameObject);
+            }
+
+            _animator = GetComponent<Animator>();
+        }
+
+        void OnDestroy()
+        {
+            if (Instance == this)
+            {
+                Instance = null;
+            }
+        }
+
+        void Start()
+        {
+            ChangeWeapon(_currentWeapon);
+            SetHealth();
         }
 
         void Update()
         {
-            isGrounded = GroundedCheck();
-            MoveByInput();
-            Jump();
-            ApplyGravity();
-        }
-
-        void OnEnable()
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
-
-        void OnDisable()
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            LastAttackTime += Time.deltaTime;
+            if (LastAttackTime < Weapon.Cooldown) return;
+            
+            if (Input.GetKeyDown(_primaryKey))
+            {
+                PrimaryAttack();
+            }
+            else if (Input.GetKeyDown(_secondaryKey))
+            {
+                SecondaryAttack();
+            }
+            else if (Input.GetKeyDown(_switchKey))
+            {
+                SwitchWeapons();
+            }
+            else if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                PauseGame();
+            }
         }
         #endregion
 
-        /// <summary>
-        /// Checks if this.transform is on the ground.
-        /// </summary>
-        /// <returns> true if within <see cref=""/> units of the ground </returns>
-        bool GroundedCheck()
+        #region UI
+        void PauseGame()
         {
-            return Physics.CheckSphere(transform.position, _groundedDistance, _groundedMask);
+            StopGame();
+            pauseMenu.SetActive(true);
         }
 
-        /// <summary>
-        /// Polls Input Systems "Horizontal" and "Vertical" axes 
-        /// and moves the character controller accordingly.
-        /// </summary>
-        void MoveByInput()
+        void WinGame()
         {
-            // polls input
-            float x = Input.GetAxis(_horizontalAxis);
-            float z = Input.GetAxis(_verticalAxis);
-
-            // relate input vector to player's direction
-            Vector3 right = Cam.transform.right;
-            Vector3 forward = Quaternion.Euler(0, -90, 0) * right;
-            Vector3 move = right * x + forward * z;
-
-            // apply multipliers
-            move *= _playerSpeed;
-            if (_canRun && Input.GetKey(_runKeyCode))
-            {
-                move *= _runMultiplier;
-            }
-
-            _controller.Move(move * Time.deltaTime);
+            StopGame();
+            winMenu.SetActive(true);
         }
 
-        /// <summary>
-        /// Polls Input Systems "Jump" button and will jump if appropriate.
-        /// This modifies velocity, so ApplyGravity must be called
-        /// to apply velocity to the CharacterController.
-        /// </summary>
-        void Jump()
+        void LoseGame()
         {
-            if (isGrounded && Input.GetButtonDown("Jump"))
-            {
-                Velocity.y = Mathf.Sqrt(_jumpHeight * -2f * _gravity);
-            }
+            StopGame();
+            loseMenu.SetActive(true);
         }
 
-        /// <summary>
-        /// Applies gravity to the player.
-        /// </summary>
-        void ApplyGravity()
+        void StopGame()
         {
-            if (isGrounded && Velocity.y < 0)
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            
+            Time.timeScale = 0;
+            
+            crosshairs.SetActive(false);
+        }
+        #endregion
+
+        #region Stats
+        void SetHealth()
+        {
+            _health = PlayerStats.GetInRange(PlayerStats.Instance.Constitution, PlayerStats.Instance.ConstitutionRange);
+        }
+        #endregion
+        
+        void PrimaryAttack()
+        {
+            if (_currentWeapon == WeaponType.Sword)
             {
-                Velocity.y = -2f;
+                PrimaryAttackSword();
+            }
+            else if (_currentWeapon == WeaponType.Bow)
+            {
+                PrimaryAttackBow();
             }
 
-            Velocity.y += _gravity * Time.deltaTime;
-            _controller.Move(Velocity * Time.deltaTime);
+            LastAttackTime = 0;
+        }
+
+        void PrimaryAttackSword()
+        {
+            // reset chain
+            if (Time.time - _lastSwing >= _maxTimeInChain || _curSwing > 1)
+            {
+                _curSwing = 0;
+            }
+
+            LastAttackTime = _curSwing == 0 ? .33f : .55f;
+            _lastSwing = Time.time;
+            _animator.SetTrigger(AT_SWORD_PRIMARY_ + (_curSwing + 1).ToString());
+            _curSwing++;
+        }
+
+        void PrimaryAttackBow()
+        {
+            _animator.SetTrigger(AT_BOW_FIRE);
+            StartCoroutine(WaitThen(.12f , () =>
+            {
+                // target is horizon from center of screen
+                Ray ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0f));
+                Vector3 targetPoint = ray.GetPoint(HORIZON_DISTANCE);
+
+                var pos = _arrowSpawn.transform.position;
+                GameObject currentBullet = Instantiate(PF_Arrow, pos, Quaternion.identity);
+                currentBullet.transform.forward = targetPoint - pos;
+            }));
+        }
+
+        void SecondaryAttack()
+        {
+            // if (_CurrentWeapon == WeaponType.Sword)
+            // {
+            //     
+            // }
+        }
+
+        void SwitchWeapons()
+        {
+            ChangeWeapon(_currentWeapon == WeaponType.Sword ? WeaponType.Bow : WeaponType.Sword);
+        }
+
+        void ChangeWeapon(WeaponType weaponType)
+        {
+            SOWeapon weapon;
+            switch (weaponType)
+            {
+                default:
+                case WeaponType.Sword:
+                    weapon = Sword;
+                    _animator.SetTrigger(AT_SWORD_DRAW);
+                    break;
+                
+                case WeaponType.Bow:
+                    weapon = Bow;
+                    _animator.SetTrigger(AT_BOW_DRAW);
+                    break;
+            }
+
+            _currentWeapon = weaponType;
+            _animator.speed = weapon.Speed;
         }
         
-        
-#if UNITY_EDITOR
-        // is within FPSController to use nameof() on private fields instead of hardcoded strings
-        [CustomEditor(typeof(PlayerController))]
-        public class PlayerControllerEditor : Editor
+        static IEnumerator WaitThen(float seconds, Action callback)
         {
-            SerializedProperty _cameraProperty;
-            SerializedProperty _useMainCameraProperty;
+            yield return new WaitForSeconds(seconds);
+            callback?.Invoke();
+        }
 
-            SerializedProperty _playerSpeedProperty;
-            SerializedProperty _jumpHeightProperty;
-            SerializedProperty _canRunProperty;
-            SerializedProperty _runKeyCodeProperty;
-            SerializedProperty _runMultiplierProperty;
-            SerializedProperty _horizontalAxisProperty;
-            SerializedProperty _verticalAxisProperty;
+        public void Hurt(float damage)
+        {
+            _health -= damage;
+            StartCoroutine(dispayHurtScreen(hurtScreen, fine, hurt, .3f));
+        }
 
-            SerializedProperty _gravityProperty;
-            SerializedProperty _groundedDistanceProperty;
-            SerializedProperty _groundedMaskProperty;
-
-            public void OnEnable()
+        static IEnumerator dispayHurtScreen(Graphic hurtScreen, Color from, Color to, float seconds)
+        {
+            float startTime = Time.time;
+            float TimeSinceStarted = Time.time - startTime;
+            float percentageComplete = TimeSinceStarted / seconds;
+            
+            while (true)
             {
-                _cameraProperty = serializedObject.FindProperty(nameof(Cam));
-                _useMainCameraProperty = serializedObject.FindProperty(nameof(_useMainCamera));
-
-                _playerSpeedProperty = serializedObject.FindProperty(nameof(_playerSpeed));
-                _jumpHeightProperty = serializedObject.FindProperty(nameof(_jumpHeight));
-                _canRunProperty = serializedObject.FindProperty(nameof(_canRun));
-                _runKeyCodeProperty = serializedObject.FindProperty(nameof(_runKeyCode));
-                _runMultiplierProperty = serializedObject.FindProperty(nameof(_runMultiplier));
-                _horizontalAxisProperty = serializedObject.FindProperty(nameof(_horizontalAxis));
-                _verticalAxisProperty = serializedObject.FindProperty(nameof(_verticalAxis));
-
-                _gravityProperty = serializedObject.FindProperty(nameof(_gravity));
-                _groundedDistanceProperty = serializedObject.FindProperty(nameof(_groundedDistance));
-                _groundedMaskProperty = serializedObject.FindProperty(nameof(_groundedMask));
+                TimeSinceStarted = Time.time - startTime;
+                percentageComplete = TimeSinceStarted / seconds;
+                hurtScreen.color = Color.Lerp(from, to, percentageComplete);
+                if (percentageComplete >= 1) break;
+                yield return new WaitForEndOfFrame();
             }
-
-            public override void OnInspectorGUI()
+            
+            float reverseStartTime = Time.time;
+            float reverseTimeSinceStarted = Time.time - reverseStartTime;
+            float reversePercentageComplete = reverseTimeSinceStarted / seconds;
+            
+            while (true)
             {
-                EditorGUILayout.PropertyField(_useMainCameraProperty);
-                if (!_useMainCameraProperty.boolValue)
-                {
-                    EditorGUI.indentLevel += 1;
-                
-                    EditorGUILayout.PropertyField(_cameraProperty);
-                
-                    EditorGUI.indentLevel -= 1;
-                }
-                
-                // movement
-                EditorGUILayout.PropertyField(_playerSpeedProperty);
-                EditorGUILayout.PropertyField(_jumpHeightProperty);
-                EditorGUILayout.PropertyField(_canRunProperty);
-                if (_canRunProperty.boolValue)
-                {
-                    EditorGUI.indentLevel += 1;
-
-                    EditorGUILayout.PropertyField(_runKeyCodeProperty);
-                    if (_runKeyCodeProperty.enumValueIndex != 0)
-                    {
-                        EditorGUILayout.PropertyField(_runMultiplierProperty);
-                    }
-
-                    EditorGUI.indentLevel -= 1;
-                }
-                EditorGUILayout.PropertyField(_horizontalAxisProperty);
-                EditorGUILayout.PropertyField(_verticalAxisProperty);
-
-                // physics
-                EditorGUILayout.PropertyField(_gravityProperty);
-                EditorGUILayout.PropertyField(_groundedDistanceProperty);
-                EditorGUILayout.PropertyField(_groundedMaskProperty);
-
-                serializedObject.ApplyModifiedProperties();
+                reverseTimeSinceStarted = Time.time - reverseStartTime;
+                reversePercentageComplete = reverseTimeSinceStarted / seconds;
+                hurtScreen.color = Color.Lerp(to, from, reversePercentageComplete);
+                if (reversePercentageComplete >= 1) break;
+                yield return new WaitForEndOfFrame();
             }
         }
-#endif
+       
+        readonly float HORIZON_DISTANCE = 75;
+
+        readonly String AT_SWORD_DRAW      = "Sword_Draw";
+        readonly String AT_SWORD_PRIMARY_   = "Sword_Primary_";
+        
+        readonly String AT_BOW_DRAW   = "Bow_Draw";
+        readonly String AT_BOW_FIRE   = "Bow_Fire";
     }
 }

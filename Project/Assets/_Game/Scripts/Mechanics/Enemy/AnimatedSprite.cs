@@ -10,20 +10,23 @@ namespace Game.Mechanics.Enemy
     [RequireComponent(typeof(SpriteRenderer))]
     public class AnimatedSprite : MonoBehaviour
     {
-        [SerializeField]
-        Sprite[] _frames;
+        public float Length
+        {
+            get
+            {
+                return _animation.Frames.Length * Spf;
+            }
+        }
+
+        public float Spf { get; private set; }
 
         [SerializeField]
-        [Tooltip("Frames per second")]
-        float _fps;
-
-        [SerializeField]
-        int _initialFrame = 0;
+        SOSpriteAnimation _animation;
 
         SpriteRenderer _renderer;
-        float _spf;
         float _timer = 0;
         int _currentFrame;
+        Action callback = null;
         
         void Awake()
         {
@@ -32,41 +35,69 @@ namespace Game.Mechanics.Enemy
 
         void Start()
         {
-            _currentFrame = _initialFrame;
-            _renderer.sprite = _frames[_currentFrame];
-            UpdateSpf();
+            LoadAnimation();
         }
 
         void OnValidate()
         {
-            UpdateSpf();
+            if (!_renderer) _renderer = GetComponent<SpriteRenderer>();
+            if (!_animation)
+            {
+                _renderer.sprite = null;
+                return;
+            }
+            LoadAnimation();
         }
 
         void Update()
         {
             _timer += Time.deltaTime;
 
-            if (_timer > _spf)
+            if (_timer > Spf)
             {
                 NextFrame();
                 _timer = 0;
             }
 
             // apply billboard rotation
-            Vector3 playerPosition = PlayerController.Instance.transform.position;
+            Vector3 playerPosition = FPSController.Instance.transform.position;
             playerPosition.y = transform.position.y;
             transform.LookAt(playerPosition);
         }
 
         void NextFrame()
         {
-            _currentFrame = (_currentFrame + 1) % _frames.Length;
-            _renderer.sprite = _frames[_currentFrame];
+            _currentFrame++;
+            if (_currentFrame >= _animation.Frames.Length)
+            {
+                _currentFrame = 0;
+                if (callback != null)
+                {
+                    callback();
+                    callback = null;
+                    Spf = float.PositiveInfinity;
+                }
+            }
+            _renderer.sprite = _animation.Frames[_currentFrame];
         }
 
-        void UpdateSpf()
+        public void PlayOneShot(SOSpriteAnimation data, Action callback)
         {
-            _spf = 1f / _fps;
+            LoadAnimation(data);
+            this.callback = callback;
+        }
+        
+        public void LoadAnimation(SOSpriteAnimation data)
+        {
+            _animation = data;
+            LoadAnimation();
+        }
+        
+        void LoadAnimation()
+        {
+            Spf = 1f / _animation.Fps;
+            _currentFrame = _animation.InitialFrame;
+            _renderer.sprite = _animation.Frames[_currentFrame];
         }
     }
 }
