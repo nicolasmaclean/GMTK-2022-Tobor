@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -48,9 +49,6 @@ namespace Game.Mechanics.Player
         bool _useMainCamera = true;
 
         [Header("Movement")]
-        [SerializeField]
-        Vector2 _speedRange = new Vector2(3, 10);
-        
         [Utility.ReadOnly]
         [SerializeField]
         float _speed = 4f;
@@ -101,6 +99,11 @@ namespace Game.Mechanics.Player
             }
         }
 
+        void Start()
+        {
+            _speed = PlayerStats.GetInRange(PlayerStats.Instance.Agility, PlayerStats.Instance.AgilityRange);
+        }
+
         void Update()
         {
             isGrounded = GroundedCheck();
@@ -121,18 +124,6 @@ namespace Game.Mechanics.Player
             Cursor.visible = true;
         }
         #endregion
-
-        public float UpdateSpeed(float fraction)
-        {
-            _speed = UpdateRange(_speedRange, fraction);
-            return _speed;
-        }
-
-        float UpdateRange(Vector2 range, float fraction)
-        {
-            fraction = Mathf.Clamp(fraction, 0, 1);
-            return Mathf.Lerp(range.x, range.y, fraction);
-        }
 
         #region Private Methods
         /// <summary>

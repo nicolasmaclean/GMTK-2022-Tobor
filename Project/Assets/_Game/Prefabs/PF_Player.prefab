@@ -931,7 +931,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8632076, g: 1, b: 0.9920929, a: 0.29803923}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2766,7 +2766,6 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   Cam: {fileID: 0}
   _useMainCamera: 1
-  _speedRange: {x: 3, y: 10}
   _speed: 4
   _jumpHeight: 1
   _canRun: 0
@@ -2799,7 +2798,6 @@ MonoBehaviour:
   winMenu: {fileID: 8495192305584315662}
   loseMenu: {fileID: 2980137860572522896}
   _health: 0
-  _startHealth: 5
   _currentWeapon: 0
   _primaryKey: 323
   _secondaryKey: 324

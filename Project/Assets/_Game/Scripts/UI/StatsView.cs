@@ -24,9 +24,10 @@ public class StatsView : MonoBehaviour
     {
         String[] propertyNames = PlayerStats.GetFieldNames();
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < propertyNames.Length; i++)
         {
             Transform stat = Instantiate(PF_Stat, _statsParent, true).transform;
+            stat.localScale = Vector3.one;
             TMP_Text stat_name = stat.Find("TXT_Name").GetComponent<TMP_Text>();
             TMP_Text stat_num  = stat.Find("TXT_Num").GetComponent<TMP_Text>();
 

@@ -51,7 +51,7 @@ namespace Game.Mechanics.Enemy
             _player = PlayerController.Instance;
         }
 
-        public virtual void Harm(int damage)
+        public virtual void Harm(float damage)
         {
             Health -= damage;
             isHarmed = true;
