@@ -2923,8 +2923,7 @@ MonoBehaviour:
   hurt: {r: 0.9529412, g: 0.047058824, b: 0.047058824, a: 0.2}
   fine: {r: 0, g: 0, b: 0, a: 0}
   pauseMenu: {fileID: 5489347103867283839}
-  crosshairs: {fileID: 3273211183499205843}
-  crosshairsColor: {fileID: 0}
+  _IMG_Crosshair: {fileID: 0}
   winMenu: {fileID: 8495192305584315662}
   loseMenu: {fileID: 2980137860572522896}
   OnAttack:
@@ -2935,7 +2934,7 @@ MonoBehaviour:
         m_MethodName: PlaySFX
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgument: {fileID: 11400000, guid: f6e07aad253e64510a4fc12307bcf793, type: 2}
           m_ObjectArgumentAssemblyTypeName: Game.Core.SOAudioClip, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -2950,7 +2949,7 @@ MonoBehaviour:
         m_MethodName: PlaySFX
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgument: {fileID: 11400000, guid: 20c3506af3da248d0b9330c8033e932d, type: 2}
           m_ObjectArgumentAssemblyTypeName: Game.Core.SOAudioClip, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -2965,7 +2964,7 @@ MonoBehaviour:
         m_MethodName: PlaySFX
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgument: {fileID: 11400000, guid: c5a24024408c643f7bcad4396ac7e530, type: 2}
           m_ObjectArgumentAssemblyTypeName: Game.Core.SOAudioClip, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -2980,7 +2979,7 @@ MonoBehaviour:
         m_MethodName: PlaySFX
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgument: {fileID: 11400000, guid: 123b2aab9934a4288b8687434d83f399, type: 2}
           m_ObjectArgumentAssemblyTypeName: Game.Core.SOAudioClip, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
