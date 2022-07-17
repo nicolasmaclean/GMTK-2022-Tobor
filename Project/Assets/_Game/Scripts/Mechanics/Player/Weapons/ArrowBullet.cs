@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game.Core;
 using Game.Mechanics.Player;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 namespace Game.Mechanics.Enemy
@@ -9,6 +11,7 @@ namespace Game.Mechanics.Enemy
     [RequireComponent(typeof(Rigidbody))]
     public class ArrowBullet : MonoBehaviour
     {
+
         static float Damage
         {
             get
@@ -31,6 +34,7 @@ namespace Game.Mechanics.Enemy
         
         PlayerController _player;
         float _timeAlive = 0;
+        public UnityEvent OnHit;
 
         void Awake()
         {
@@ -52,6 +56,7 @@ namespace Game.Mechanics.Enemy
 
         void OnTriggerEnter(Collider other)
         {
+            
             Transform parent = other.transform.parent;
             if (!parent)
             {
@@ -71,7 +76,13 @@ namespace Game.Mechanics.Enemy
 
         void Die()
         {
+            OnHit?.Invoke();
             Destroy(gameObject, 0.01f);
+        }
+
+        public void PlaySFX(SOAudioClip clip)
+        {
+            SFXManager.PlaySFX(clip);
         }
     }
 }

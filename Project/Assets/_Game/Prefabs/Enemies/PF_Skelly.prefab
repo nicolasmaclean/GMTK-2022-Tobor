@@ -290,6 +290,12 @@ MonoBehaviour:
   OnHurt:
     m_PersistentCalls:
       m_Calls: []
-  _attackCollider: {fileID: 9173503801023729763}
+  OnDead:
+    m_PersistentCalls:
+      m_Calls: []
+  _attackCollider: {fileID: 9173503801023729773}
+  OnAttack:
+    m_PersistentCalls:
+      m_Calls: []
   _walkAnimation: {fileID: 11400000, guid: 8bbd12ff2708bc741ba956d27c1accc6, type: 2}
   _attackAnimation: {fileID: 11400000, guid: 6759f58d6c155784bb8d1eb39e768db2, type: 2}

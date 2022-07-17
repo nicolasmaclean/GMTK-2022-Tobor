@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Game.Mechanics.Player;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 namespace Game.Mechanics.Enemy
 {
@@ -12,6 +13,7 @@ namespace Game.Mechanics.Enemy
         [Header("Melee")]
         [SerializeField]
         GameObject _attackCollider;
+        public UnityEvent OnAttack;
 
         [SerializeField]
         SOSpriteAnimation _transformAnimation;
@@ -89,6 +91,7 @@ namespace Game.Mechanics.Enemy
             }
 
             _anim.LoadAnimation(_attackAnimation);
+            OnAttack?.Invoke();
             StartCoroutine(WaitThen(_anim.Length, () =>
                 {
                     _anim.LoadAnimation(_walkAnimation);

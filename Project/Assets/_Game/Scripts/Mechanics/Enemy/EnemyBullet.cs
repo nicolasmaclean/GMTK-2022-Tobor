@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game.Core;
 using Game.Mechanics.Player;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Game.Mechanics.Enemy
 {
@@ -21,7 +23,9 @@ namespace Game.Mechanics.Enemy
 
         Transform sprite;
         float _timeAlive;
-        
+
+        public UnityEvent OnHit;
+
         void Awake()
         {
             sprite = transform.GetChild(0);
@@ -78,7 +82,14 @@ namespace Game.Mechanics.Enemy
 
         void Die()
         {
+
+            OnHit?.Invoke();
             Destroy(gameObject, .01f);
+        }
+
+        public void PlaySFX(SOAudioClip clip)
+        {
+            SFXManager.PlaySFX(clip);
         }
     }
 }

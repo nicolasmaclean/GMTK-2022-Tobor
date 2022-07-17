@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 namespace Game.Mechanics.Enemy
 {
@@ -11,7 +12,8 @@ namespace Game.Mechanics.Enemy
         [Header("Ranged")]
         [SerializeField]
         Transform _bulletSpawnPoint;
-        
+        public UnityEvent OnShoot;
+
         [SerializeField]
         GameObject _bullet;
 
@@ -79,6 +81,7 @@ namespace Game.Mechanics.Enemy
 
             StartCoroutine(WaitThen(_anim.Spf * 3, () =>
                 {
+                    OnShoot?.Invoke();
                     EnemyBullet bullet = Instantiate(_bullet, _bulletSpawnPoint.transform.position, _bulletSpawnPoint.transform.rotation).GetComponent<EnemyBullet>();
                     bullet._damage = _attack;
                 }

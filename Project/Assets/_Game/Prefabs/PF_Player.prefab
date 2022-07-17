@@ -2924,8 +2924,21 @@ MonoBehaviour:
   fine: {r: 0, g: 0, b: 0, a: 0}
   pauseMenu: {fileID: 5489347103867283839}
   crosshairs: {fileID: 3273211183499205843}
+  crosshairsColor: {fileID: 0}
   winMenu: {fileID: 8495192305584315662}
   loseMenu: {fileID: 2980137860572522896}
+  OnAttack:
+    m_PersistentCalls:
+      m_Calls: []
+  OnShoot:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSwitch:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHurt:
+    m_PersistentCalls:
+      m_Calls: []
   _health: 0
   _currentWeapon: 0
   _primaryKey: 323
