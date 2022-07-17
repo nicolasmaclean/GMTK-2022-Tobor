@@ -35,7 +35,7 @@ namespace Game.Mechanics.Player
         {
             get
             {
-                switch (_CurrentWeapon)
+                switch (_currentWeapon)
                 {
                     default:
                     case WeaponType.Sword:
@@ -58,7 +58,7 @@ namespace Game.Mechanics.Player
         float _startHealth = 5;
         
         [SerializeField]
-        WeaponType _CurrentWeapon;
+        WeaponType _currentWeapon;
         
         [Header("Controls")]
         [SerializeField]
@@ -66,6 +66,9 @@ namespace Game.Mechanics.Player
 
         [SerializeField]
         KeyCode _secondaryKey = KeyCode.Mouse1;
+
+        [SerializeField]
+        KeyCode _switchKey = KeyCode.Q;
         
         [Header("Sword")]
         public SOWeapon Sword;
@@ -119,7 +122,7 @@ namespace Game.Mechanics.Player
         void Start()
         {
             _playerController.UpdateSpeed(Stats.Agility / 20f);
-            ChangeWeapon(_CurrentWeapon);
+            ChangeWeapon(_currentWeapon);
             _health = _startHealth;
         }
 
@@ -132,13 +135,17 @@ namespace Game.Mechanics.Player
             {
                 PrimaryAttack();
             }
-            else if(Input.GetKeyDown(KeyCode.Escape))
-            {
-                PauseGame();
-            }
             else if (Input.GetKeyDown(_secondaryKey))
             {
                 SecondaryAttack();
+            }
+            else if (Input.GetKeyDown(_switchKey))
+            {
+                SwitchWeapons();
+            }
+            else if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                PauseGame();
             }
         }
         #endregion
@@ -175,11 +182,11 @@ namespace Game.Mechanics.Player
         
         void PrimaryAttack()
         {
-            if (_CurrentWeapon == WeaponType.Sword)
+            if (_currentWeapon == WeaponType.Sword)
             {
                 PrimaryAttackSword();
             }
-            else if (_CurrentWeapon == WeaponType.Bow)
+            else if (_currentWeapon == WeaponType.Bow)
             {
                 PrimaryAttackBow();
             }
@@ -227,6 +234,11 @@ namespace Game.Mechanics.Player
             // }
         }
 
+        void SwitchWeapons()
+        {
+            ChangeWeapon(_currentWeapon == WeaponType.Sword ? WeaponType.Bow : WeaponType.Sword);
+        }
+
         void ChangeWeapon(WeaponType weaponType)
         {
             SOWeapon weapon;
@@ -234,18 +246,17 @@ namespace Game.Mechanics.Player
             {
                 default:
                 case WeaponType.Sword:
-                    _CurrentWeapon = WeaponType.Sword;
                     weapon = Sword;
                     _animator.SetTrigger(AT_SWORD_DRAW);
                     break;
                 
                 case WeaponType.Bow:
-                    _CurrentWeapon = WeaponType.Bow;
                     weapon = Bow;
                     _animator.SetTrigger(AT_BOW_DRAW);
                     break;
             }
 
+            _currentWeapon = weaponType;
             _animator.speed = weapon.Speed;
         }
         
