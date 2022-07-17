@@ -17,6 +17,9 @@ namespace Game.Mechanics.Player
         [SerializeField] Color hurt;
         [SerializeField] Color fine;
         [SerializeField] GameObject pauseMenu;
+        [SerializeField] GameObject crosshairs;
+        [SerializeField] GameObject winMenu;
+        [SerializeField] GameObject loseMenu;
 
         public SOWeapon Weapon
         {
@@ -117,7 +120,27 @@ namespace Game.Mechanics.Player
             Cursor.visible = true;
             Time.timeScale = 0;
             pauseMenu.SetActive(true);
+            crosshairs.SetActive(false);
         }
+
+        private void WinGame()
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            Time.timeScale = 0;
+            winMenu.SetActive(true);
+            crosshairs.SetActive(false);
+        }
+
+        private void LoseGame()
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            Time.timeScale = 0;
+            loseMenu.SetActive(true);
+            crosshairs.SetActive(false);
+        }
+        
         void PrimaryAttack()
         {
             if (_CurrentWeapon == WeaponType.Sword)
