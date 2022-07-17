@@ -9,31 +9,55 @@ namespace Game.Mechanics.Enemy
     [RequireComponent(typeof(Rigidbody))]
     public class ArrowBullet : MonoBehaviour
     {
-        [SerializeField] float _arrowSpeed;
-        [SerializeField] Rigidbody rb;
+        [SerializeField]
+        float _arrowSpeed;
+
+        [SerializeField]
+        float _lifeSpan = 20f;
+        
         PlayerController _player;
+        float _timeAlive = 0;
 
         void Awake()
         {
-            rb = gameObject.GetComponent<Rigidbody>();
             _player = PlayerController.Instance;
         }
 
-        private void OnTriggerEnter(Collider other)
+        void Update()
         {
-            EnemyBase monster = other.gameObject.GetComponentInParent<EnemyBase>();
-            if (monster != null)
+            var t = transform;
+            t.position += t.forward * (_arrowSpeed * Time.deltaTime);
+            
+            if (_timeAlive > _lifeSpan)
             {
-                monster.Harm((int)_player.Weapon.Damage);
-            Debug.Log("Shot Enemy");
+                Die();
             }
-            Destroy(gameObject, .01f);
+            
+            _timeAlive += Time.deltaTime;
         }
-        
 
-        void Start()
+        void OnTriggerEnter(Collider other)
         {
-            rb.velocity = transform.forward * _arrowSpeed;
+            Transform parent = other.transform.parent;
+            if (!parent)
+            {
+                Destroy(gameObject, .01f);
+                return;
+            }
+            
+            EnemyBase em = parent.GetComponentInParent<EnemyBase>();
+            if (!em)
+            {
+                Die();
+                return;
+            }
+            
+            em.Harm((int)_player.Weapon.Damage);
+        }
+
+        void Die()
+        {
+            Destroy(gameObject, 0.01f);
         }
     }
 }
