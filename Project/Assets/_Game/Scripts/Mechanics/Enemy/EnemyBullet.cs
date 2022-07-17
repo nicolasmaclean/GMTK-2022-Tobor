@@ -59,6 +59,7 @@ namespace Game.Mechanics.Enemy
             
             if (player != null)
             {
+                
                 Debug.Log("Player Shot");
             }
             else
