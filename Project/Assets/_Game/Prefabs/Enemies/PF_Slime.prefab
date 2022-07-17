@@ -243,7 +243,16 @@ MonoBehaviour:
   _attack: 1
   _damageRate: 2
   _rangeOfAttack: 15
+  OnHurt:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDead:
+    m_PersistentCalls:
+      m_Calls: []
   _bulletSpawnPoint: {fileID: 5836525155098644751}
+  OnShoot:
+    m_PersistentCalls:
+      m_Calls: []
   _bullet: {fileID: 7938779356315524346, guid: 589dae44a499a234299c6a878553a93d, type: 3}
   _walkAnimation: {fileID: 11400000, guid: 65e6e36dad167174a8e97275eed90261, type: 2}
   _attackAnimation: {fileID: 11400000, guid: 10b7465b9e868164aafe85960831db25, type: 2}

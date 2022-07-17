@@ -31,7 +31,8 @@ namespace Game.Mechanics.Enemy
         [Header("Events")]
         [SerializeField]
         public UnityEvent OnHurt;
-        
+        public UnityEvent OnDead;
+
         protected PlayerController _player;
         protected AnimatedSprite _anim;
         protected bool isHarmed;
@@ -73,6 +74,7 @@ namespace Game.Mechanics.Enemy
 
         protected virtual void Kill()
         {
+            OnDead?.Invoke();
             Debug.Log("Enemy is dead");
             OnKilled?.Invoke(this);
             gameObject.SetActive(false);

@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using Game.Mechanics.Player;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 namespace Game.Mechanics.Enemy
 {
@@ -13,6 +14,8 @@ namespace Game.Mechanics.Enemy
         [Header("Boss")]
         [SerializeField]
         GameObject _attackCollider;
+        public UnityEvent OnAttack;
+        public UnityEvent OnShoot;
 
         [SerializeField]
         SOSpriteAnimation _walkAnimation;
@@ -105,6 +108,7 @@ namespace Game.Mechanics.Enemy
             }
 
             _anim.LoadAnimation(_attackAnimation);
+            OnAttack?.Invoke();
             StartCoroutine(SwapToWalk(_anim.Length));
         }
 
@@ -120,6 +124,7 @@ namespace Game.Mechanics.Enemy
 
                 StartCoroutine(WaitThen(_anim.Spf * 3, () =>
                 {
+                    OnShoot?.Invoke();
                     Instantiate(_bullet, _bulletSpawnPoint.transform.position, _bulletSpawnPoint.transform.rotation);
                 }
                 ));
