@@ -61,10 +61,9 @@ namespace Game.Mechanics.Level
         {
             Renderer rend = die.GetComponent<Renderer>();
             Material mat = rend.material;
-            mat.SetTexture(BaseColor, _diceValues[num]);
+            mat.mainTexture = _diceValues[num-1];
         }
 
         readonly String AT_Roll = "Roll";
-        static readonly int BaseColor = Shader.PropertyToID("_BaseColor");
     }
 }
