@@ -24,6 +24,7 @@ namespace Game.Mechanics.Enemy
 
         readonly float SEARCH_INTERVAL = 0.2f;
 
+        PlayerTrigger _playerTrigger;
         NavMeshAgent _agent;
         float _stampForNextAttack;
         
@@ -31,12 +32,12 @@ namespace Game.Mechanics.Enemy
         {
             base.OnAwake();
             _agent = GetComponent<NavMeshAgent>();
+            _playerTrigger = GetComponentInChildren<PlayerTrigger>();
         }
         
         protected override void OnStart()
         {
             base.OnStart();
-            _attackCollider.SetActive(false);
             StartCoroutine(SeekLoop());
         }
 
@@ -72,16 +73,9 @@ namespace Game.Mechanics.Enemy
 
         void EnemyAttack()
         {
-            Collider[] hitPlayers = Physics.OverlapBox(_attackCollider.transform.position, _attackCollider.transform.position);
-            foreach (Collider player in hitPlayers)
+            if (_playerTrigger.PlayerIsIn)
             {
-                PlayerController hero = player.GetComponentInParent<PlayerController>();
-                if(hero != null)
-                {
-                    hero.Hurt(_attack);
-                    Debug.Log("Attacked Player");
-                }
-                
+                PlayerController.Instance.Hurt(_attack);
             }
             
             _anim.LoadAnimation(_attackAnimation);

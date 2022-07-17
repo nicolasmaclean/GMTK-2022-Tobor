@@ -299,7 +299,15 @@ namespace Game.Mechanics.Player
         {
             _health -= damage * Modifiers.DamageMultiplier;
             OnHurt?.Invoke();
-            StartCoroutine(dispayHurtScreen(hurtScreen, fine, hurt, .3f));
+
+            if (_health > 0)
+            {
+                StartCoroutine(dispayHurtScreen(hurtScreen, fine, hurt, .3f));
+            }
+            else
+            {
+                LoseGame();
+            }
         }
         public void PlaySFX(SOAudioClip clip)
         {

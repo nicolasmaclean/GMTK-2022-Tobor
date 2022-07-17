@@ -82,7 +82,8 @@ namespace Game.Mechanics.Enemy
             StartCoroutine(WaitThen(_anim.Spf * 3, () =>
                 {
                     OnShoot?.Invoke();
-                    Instantiate(_bullet, _bulletSpawnPoint.transform.position, _bulletSpawnPoint.transform.rotation);
+                    EnemyBullet bullet = Instantiate(_bullet, _bulletSpawnPoint.transform.position, _bulletSpawnPoint.transform.rotation).GetComponent<EnemyBullet>();
+                    bullet._damage = _attack;
                 }
             ));
         }
