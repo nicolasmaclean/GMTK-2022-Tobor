@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc5067c61fa77f54d84ecbc1bd68d272, type: 3}
   m_Name: Skelly_Death
   m_EditorClassIdentifier: 
-  Clip: {fileID: 0}
-  Volume: 0
+  Clip: {fileID: 8300000, guid: 0cf45749d239af64b9771f7941c5deca, type: 3}
+  Volume: 0.3

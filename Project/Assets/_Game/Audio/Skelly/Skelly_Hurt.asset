@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc5067c61fa77f54d84ecbc1bd68d272, type: 3}
   m_Name: Skelly_Hurt
   m_EditorClassIdentifier: 
-  Clip: {fileID: 0}
-  Volume: 0
+  Clip: {fileID: 8300000, guid: 9f79d759e08b9b64db080bd318582c0f, type: 3}
+  Volume: 0.3

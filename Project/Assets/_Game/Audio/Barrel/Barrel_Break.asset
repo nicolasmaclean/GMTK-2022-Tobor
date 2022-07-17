@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc5067c61fa77f54d84ecbc1bd68d272, type: 3}
   m_Name: Barrel_Break
   m_EditorClassIdentifier: 
-  Clip: {fileID: 0}
-  Volume: 0
+  Clip: {fileID: 8300000, guid: 73dad77685ad7f245a328b263f8b4844, type: 3}
+  Volume: 0.3
