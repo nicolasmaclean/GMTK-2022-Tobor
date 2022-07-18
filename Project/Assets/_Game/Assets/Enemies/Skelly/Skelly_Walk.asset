@@ -15,5 +15,5 @@ MonoBehaviour:
   Frames:
   - {fileID: 4663055303882016461, guid: 0539d393d28e1aa43a08acb353fb039d, type: 3}
   - {fileID: 4052039412841888711, guid: 0539d393d28e1aa43a08acb353fb039d, type: 3}
-  Fps: 1
+  Fps: 2
   InitialFrame: 0
