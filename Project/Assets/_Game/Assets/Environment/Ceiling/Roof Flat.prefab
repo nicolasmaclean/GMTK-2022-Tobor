@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &6729725497932936654
 Transform:
@@ -156,6 +156,10 @@ PrefabInstance:
     - target: {fileID: 8921975246709547726, guid: 2716a69be26cf8842a104db11ae66b57, type: 3}
       propertyPath: m_Name
       value: Roof Tile
+      objectReference: {fileID: 0}
+    - target: {fileID: 8921975246709547726, guid: 2716a69be26cf8842a104db11ae66b57, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2716a69be26cf8842a104db11ae66b57, type: 3}

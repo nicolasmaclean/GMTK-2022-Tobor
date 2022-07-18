@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1218096775294573082
 Transform:
@@ -91,6 +91,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Roof Pillar
       objectReference: {fileID: 0}
+    - target: {fileID: 4556839596480786312, guid: cd6137531d44fdf46b96866c732c39a0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd6137531d44fdf46b96866c732c39a0, type: 3}
 --- !u!4 &3256504176865690505 stripped
@@ -152,6 +156,14 @@ PrefabInstance:
     - target: {fileID: 6866840580303031487, guid: 043e368dba866ec4f8686863edf445a5, type: 3}
       propertyPath: m_Name
       value: Pillar Square (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6866840580303031487, guid: 043e368dba866ec4f8686863edf445a5, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397226773424810223, guid: 043e368dba866ec4f8686863edf445a5, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 043e368dba866ec4f8686863edf445a5, type: 3}
@@ -215,6 +227,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pillar Square (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6866840580303031487, guid: 043e368dba866ec4f8686863edf445a5, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397226773424810223, guid: 043e368dba866ec4f8686863edf445a5, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 043e368dba866ec4f8686863edf445a5, type: 3}
 --- !u!4 &7331140157993058936 stripped
@@ -276,6 +296,14 @@ PrefabInstance:
     - target: {fileID: 6866840580303031487, guid: 043e368dba866ec4f8686863edf445a5, type: 3}
       propertyPath: m_Name
       value: Pillar Square (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6866840580303031487, guid: 043e368dba866ec4f8686863edf445a5, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397226773424810223, guid: 043e368dba866ec4f8686863edf445a5, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 043e368dba866ec4f8686863edf445a5, type: 3}
@@ -339,6 +367,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Roof Pillar (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4556839596480786312, guid: cd6137531d44fdf46b96866c732c39a0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd6137531d44fdf46b96866c732c39a0, type: 3}
 --- !u!4 &7940772732863257611 stripped
@@ -400,6 +432,14 @@ PrefabInstance:
     - target: {fileID: 6866840580303031487, guid: 043e368dba866ec4f8686863edf445a5, type: 3}
       propertyPath: m_Name
       value: Pillar Square
+      objectReference: {fileID: 0}
+    - target: {fileID: 6866840580303031487, guid: 043e368dba866ec4f8686863edf445a5, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397226773424810223, guid: 043e368dba866ec4f8686863edf445a5, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 043e368dba866ec4f8686863edf445a5, type: 3}
