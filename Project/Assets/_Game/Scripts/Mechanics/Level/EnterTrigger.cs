@@ -6,13 +6,17 @@ using Game.Mechanics.Player;
 using UnityEngine;
 using UnityEngine.Rendering.HighDefinition;
 
+[RequireComponent(typeof(Rigidbody))]
 public class EnterTrigger : MonoBehaviour
 {
     LevelController Controller;
 
     void Awake()
     {
-        Controller = transform.parent.parent.GetComponent<LevelController>();
+        Controller = GetComponentInParent<LevelController>();
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.useGravity = false;
+        rb.constraints = RigidbodyConstraints.FreezeAll;
     }
 
     void OnTriggerEnter(Collider other)

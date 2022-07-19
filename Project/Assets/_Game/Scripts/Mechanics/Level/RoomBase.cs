@@ -17,7 +17,7 @@ namespace Game.Mechanics.Level
 
         protected virtual void OnAwake()
         {
-            Controller = transform.parent.GetComponent<LevelController>();
+            Controller = GetComponentInParent<LevelController>();
             if (Controller == null) Debug.LogError("Unable to find parent Level Controller.");
         }
 

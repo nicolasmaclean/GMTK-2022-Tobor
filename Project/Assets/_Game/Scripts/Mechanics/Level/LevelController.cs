@@ -12,6 +12,12 @@ namespace Game.Mechanics.Level
     {
         public static RoomBase CurrentRoom { get; private set; }
         
+        #if UNITY_EDITOR
+        [SerializeField]
+        [Utility.ReadOnly]
+        RoomBase _currentRoom;
+        #endif
+        
         [SerializeField]
         RoomBase[] _rooms;
         
@@ -24,6 +30,13 @@ namespace Game.Mechanics.Level
 
             DisableAllButStart();
         }
+
+        #if  UNITY_EDITOR
+        void Update()
+        {
+            _currentRoom = _rooms[_currentRoomIndex];
+        }
+        #endif
 
         void DisableAllButStart()
         {

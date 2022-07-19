@@ -75,7 +75,6 @@ namespace Game.Mechanics.Enemy
         protected virtual void Kill()
         {
             OnDead?.Invoke();
-            Debug.Log("Enemy is dead");
             OnKilled?.Invoke(this);
             gameObject.SetActive(false);
         }
