@@ -5,7 +5,7 @@ using Game.Mechanics.Player;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Game.UI
+namespace Game.Utility.UI
 {
     [RequireComponent(typeof(Image))]
     public class AnimatedImage : MonoBehaviour

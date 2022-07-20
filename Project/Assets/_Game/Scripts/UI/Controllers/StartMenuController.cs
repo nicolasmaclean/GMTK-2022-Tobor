@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Game.Core;
 
-namespace Game.UI
+namespace Game.UI.Utility
 {
     public class StartMenuController : MonoBehaviour
     {
