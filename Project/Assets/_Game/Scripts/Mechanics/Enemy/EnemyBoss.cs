@@ -11,61 +11,45 @@ namespace Game.Mechanics.Enemy
     [RequireComponent(typeof(NavMeshAgent))]
     public class EnemyBoss : EnemyBase
     {
-        [Header("Boss")]
-        [SerializeField]
-        GameObject _attackCollider;
-        public UnityEvent OnAttack;
-        public UnityEvent OnShoot;
-
-        [SerializeField]
-        SOSpriteAnimation _walkAnimation;
-
         [SerializeField]
         SOSpriteAnimation _attackAnimation;
 
         [SerializeField]
         SOSpriteAnimation _shootAnimation;
 
-        [SerializeField] float _rangeOfShot = 6f;
-        [SerializeField] Transform _bulletSpawnPoint;
-        [SerializeField] GameObject _bullet;
-        [SerializeField] float _fireRate = 3f;
+        [SerializeField]
+        [Tooltip("The number of frames into the shoot animation to wait before spawning a bullet.")]
+        float _shootDelay = 3;
+        
+        [Header("More Stats!")]
+        [SerializeField]
+        float _rangeOfShot = 6f;
+        
+        [SerializeField]
+        Transform _bulletSpawnPoint;
+        
+        [SerializeField]
+        GameObject _bullet;
+        
+        [SerializeField]
+        float _fireRate = 3f;
+        
+        [Header("More Events")]
+        public UnityEvent OnAttack;
+        public UnityEvent OnShoot;
 
-        readonly float SEARCH_INTERVAL = 0.2f;
-
-        NavMeshAgent _agent;
+        PlayerTrigger _playerTrigger;
         float _stampForNextAttack;
         float _stampForNextShot;
-        bool canShoot;
-        
+        bool canShoot = true;
 
         protected override void OnAwake()
         {
             base.OnAwake();
-            _agent = GetComponent<NavMeshAgent>();
+            _playerTrigger = GetComponentInChildren<PlayerTrigger>();
         }
-
-        protected override void OnStart()
-        {
-            base.OnStart();
-            _attackCollider.SetActive(false);
-            StartCoroutine(SeekLoop());
-            canShoot = true;
-        }
-
-        IEnumerator SeekLoop()
-        {
-            _anim.LoadAnimation(_walkAnimation);
-            while (true)
-            {
-                _agent.SetDestination(_player.transform.position);
-                DetectPlayer();
-
-                yield return new WaitForSeconds(SEARCH_INTERVAL);
-            }
-        }
-
-        void DetectPlayer()
+        
+        protected override void DetectPlayer()
         {
             float currentTargetDistance = Vector3.Distance(transform.position, _player.transform.position);
             if (currentTargetDistance <= _rangeOfShot)
@@ -95,46 +79,33 @@ namespace Game.Mechanics.Enemy
 
         void EnemyAttack()
         {
-            Collider[] hitPlayers = Physics.OverlapBox(_attackCollider.transform.position, _attackCollider.transform.position);
-            foreach (Collider player in hitPlayers)
+            if (_playerTrigger.PlayerIsIn)
             {
-                PlayerController hero = player.GetComponentInParent<PlayerController>();
-                if (hero != null)
-                {
-                    hero.Hurt(_attack);
-                    Debug.Log("Attacked Player");
-                }
-
+                PlayerController.Instance.Hurt(_attack);
             }
-
-            _anim.LoadAnimation(_attackAnimation);
+            
             OnAttack?.Invoke();
-            StartCoroutine(SwapToWalk(_anim.Length));
+            _anim.PlayOneShot(_attackAnimation, () =>
+            {
+                _anim.LoadAnimation(_walkAnimation);
+            });
         }
 
         void EnemyShoot(bool rangeCheck)
         {
             if (rangeCheck)
             {
-                _anim.LoadAnimation(_shootAnimation);
                 _anim.PlayOneShot(_shootAnimation, () =>
                 {
                     _anim.LoadAnimation(_walkAnimation);
                 });
 
-                StartCoroutine(WaitThen(_anim.Spf * 3, () =>
+                StartCoroutine(WaitThen(_anim.Spf * _shootDelay, () =>
                 {
                     OnShoot?.Invoke();
                     Instantiate(_bullet, _bulletSpawnPoint.transform.position, _bulletSpawnPoint.transform.rotation);
-                }
-                ));
+                }));
             }
-        }
-
-        IEnumerator SwapToWalk(float seconds)
-        {
-            yield return new WaitForSeconds(seconds);
-            _anim.LoadAnimation(_walkAnimation);
         }
     }
 }

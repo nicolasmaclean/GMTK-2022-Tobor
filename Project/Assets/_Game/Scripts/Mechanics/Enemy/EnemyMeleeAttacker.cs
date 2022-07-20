@@ -11,66 +11,23 @@ namespace Game.Mechanics.Enemy
     [RequireComponent(typeof(NavMeshAgent))]
     public class EnemyMeleeAttacker : EnemyBase
     {
-        [Header("Melee")]
-        [SerializeField]
-        GameObject _attackCollider;
-        public UnityEvent OnAttack;
-
-        [SerializeField]
-        SOSpriteAnimation _walkAnimation;
-
         [SerializeField]
         SOSpriteAnimation _attackAnimation;
-
-        readonly float SEARCH_INTERVAL = 0.2f;
+        
+        [Header("More Events!")]
+        [SerializeField]
+        public UnityEvent OnAttack;
 
         PlayerTrigger _playerTrigger;
-        NavMeshAgent _agent;
         float _stampForNextAttack;
         
         protected override void OnAwake()
         {
             base.OnAwake();
-            _agent = GetComponent<NavMeshAgent>();
             _playerTrigger = GetComponentInChildren<PlayerTrigger>();
         }
-        
-        protected override void OnStart()
-        {
-            base.OnStart();
-            StartCoroutine(SeekLoop());
-        }
 
-        IEnumerator SeekLoop()
-        {
-            _anim.LoadAnimation(_walkAnimation);
-            while (true)
-            {
-                NavMeshPath path = CalculatePath();
-                
-                NavMeshPathStatus status = path.status;
-                if (status == NavMeshPathStatus.PathComplete)
-                {
-                    _agent.SetDestination(_player.transform.position);
-                }
-                else
-                {
-                    _agent.ResetPath();
-                    DetectPlayer();
-                }
-
-                yield return new WaitForSeconds(SEARCH_INTERVAL);
-            }
-        }
-
-        NavMeshPath CalculatePath()
-        {
-            NavMeshPath path = new NavMeshPath();
-            _agent.CalculatePath(_player.transform.position, path);
-            return path;
-        }
-
-        void DetectPlayer()
+        protected override void DetectPlayer()
         {
             float currentTargetDistance = Vector3.Distance(transform.position, _player.transform.position);
             if (currentTargetDistance <= _rangeOfAttack)
@@ -95,15 +52,11 @@ namespace Game.Mechanics.Enemy
                 PlayerController.Instance.Hurt(_attack);
             }
             
-            _anim.LoadAnimation(_attackAnimation);
             OnAttack?.Invoke();
-            StartCoroutine(SwapToWalk(_anim.Length));
-        }
-
-        IEnumerator SwapToWalk(float seconds)
-        {
-            yield return new WaitForSeconds(seconds);
-            _anim.LoadAnimation(_walkAnimation);
+            _anim.PlayOneShot(_attackAnimation, () =>
+            {
+                _anim.LoadAnimation(_walkAnimation);
+            });
         }
     }
 }

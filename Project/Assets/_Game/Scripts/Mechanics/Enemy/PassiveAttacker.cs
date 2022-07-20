@@ -10,32 +10,32 @@ namespace Game.Mechanics.Enemy
 {
     public class PassiveAttacker : EnemyBase
     {
-        [Header("Melee")]
         [SerializeField]
-        GameObject _attackCollider;
-        public UnityEvent OnAttack;
-
+        SOSpriteAnimation _idleAnimation;
+        
+        [SerializeField]
+        SOSpriteAnimation _attackAnimation;
+        
         [SerializeField]
         SOSpriteAnimation _transformAnimation;
         
+        [Header("More Events!")]
         [SerializeField]
-        SOSpriteAnimation _walkAnimation;
-
-        [SerializeField]
-        SOSpriteAnimation _attackAnimation;
-
-        readonly float SEARCH_INTERVAL = 0.2f;
+        public UnityEvent OnAttack;
 
         PlayerTrigger _playerTrigger;
-        NavMeshAgent _agent;
         bool _passive = true;
         float _stampForNextAttack;
 
         protected override void OnAwake()
         {
             base.OnAwake();
-            _agent = GetComponent<NavMeshAgent>();
             _playerTrigger = GetComponentInChildren<PlayerTrigger>();
+        }
+
+        protected override void OnStart()
+        {
+            _anim.LoadAnimationRandom(_idleAnimation);
         }
 
         public override void Harm(float damage)
@@ -53,19 +53,7 @@ namespace Game.Mechanics.Enemy
             }
         }
 
-        IEnumerator SeekLoop()
-        {
-            _anim.LoadAnimation(_walkAnimation);
-            while (true)
-            {
-                _agent.SetDestination(_player.transform.position);
-                DetectPlayer();
-
-                yield return new WaitForSeconds(SEARCH_INTERVAL);
-            }
-        }
-
-        void DetectPlayer()
+        protected override void DetectPlayer()
         {
             float currentTargetDistance = Vector3.Distance(transform.position, _player.transform.position);
             if (currentTargetDistance <= _rangeOfAttack)
@@ -90,12 +78,11 @@ namespace Game.Mechanics.Enemy
                 PlayerController.Instance.Hurt(_attack);
             }
 
-            _anim.LoadAnimation(_attackAnimation);
             OnAttack?.Invoke();
-            StartCoroutine(WaitThen(_anim.Length, () =>
-                {
-                    _anim.LoadAnimation(_walkAnimation);
-                }));
+            _anim.PlayOneShot(_attackAnimation, () =>
+            {
+                _anim.LoadAnimation(_walkAnimation);
+            });
         }
     }
 }

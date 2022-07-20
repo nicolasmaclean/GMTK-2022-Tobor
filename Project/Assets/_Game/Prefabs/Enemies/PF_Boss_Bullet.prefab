@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: -4851361520257444546}
   - component: {fileID: 1047225410371122678}
   m_Layer: 0
-  m_Name: Boss_bullet
+  m_Name: PF_Boss_Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
