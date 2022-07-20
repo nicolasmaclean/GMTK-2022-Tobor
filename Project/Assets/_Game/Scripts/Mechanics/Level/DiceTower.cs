@@ -10,6 +10,10 @@ namespace Game.Mechanics.Level
     public class DiceTower : MonoBehaviour
     {
         [SerializeField]
+        [Utility.ReadOnly]
+        bool _haveRolled = false;
+        
+        [SerializeField]
         GameObject[] _dice;
 
         [SerializeField]
@@ -26,9 +30,12 @@ namespace Game.Mechanics.Level
 
         void Update()
         {
+            if (_haveRolled) return;
+            
             if (Input.GetKeyDown(KeyCode.E) && _trigger.PlayerInside)
             {
                 Roll(3);
+                _haveRolled = true;
             }
         }
 
