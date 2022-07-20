@@ -17,19 +17,7 @@ namespace Game.Mechanics.Player
     public class FPSController : MonoBehaviour
     {
         #region public variables
-        public static FPSController Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = FindObjectOfType<FPSController>();
-                }
-
-                return instance;
-            }
-        }
-        static FPSController instance = null;
+        public static FPSController Instance { get; private set; }
 
         [HideInInspector]
         public Vector3 Velocity;
@@ -91,7 +79,16 @@ namespace Game.Mechanics.Player
         #region Monobehaviour
         void Awake()
         {
-            instance = this;
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+                return;
+            }
+            
             _controller = gameObject.GetComponent<CharacterController>();
 
             if (_useMainCamera)
@@ -105,11 +102,15 @@ namespace Game.Mechanics.Player
             _speed = _baseSpeed = PlayerStats.GetInRange(PlayerStats.Instance.Agility, PlayerStats.Instance.AgilityRange);
             _baseJump = _jumpHeight;
             Modifiers.OnChange += ApplyModifers;
+            Time.timeScale = 1;
         }
 
         void OnDestroy()
         {
+            if (Instance != this) return;
+            
             Modifiers.OnChange -= ApplyModifers;
+            Instance = null;
         }
 
         void Update()
