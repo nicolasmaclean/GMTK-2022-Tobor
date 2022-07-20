@@ -28,5 +28,6 @@ public class EnterTrigger : MonoBehaviour
         if (!player) return;
 
         Controller.MoveToNext();
+        gameObject.SetActive(false);
     }
 }

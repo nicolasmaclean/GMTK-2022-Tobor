@@ -46,11 +46,28 @@ namespace Game.Mechanics.Enemy
             _anim.LoadAnimation(_walkAnimation);
             while (true)
             {
-                _agent.SetDestination(_player.transform.position);
-                DetectPlayer();
+                NavMeshPath path = CalculatePath();
+                
+                NavMeshPathStatus status = path.status;
+                if (status == NavMeshPathStatus.PathComplete)
+                {
+                    _agent.SetDestination(_player.transform.position);
+                }
+                else
+                {
+                    _agent.ResetPath();
+                    DetectPlayer();
+                }
 
                 yield return new WaitForSeconds(SEARCH_INTERVAL);
             }
+        }
+
+        NavMeshPath CalculatePath()
+        {
+            NavMeshPath path = new NavMeshPath();
+            _agent.CalculatePath(_player.transform.position, path);
+            return path;
         }
 
         void DetectPlayer()
