@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Game.Mechanics.Player;
 using UnityEngine;
+using Random = System.Random;
 
 namespace Game.Mechanics.Enemy
 {
@@ -23,9 +24,12 @@ namespace Game.Mechanics.Enemy
         [SerializeField]
         SOSpriteAnimation _animation;
 
+        [SerializeField]
+        [Utility.ReadOnly]
+        int _currentFrame;
+        
         SpriteRenderer _renderer;
         float _timer = 0;
-        int _currentFrame;
         Action callback = null;
         
         void Awake()
@@ -73,9 +77,9 @@ namespace Game.Mechanics.Enemy
                 _currentFrame = 0;
                 if (callback != null)
                 {
+                    Spf = float.PositiveInfinity;
                     callback();
                     callback = null;
-                    Spf = float.PositiveInfinity;
                 }
             }
             _renderer.sprite = _animation.Frames[_currentFrame];
@@ -89,6 +93,7 @@ namespace Game.Mechanics.Enemy
         
         public void LoadAnimation(SOSpriteAnimation data)
         {
+            if (data == _animation && !float.IsPositiveInfinity(Spf)) return;
             _animation = data;
             LoadAnimation();
         }
@@ -98,6 +103,13 @@ namespace Game.Mechanics.Enemy
             Spf = 1f / _animation.Fps;
             _currentFrame = _animation.InitialFrame;
             _renderer.sprite = _animation.Frames[_currentFrame];
+        }
+        
+        public void LoadAnimationRandom(SOSpriteAnimation data)
+        {
+            _animation = data;
+            LoadAnimation();
+            _currentFrame = UnityEngine.Random.Range(0, _animation.Frames.Length);
         }
     }
 }

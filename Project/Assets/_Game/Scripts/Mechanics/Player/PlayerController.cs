@@ -114,10 +114,9 @@ namespace Game.Mechanics.Player
 
         void OnDestroy()
         {
-            if (Instance == this)
-            {
-                Instance = null;
-            }
+            if (Instance != this) return;
+            
+            Instance = null;
         }
 
         void Start()

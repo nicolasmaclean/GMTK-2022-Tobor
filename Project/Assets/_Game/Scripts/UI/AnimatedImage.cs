@@ -15,6 +15,9 @@ namespace Game.UI
         [SerializeField]
         SOSpriteAnimation _animation;
 
+        [SerializeField]
+        bool _oneShot = false;
+
         Image _image;
         float _timer = 0;
         int _currentFrame;
@@ -57,6 +60,11 @@ namespace Game.UI
             _currentFrame++;
             if (_currentFrame >= _animation.Frames.Length)
             {
+                if (_oneShot)
+                {
+                    this.enabled = false;
+                    return;
+                }
                 _currentFrame = 0;
             }
 
