@@ -13,6 +13,10 @@ namespace Game.Utility.UI
         public float Spf { get; private set; }
 
         [SerializeField]
+        [ReadOnly]
+        int _currentFrame;
+        
+        [SerializeField]
         SOSpriteAnimation _animation;
 
         [SerializeField]
@@ -20,7 +24,6 @@ namespace Game.Utility.UI
 
         Image _image;
         float _timer = 0;
-        int _currentFrame;
 
         void Awake()
         {

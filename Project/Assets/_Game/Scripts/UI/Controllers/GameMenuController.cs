@@ -107,8 +107,9 @@ namespace Game.UI
 
         public void GoToMainMenu()
         {
-            SceneController.LoadScene(GameScene.Start);
+            Time.timeScale = 1;
             Paused = false;
+            SceneController.LoadScene(GameScene.Start);
         }
 
         public void Quit()
