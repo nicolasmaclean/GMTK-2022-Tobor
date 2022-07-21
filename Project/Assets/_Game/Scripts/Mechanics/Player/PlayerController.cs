@@ -1,5 +1,6 @@
 ﻿using System;
 using Game.Core;
+using Game.UI;
 using Game.Utility;
 using UnityEngine;
 using UnityEngine.Events;
@@ -113,38 +114,6 @@ namespace Game.Mechanics.Player
             {
                 BowAttack();
             }
-            else if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                PauseGame();
-            }
-        }
-        #endregion
-
-        #region UI
-        void PauseGame()
-        {
-            // StopGame();
-            // pauseMenu.SetActive(true);
-        }
-        
-        public void WinGame()
-        {
-            // StopGame();
-            // winMenu.SetActive(true);
-        }
-        
-        void LoseGame()
-        {
-            // StopGame();
-            // loseMenu.SetActive(true);
-        }
-        
-        void StopGame()
-        {
-            // Cursor.lockState = CursorLockMode.None;
-            // Cursor.visible = true;
-            //
-            // Time.timeScale = 0;
         }
         #endregion
 
@@ -200,7 +169,7 @@ namespace Game.Mechanics.Player
             if (_health < 0)
             {
                 OnDeath?.Invoke();
-                LoseGame();
+                GameMenuController.Lose();
             }
             else
             {
