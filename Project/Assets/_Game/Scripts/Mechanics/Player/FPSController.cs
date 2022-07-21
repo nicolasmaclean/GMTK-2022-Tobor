@@ -102,7 +102,6 @@ namespace Game.Mechanics.Player
             _speed = _baseSpeed = PlayerStats.GetInRange(PlayerStats.Instance.Agility, PlayerStats.Instance.AgilityRange);
             _baseJump = _jumpHeight;
             Modifiers.OnChange += ApplyModifers;
-            Time.timeScale = 1;
         }
 
         void OnDestroy()

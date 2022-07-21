@@ -5,13 +5,17 @@ using Game.Mechanics.Player;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Game.UI
+namespace Game.Utility.UI
 {
     [RequireComponent(typeof(Image))]
     public class AnimatedImage : MonoBehaviour
     {
         public float Spf { get; private set; }
 
+        [SerializeField]
+        [ReadOnly]
+        int _currentFrame;
+        
         [SerializeField]
         SOSpriteAnimation _animation;
 
@@ -20,7 +24,6 @@ namespace Game.UI
 
         Image _image;
         float _timer = 0;
-        int _currentFrame;
 
         void Awake()
         {
