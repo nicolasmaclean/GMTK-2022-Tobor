@@ -9,12 +9,12 @@ namespace Game.UI.Utility
     {
         public void Play()
         {
-            SceneController.Instance.LoadNextScene();
+            SceneController.LoadNextScene();
         }
 
         public void Quit()
         {
-            SceneController.Instance.Quit();
+            SceneController.Quit();
         }
     }
 }

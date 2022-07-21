@@ -21,8 +21,27 @@ namespace Game.UI.Hud
         {
             _crosshair = GetComponent<Image>();
             _defaultColor = _crosshair.color;
+            
+            GameMenuController.S_OnResume += Show;
+            GameMenuController.S_OnPause  += Hide;
+        }
+
+        void OnDestroy()
+        {
+            GameMenuController.S_OnResume -= Show;
+            GameMenuController.S_OnPause  -= Hide;
+        }
+
+        void Show()
+        {
+            _crosshair.enabled = true;
         }
         
+        void Hide()
+        {
+            _crosshair.enabled = false;
+        }
+
         void FixedUpdate() => EnemyHighlight();
 
         void EnemyHighlight()

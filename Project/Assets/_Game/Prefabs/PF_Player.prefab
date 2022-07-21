@@ -162,7 +162,6 @@ GameObject:
   - component: {fileID: 1816960481209632555}
   - component: {fileID: 67486350591213082}
   - component: {fileID: 5919220720982231954}
-  - component: {fileID: 1965233352969800142}
   m_Layer: 6
   m_Name: CNVS_Hud
   m_TagString: Untagged
@@ -252,18 +251,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &1965233352969800142
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2899662054167672835}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68e932c5e19925b4c9a386ce8dc915df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3273211183499205843
 GameObject:
   m_ObjectHideFlags: 0
@@ -324,7 +311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1094,7 +1081,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.9372549, g: 0.24527042, b: 0.101960756, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1285,14 +1272,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 64cd71d010aaee443996e8b76c0c6648, type: 3}
---- !u!4 &2101059896906541109 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 64cd71d010aaee443996e8b76c0c6648, type: 3}
-  m_PrefabInstance: {fileID: 1919324700271677406}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7019591451671847971 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -303897735137367043, guid: 64cd71d010aaee443996e8b76c0c6648, type: 3}
+  m_PrefabInstance: {fileID: 1919324700271677406}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2101059896906541109 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 64cd71d010aaee443996e8b76c0c6648, type: 3}
   m_PrefabInstance: {fileID: 1919324700271677406}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3690243871539687322

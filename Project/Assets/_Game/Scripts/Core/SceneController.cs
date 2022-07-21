@@ -5,33 +5,9 @@ using UnityEngine.SceneManagement;
 
 namespace Game.Core
 {
-    public class SceneController : MonoBehaviour
+    public static class SceneController
     {
-        /// <summary>
-        /// Lazy-loaded singleton
-        /// </summary>
-        public static SceneController Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    Create();
-                }
-
-                return instance;
-            }
-        }
-
-        static SceneController instance = null;
-
-        static void Create()
-        {
-            GameObject go = new GameObject("S_SceneController");
-            instance = go.AddComponent<SceneController>();
-        }
-
-        Scene currentScene
+        static Scene currentScene
         {
             get
             {
@@ -39,23 +15,28 @@ namespace Game.Core
             }
         }
 
-        void Awake()
-        {
-            DontDestroyOnLoad(this);
-        }
+        public static void LoadNextScene() => LoadScene(currentScene.buildIndex + 1);
+        public static void LoadLastScene() => LoadScene(currentScene.buildIndex - 1);
 
-        public void LoadNextScene() => LoadScene(currentScene.buildIndex + 1);
-        public void LoadLastScene() => LoadScene(currentScene.buildIndex - 1);
-
-        public void LoadScene(int buildIndex)
+        static void LoadScene(int buildIndex)
         {
             SceneManager.LoadScene(buildIndex);
         }
 
-        public void Quit()
+        public static void LoadScene(GameScene scene)
+        {
+            LoadScene((int) scene);
+        }
+
+        public static void Quit()
         {
             Debug.Log("Quitting");
             Application.Quit();
         }
+    }
+
+    public enum GameScene
+    {
+        Start = 0, Character = 1, Game = 2
     }
 }
