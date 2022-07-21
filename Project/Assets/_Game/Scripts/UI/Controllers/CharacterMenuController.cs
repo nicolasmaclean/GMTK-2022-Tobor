@@ -72,12 +72,12 @@ public class CharacterMenuController : MonoBehaviour
         
         PlayerStats.Instance.PlayerName = playerName;
         
-        SceneController.Instance.LoadNextScene();
+        SceneController.LoadNextScene();
     }
 
     public void Back()
     {
-        SceneController.Instance.LoadLastScene();
+        SceneController.LoadLastScene();
     }
 
     readonly String[] names = new[]

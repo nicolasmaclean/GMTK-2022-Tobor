@@ -208,7 +208,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1595376100}
         m_TargetAssemblyTypeName: Game.UI.PauseMenu, Assembly-CSharp
-        m_MethodName: Exit
+        m_MethodName: Quit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -398,7 +398,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1595376100}
         m_TargetAssemblyTypeName: Game.UI.PauseMenu, Assembly-CSharp
-        m_MethodName: GoBackToMainMenu
+        m_MethodName: GoToMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -531,7 +531,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1595376100}
         m_TargetAssemblyTypeName: Game.UI.PauseMenu, Assembly-CSharp
-        m_MethodName: GoBackToMainMenu
+        m_MethodName: GoToMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -664,7 +664,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1595376100}
         m_TargetAssemblyTypeName: Game.UI.PauseMenu, Assembly-CSharp
-        m_MethodName: GoBackToMainMenu
+        m_MethodName: GoToMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2161,7 +2161,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1595376100}
         m_TargetAssemblyTypeName: Game.UI.PauseMenu, Assembly-CSharp
-        m_MethodName: Exit
+        m_MethodName: Quit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2369,7 +2369,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1595376100}
         m_TargetAssemblyTypeName: Game.UI.PauseMenu, Assembly-CSharp
-        m_MethodName: Exit
+        m_MethodName: Quit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

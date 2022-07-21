@@ -17,7 +17,7 @@ namespace Game.Mechanics.Level
         [Utility.ReadOnly]
         RoomBase _currentRoom;
         #endif
-        
+
         [SerializeField]
         RoomBase[] _rooms;
         
@@ -52,7 +52,7 @@ namespace Game.Mechanics.Level
         {
             if (_currentRoomIndex == _rooms.Length - 1)
             {
-                PlayerController.Instance.WinGame();
+                Debug.Log("Winner, Winner, Chicken Dinner");
             }
             
             // hide rooms
