@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using Game.Core;
 using Game.UI;
 using Game.Utility;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -13,7 +15,6 @@ namespace Game.Mechanics.Player
         #region Public
         public static PlayerController Instance { get; private set; }
         
-        public float LastAttackTime { get; private set; } = float.MaxValue;
         public float Health
         {
             get
@@ -21,10 +22,6 @@ namespace Game.Mechanics.Player
                 return _health;
             }
         }
-
-        // [SerializeField] GameObject pauseMenu;
-        // [SerializeField] GameObject winMenu;
-        // [SerializeField] GameObject loseMenu;
 
         [FormerlySerializedAs("OnAttack"),Header("Events")]
         public UnityEvent OnSwordAttack;
@@ -42,9 +39,6 @@ namespace Game.Mechanics.Player
         [ReadOnly]
         float _health = 0;
 
-        [SerializeField]
-        WeaponType _currentWeapon;
-        
         [Header("Controls")]
         [SerializeField]
         KeyCode _swordAttackKey = KeyCode.Mouse0;
@@ -53,25 +47,26 @@ namespace Game.Mechanics.Player
         KeyCode _bowAttackKey = KeyCode.Mouse1;
 
         [Header("Sword")]
+        [SerializeField]
+        Animator _swordAnimator;
+        
         public SOWeapon Sword;
 
         [SerializeField]
-        [Min(0)]
-        float _maxTimeInChain = 1f;
+        [Tooltip("Seconds before swing end that the next attack can be queued up.")]
+        float _earlySwing = .1f; 
 
         [Header("Bow")]
-        public SOWeapon Bow;
-        
         [SerializeField]
-        GameObject PF_Arrow;
+        Animator _bowAnimator;
+        
+        public SOWeapon Bow;
         
         [SerializeField]
         Transform _arrowSpawn;
         
-        Animator _animator;
-        RaycastHit _hitinfo;
-        int _curSwing = 0;
-        float _lastSwing = 0;
+        [SerializeField]
+        GameObject PF_Arrow;
         #endregion
 
         #region MonoBehaviour
@@ -85,8 +80,6 @@ namespace Game.Mechanics.Player
             {
                 Destroy(gameObject);
             }
-
-            _animator = GetComponent<Animator>();
         }
 
         void OnDestroy()
@@ -103,9 +96,6 @@ namespace Game.Mechanics.Player
 
         void Update()
         {
-            LastAttackTime += Time.deltaTime;
-            // if (LastAttackTime < Weapon.Cooldown) return;
-            
             if (Input.GetKeyDown(_swordAttackKey))
             {
                 SwordAttack();
@@ -127,25 +117,59 @@ namespace Game.Mechanics.Player
         #region Weapons
         void SwordAttack()
         {
-            // reset chain
-            if (Time.time - _lastSwing >= _maxTimeInChain || _curSwing > 1)
+            if (_swordAnimator.IsInTransition(0)) return;
+
+            AnimatorStateInfo state = _swordAnimator.GetCurrentAnimatorStateInfo(0);
+            String trigger_swing;
+            if (state.IsName("Swing 1") || state.IsName("Swing 2"))
             {
-                _curSwing = 0;
+                float normalizedCooldown = (state.length - _earlySwing) / state.length;
+                if (state.normalizedTime < normalizedCooldown)
+                {
+                    return;
+                }
+
+                trigger_swing = AT_SWORD_ATTACK + (state.IsName("Swing 1") ? "2" : "3");
+            }
+            else if (state.IsName("Idle"))
+            {
+                float timeInIdle = state.normalizedTime * state.length;
+                if (timeInIdle < Sword.Cooldown)
+                {
+                    return;
+                }
+
+                trigger_swing = AT_SWORD_ATTACK + "1";
+            }
+            else
+            {
+                return;
+            }
+            
+            
+            if (state.IsName("Idle"))
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    _swordAnimator.ResetTrigger(AT_SWORD_ATTACK + (i+1).ToString());
+                }
             }
 
-            LastAttackTime = _curSwing == 0 ? .33f : .55f;
-            _lastSwing = Time.time;
-            _animator.SetTrigger(AT_SWORD_PRIMARY_ + (_curSwing + 1).ToString());
+            _swordAnimator.SetTrigger(trigger_swing);
             OnSwordAttack?.Invoke();
-            _curSwing++;
         }
 
         void BowAttack()
         {
-            // play animation
-            _animator.SetTrigger(AT_BOW_FIRE);
+            if (_bowAnimator.IsInTransition(0)) return;
+            AnimatorStateInfo state = _bowAnimator.GetCurrentAnimatorStateInfo(0);
+
+            if (!state.IsName("Idle")) return;
             
-            // trigger event
+            float timeInIdle = state.normalizedTime * state.length;
+            if (timeInIdle < Bow.Cooldown) return;
+            
+            _bowAnimator.SetTrigger(AT_BOW_FIRE);
             OnBowAttack?.Invoke();
             
             // fire projectile
@@ -187,8 +211,9 @@ namespace Game.Mechanics.Player
         readonly float HORIZON_DISTANCE = 75;
 
         #region Animator Constants
-        readonly String AT_SWORD_PRIMARY_   = "Sword_Primary_";
-        readonly String AT_BOW_FIRE   = "Bow_Fire";
+        readonly String AT_SWORD_ATTACK = "Attack_";
+        readonly String AT_BOW_FIRE     = "Fire";
+        // readonly String AT_BOW_ROLL     = "Roll";
         #endregion
     }
 }

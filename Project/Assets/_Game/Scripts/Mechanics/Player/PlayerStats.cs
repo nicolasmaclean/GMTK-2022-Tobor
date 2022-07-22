@@ -43,8 +43,6 @@ namespace Game.Mechanics.Player
         [Range(1, 20)]
         public int Perception = 1;
         public Vector2 PerceptionRange = new Vector2(.4f, .1f);
-
-        public WeaponType Weapon = WeaponType.Sword;
         #endregion
         
         public static PlayerStats CreateRandom()
@@ -76,10 +74,5 @@ namespace Game.Mechanics.Player
         {
             return Mathf.LerpUnclamped(range.x, range.y, val / 20f);
         }
-    }
-
-    public enum WeaponType
-    {
-        Sword = 0, Bow = 1, Magic = 2
     }
 }

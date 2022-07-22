@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Game.Mechanics.Player;
 using UnityEngine;
 
-namespace Game.Mechanics
+namespace Game.Mechanics.Player
 {
     [CreateAssetMenu(menuName = "Data/Weapon")]
     public class SOWeapon : ScriptableObject
@@ -15,5 +15,10 @@ namespace Game.Mechanics
         public float Cooldown = .6f;
         public float Damage = 1f;
         public float Speed = 1f;
+    }
+    
+    public enum WeaponType
+    {
+        Sword = 0, Bow = 1,
     }
 }
