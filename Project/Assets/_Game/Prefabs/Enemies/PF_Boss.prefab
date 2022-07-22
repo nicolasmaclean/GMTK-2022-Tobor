@@ -245,6 +245,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animation: {fileID: 11400000, guid: d3c4daeda6c38094b9827c6284716d37, type: 2}
   _currentFrame: 0
+  _speedMultiplier: 1
 --- !u!1 &9173503802575703146
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,8 +318,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _baseHealth: 10
   _attack: 1
-  _damageRate: 2
-  _rangeOfAttack: 3
+  _attackSpeed: 2
+  _range: 15
+  _lastAttack: 0
   OnHurt:
     m_PersistentCalls:
       m_Calls:
@@ -353,10 +355,9 @@ MonoBehaviour:
   _attackAnimation: {fileID: 11400000, guid: 254b2ce763c45af43b6cfd7093de9055, type: 2}
   _shootAnimation: {fileID: 11400000, guid: 363e0ffea8db6af4b8eac691f2482897, type: 2}
   _shootDelay: 3
-  _rangeOfShot: 6
+  _meleeRange: 8
   _bulletSpawnPoint: {fileID: 5762167155634155953}
   _bullet: {fileID: 7938779356315524346, guid: 6ce3f13ef48d5524ba8dd8e64c420070, type: 3}
-  _fireRate: 3
   OnAttack:
     m_PersistentCalls:
       m_Calls: []

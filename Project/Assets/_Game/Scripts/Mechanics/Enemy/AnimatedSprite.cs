@@ -28,6 +28,10 @@ namespace Game.Mechanics.Enemy
         [Utility.ReadOnly]
         int _currentFrame;
         
+        [SerializeField]
+        [Utility.ReadOnly]
+        float _speedMultiplier = 1;
+        
         SpriteRenderer _renderer;
         float _timer = 0;
         Action callback = null;
@@ -57,7 +61,7 @@ namespace Game.Mechanics.Enemy
         {
             _timer += Time.deltaTime;
 
-            if (_timer > Spf)
+            if (_timer > Spf / _speedMultiplier)
             {
                 NextFrame();
                 _timer = 0;
@@ -85,17 +89,18 @@ namespace Game.Mechanics.Enemy
             _renderer.sprite = _animation.Frames[_currentFrame];
         }
 
-        public void PlayOneShot(SOSpriteAnimation data, Action callback)
+        public void PlayOneShot(SOSpriteAnimation data, Action callback, float speedMultiplier = 1)
         {
-            LoadAnimation(data);
+            LoadAnimation(data, speedMultiplier);
             this.callback = callback;
         }
         
-        public void LoadAnimation(SOSpriteAnimation data)
+        public void LoadAnimation(SOSpriteAnimation data, float speedMultiplier = 1)
         {
             if (data == _animation && !float.IsPositiveInfinity(Spf)) return;
             _animation = data;
             LoadAnimation();
+            _speedMultiplier = speedMultiplier;
         }
         
         void LoadAnimation()
