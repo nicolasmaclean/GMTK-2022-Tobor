@@ -56,7 +56,6 @@ namespace Game.Mechanics.Enemy
 
         void OnTriggerEnter(Collider other)
         {
-            
             Transform parent = other.transform.parent;
             if (!parent)
             {

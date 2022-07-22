@@ -67,6 +67,8 @@ namespace Game.Mechanics.Player
         
         [SerializeField]
         GameObject PF_Arrow;
+
+        Collider _swordCollider;
         #endregion
 
         #region MonoBehaviour
@@ -80,6 +82,8 @@ namespace Game.Mechanics.Player
             {
                 Destroy(gameObject);
             }
+
+            _swordCollider = GetComponentInChildren<SwordCollision>(true).GetComponent<Collider>();
         }
 
         void OnDestroy()
@@ -104,6 +108,8 @@ namespace Game.Mechanics.Player
             {
                 BowAttack();
             }
+
+            UpdateSwordCollider();
         }
         #endregion
 
@@ -183,6 +189,29 @@ namespace Game.Mechanics.Player
                 GameObject currentBullet = Instantiate(PF_Arrow, pos, Quaternion.identity);
                 currentBullet.transform.forward = targetPoint - pos;
             }));
+        }
+
+        void UpdateSwordCollider()
+        {
+            if (_swordAnimator.IsInTransition(0))
+            {
+                Disable();
+                return;
+            }
+
+            AnimatorStateInfo state = _swordAnimator.GetCurrentAnimatorStateInfo(0);
+            if (state.IsName("Idle"))
+            {
+                Disable();
+                return;
+            }
+            
+            _swordCollider.gameObject.SetActive(true);
+
+            void Disable()
+            {
+                _swordCollider.gameObject.SetActive(false);
+            }
         }
         #endregion
         

@@ -11,6 +11,11 @@ public class SwordCollision : MonoBehaviour
 
     void Awake()
     {
+        gameObject.SetActive(false);
+    }
+
+    void Start()
+    {
         _player = PlayerController.Instance;        
     }
     
