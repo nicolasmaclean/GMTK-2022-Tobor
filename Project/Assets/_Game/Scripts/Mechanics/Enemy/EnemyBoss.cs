@@ -20,10 +20,10 @@ namespace Game.Mechanics.Enemy
         [SerializeField]
         [Tooltip("The number of frames into the shoot animation to wait before spawning a bullet.")]
         float _shootDelay = 3;
-        
+
         [Header("More Stats!")]
         [SerializeField]
-        float _rangeOfShot = 6f;
+        float _meleeRange = 10f;
         
         [SerializeField]
         Transform _bulletSpawnPoint;
@@ -31,17 +31,12 @@ namespace Game.Mechanics.Enemy
         [SerializeField]
         GameObject _bullet;
         
-        [SerializeField]
-        float _fireRate = 3f;
         
         [Header("More Events")]
         public UnityEvent OnAttack;
         public UnityEvent OnShoot;
 
         PlayerTrigger _playerTrigger;
-        float _stampForNextAttack;
-        float _stampForNextShot;
-        bool canShoot = true;
 
         protected override void OnAwake()
         {
@@ -49,35 +44,21 @@ namespace Game.Mechanics.Enemy
             _playerTrigger = GetComponentInChildren<PlayerTrigger>();
         }
         
-        protected override void DetectPlayer()
+        protected override void EnemyAttack()
         {
+            _agent.isStopped = true;
             float currentTargetDistance = Vector3.Distance(transform.position, _player.transform.position);
-            if (currentTargetDistance <= _rangeOfShot)
+            if (currentTargetDistance < _meleeRange)
             {
-                if (Time.time > _stampForNextShot)
-                {
-                    _stampForNextShot = Time.time + _fireRate;
-                    EnemyShoot(canShoot);
-                }
-                if (currentTargetDistance <= _rangeOfAttack)
-                {
-                    _agent.isStopped = true;
-                    canShoot = false;
-                    if (Time.time > _stampForNextAttack)
-                    {
-                        _stampForNextAttack = Time.time + _damageRate;
-                        EnemyAttack();
-                    }
-                }
-                else
-                {
-                    canShoot = true;
-                    _agent.isStopped = false;
-                }
+                EnemyMelee();
+            }
+            else
+            {
+                EnemyRanged();
             }
         }
 
-        void EnemyAttack()
+        void EnemyMelee()
         {
             if (_playerTrigger.PlayerIsIn)
             {
@@ -85,27 +66,27 @@ namespace Game.Mechanics.Enemy
             }
             
             OnAttack?.Invoke();
-            _anim.PlayOneShot(_attackAnimation, () =>
+            _anim.PlayOneShot(_attackAnimation, speedMultiplier: Modifiers.AttackSpeedMultiplier, callback: () =>
             {
                 _anim.LoadAnimation(_walkAnimation);
+                _agent.isStopped = false;
             });
         }
 
-        void EnemyShoot(bool rangeCheck)
+        void EnemyRanged()
         {
-            if (rangeCheck)
+            _anim.PlayOneShot(_shootAnimation, speedMultiplier: Modifiers.AttackSpeedMultiplier, callback:() =>
             {
-                _anim.PlayOneShot(_shootAnimation, () =>
-                {
-                    _anim.LoadAnimation(_walkAnimation);
-                });
+                _anim.LoadAnimation(_walkAnimation);
+                _agent.isStopped = false;
+            });
 
-                StartCoroutine(WaitThen(_anim.Spf * _shootDelay, () =>
-                {
-                    OnShoot?.Invoke();
-                    Instantiate(_bullet, _bulletSpawnPoint.transform.position, _bulletSpawnPoint.transform.rotation);
-                }));
-            }
+            StartCoroutine(WaitThen((_anim.Spf / Modifiers.AttackSpeedMultiplier) * _shootDelay, () =>
+            {
+                OnShoot?.Invoke();
+                var bulletSpawn = _bulletSpawnPoint.transform;
+                Instantiate(_bullet, bulletSpawn.position, bulletSpawn.rotation);
+            }));
         }
     }
 }

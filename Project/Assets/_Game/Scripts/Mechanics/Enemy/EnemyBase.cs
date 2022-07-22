@@ -25,11 +25,15 @@ namespace Game.Mechanics.Enemy
         protected float _attack = 1f;
         
         [SerializeField]
-        protected float _damageRate = 2f;
+        protected float _attackSpeed = 2f;
         
         [SerializeField]
-        protected float _rangeOfAttack = 3f;
+        protected float _range = 3f;
 
+        [SerializeField]
+        [Utility.ReadOnly]
+        protected float _lastAttack;
+        
         [Header("Events")]
         public UnityEvent OnHurt;
         public UnityEvent OnDead;
@@ -41,7 +45,6 @@ namespace Game.Mechanics.Enemy
         protected NavMeshAgent _agent;
         protected PlayerController _player;
         protected AnimatedSprite _anim;
-        protected bool isHarmed;
         
         protected readonly float SEARCH_INTERVAL = 0.2f;
 
@@ -49,7 +52,6 @@ namespace Game.Mechanics.Enemy
         void Awake()
         {
             Health = _baseHealth;
-            isHarmed = false;
             _anim = transform.GetComponentInChildren<AnimatedSprite>();
             _agent = GetComponent<NavMeshAgent>();
             OnAwake();
@@ -67,7 +69,7 @@ namespace Game.Mechanics.Enemy
         {
             StartCoroutine(SeekLoop());
         }
-        
+
         protected virtual IEnumerator SeekLoop()
         {
             if (_walkAnimation)
@@ -91,31 +93,28 @@ namespace Game.Mechanics.Enemy
                 }
 
                 yield return new WaitForSeconds(SEARCH_INTERVAL);
+                _lastAttack += SEARCH_INTERVAL;
             }
         }
 
         protected virtual void DetectPlayer()
         {
-            // float currentTargetDistance = Vector3.Distance(transform.position, _player.transform.position);
-            // if (currentTargetDistance <= _rangeOfAttack)
-            // {
-            //     _agent.isStopped = true;
-            //     if (Time.time > _stampForNextAttack)
-            //     {
-            //         _stampForNextAttack = Time.time + _damageRate;
-            //         EnemyAttack();
-            //     }
-            // }
-            // else
-            // {
-            //     _agent.isStopped = false;
-            // }
+            float currentTargetDistance = Vector3.Distance(transform.position, _player.transform.position);
+            if (currentTargetDistance <= _range)
+            {
+                if (_lastAttack > _attackSpeed / Modifiers.AttackSpeedMultiplier)
+                {
+                    _lastAttack = 0;
+                    EnemyAttack();
+                }
+            }
         }
+
+        protected abstract void EnemyAttack();
 
         public virtual void Harm(float damage)
         {
             Health -= damage * Modifiers.DamageMultiplier;
-            isHarmed = true;
             OnHurt?.Invoke();
             
             if (Health <= 0)

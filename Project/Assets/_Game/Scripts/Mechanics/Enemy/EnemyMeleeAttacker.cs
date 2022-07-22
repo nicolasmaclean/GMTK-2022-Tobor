@@ -19,7 +19,6 @@ namespace Game.Mechanics.Enemy
         public UnityEvent OnAttack;
 
         PlayerTrigger _playerTrigger;
-        float _stampForNextAttack;
         
         protected override void OnAwake()
         {
@@ -27,35 +26,19 @@ namespace Game.Mechanics.Enemy
             _playerTrigger = GetComponentInChildren<PlayerTrigger>();
         }
 
-        protected override void DetectPlayer()
+        protected override void EnemyAttack()
         {
-            float currentTargetDistance = Vector3.Distance(transform.position, _player.transform.position);
-            if (currentTargetDistance <= _rangeOfAttack)
-            {
-                _agent.isStopped = true;
-                if (Time.time > _stampForNextAttack)
-                {
-                    _stampForNextAttack = Time.time + _damageRate;
-                    EnemyAttack();
-                }
-            }
-            else
-            {
-                _agent.isStopped = false;
-            }
-        }
-
-        void EnemyAttack()
-        {
+            _agent.isStopped = true;
             if (_playerTrigger.PlayerIsIn)
             {
                 PlayerController.Instance.Hurt(_attack);
             }
             
             OnAttack?.Invoke();
-            _anim.PlayOneShot(_attackAnimation, () =>
+            _anim.PlayOneShot(_attackAnimation, speedMultiplier: Modifiers.AttackSpeedMultiplier, callback: () =>
             {
                 _anim.LoadAnimation(_walkAnimation);
+                _agent.isStopped = false;
             });
         }
     }

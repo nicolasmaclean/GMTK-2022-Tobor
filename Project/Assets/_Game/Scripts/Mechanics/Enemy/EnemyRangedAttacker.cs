@@ -20,34 +20,19 @@ namespace Game.Mechanics.Enemy
         [SerializeField]
         GameObject _bullet;
 
-        float _stampForNextAttack;
+        [SerializeField]
+        int _shootDelay = 3;
 
-        protected override void DetectPlayer()
+        protected override void EnemyAttack()
         {
-            float currentTargetDistance = Vector3.Distance(transform.position, _player.transform.position);
-            if (currentTargetDistance <= _rangeOfAttack)
-            {
-                _agent.isStopped = true;
-                if (Time.time > _stampForNextAttack)
-                {
-                    _stampForNextAttack = Time.time + _damageRate;
-                    EnemyAttack();
-                }
-            }
-            else
-            {
-                _agent.isStopped = false;
-            }
-        }
-
-        void EnemyAttack()
-        {
-            _anim.PlayOneShot(_attackAnimation, () =>
+            _agent.isStopped = true;
+            _anim.PlayOneShot(_attackAnimation, speedMultiplier: Modifiers.AttackSpeedMultiplier, callback: () =>
             {
                 _anim.LoadAnimation(_walkAnimation);
+                _agent.isStopped = false;
             });
 
-            StartCoroutine(WaitThen(_anim.Spf * 3, () =>
+            StartCoroutine(WaitThen((_anim.Spf / Modifiers.AttackSpeedMultiplier) * _shootDelay, () =>
             {
                 OnShoot?.Invoke();
                 EnemyBullet bullet = Instantiate(_bullet, _bulletSpawnPoint.transform.position, _bulletSpawnPoint.transform.rotation).GetComponent<EnemyBullet>();

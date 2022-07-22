@@ -86,16 +86,19 @@ namespace Game.Mechanics.Player
             _swordCollider = GetComponentInChildren<SwordCollision>(true).GetComponent<Collider>();
         }
 
+        void Start()
+        {
+            SetHealth();
+            SetAttackSpeed();
+            Modifiers.OnChange += SetAttackSpeed;
+        }
+
         void OnDestroy()
         {
             if (Instance != this) return;
             
             Instance = null;
-        }
-
-        void Start()
-        {
-            SetHealth();
+            Modifiers.OnChange -= SetAttackSpeed;
         }
 
         void Update()
@@ -117,6 +120,12 @@ namespace Game.Mechanics.Player
         void SetHealth()
         {
             _health = PlayerStats.GetInRange(PlayerStats.Instance.Constitution, PlayerStats.Instance.ConstitutionRange);
+        }
+
+        void SetAttackSpeed()
+        {
+            _swordAnimator.speed = Modifiers.AttackSpeedMultiplier;
+            _bowAnimator.speed   = Modifiers.AttackSpeedMultiplier;
         }
         #endregion
         
@@ -177,18 +186,17 @@ namespace Game.Mechanics.Player
             
             _bowAnimator.SetTrigger(AT_BOW_FIRE);
             OnBowAttack?.Invoke();
-            
-            // fire projectile
-            StartCoroutine(Coroutines.WaitThen(.12f , () =>
-            {
-                // target is horizon from center of screen
-                Ray ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0f));
-                Vector3 targetPoint = ray.GetPoint(HORIZON_DISTANCE);
+        }
 
-                var pos = _arrowSpawn.transform.position;
-                GameObject currentBullet = Instantiate(PF_Arrow, pos, Quaternion.identity);
-                currentBullet.transform.forward = targetPoint - pos;
-            }));
+        public void FireArrow()
+        {
+            // target is horizon from center of screen
+            Ray ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0f));
+            Vector3 targetPoint = ray.GetPoint(HORIZON_DISTANCE);
+
+            var pos = _arrowSpawn.transform.position;
+            GameObject currentBullet = Instantiate(PF_Arrow, pos, Quaternion.identity);
+            currentBullet.transform.forward = targetPoint - pos;
         }
 
         void UpdateSwordCollider()
