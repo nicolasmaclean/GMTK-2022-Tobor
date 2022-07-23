@@ -289,22 +289,29 @@ MonoBehaviour:
     m_SmoothTime: 5
     m_LockCursor: 1
   m_Friction: 6
-  m_Gravity: 20
-  m_JumpForce: 8
+  m_Gravity: 30
+  m_jumpHeight: 3.5
   m_AutoBunnyHop: 0
   m_AirControl: 0.3
   m_GroundSettings:
-    MaxSpeed: 20
+    MaxSpeed: 16
     Acceleration: 14
-    Deceleration: 10
+    Deceleration: 15
   m_AirSettings:
-    MaxSpeed: 20
-    Acceleration: 2
+    MaxSpeed: 18
+    Acceleration: 0.15
     Deceleration: 2
   m_StrafeSettings:
     MaxSpeed: 3
     Acceleration: 50
     Deceleration: 50
+  m_JumpForce: 14.491377
+  _speedMultiplier: 1
+  _jumpMultiplier: 1
+  _currentSpeed: 0
+  _grounded: 0
+  _deltaTime: 0
+  _appliedVelocity: 0
 --- !u!114 &7314698367671725500
 MonoBehaviour:
   m_ObjectHideFlags: 0
