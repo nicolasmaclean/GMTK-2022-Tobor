@@ -294,15 +294,15 @@ MonoBehaviour:
   m_AutoBunnyHop: 0
   m_AirControl: 0.3
   m_GroundSettings:
-    MaxSpeed: 7
+    MaxSpeed: 20
     Acceleration: 14
     Deceleration: 10
   m_AirSettings:
-    MaxSpeed: 7
+    MaxSpeed: 20
     Acceleration: 2
     Deceleration: 2
   m_StrafeSettings:
-    MaxSpeed: 1
+    MaxSpeed: 3
     Acceleration: 50
     Deceleration: 50
 --- !u!114 &7314698367671725500

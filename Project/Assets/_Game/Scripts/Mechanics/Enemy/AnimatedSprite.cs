@@ -68,7 +68,7 @@ namespace Game.Mechanics.Enemy
             }
 
             // apply billboard rotation
-            Vector3 playerPosition = FPSController.Instance.transform.position;
+            Vector3 playerPosition = PlayerController.Instance.transform.position;
             playerPosition.y = transform.position.y;
             transform.LookAt(playerPosition);
         }
