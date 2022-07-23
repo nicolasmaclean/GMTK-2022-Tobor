@@ -21,7 +21,12 @@ ModelImporter:
   - first:
       74: -7420550600455611306
     second: RollTheBones
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Brand
+    second: {fileID: 2100000, guid: 9771646b17a9a10439f0aade267bc735, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

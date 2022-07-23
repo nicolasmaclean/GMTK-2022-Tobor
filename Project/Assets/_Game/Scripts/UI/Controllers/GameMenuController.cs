@@ -17,9 +17,13 @@ namespace Game.UI
         KeyCode _pauseKey = KeyCode.Escape;
         
         [Header("Events")]
-        public UnityEvent OnPause;
         public UnityEvent OnResume;
+        public UnityEvent OnPause;
         public UnityEvent OnLose;
+        // public UnityEvent OnWin;
+        
+        [Tooltip("Wrapper for OnPause, OnLose, and OnWin.")]
+        public UnityEvent OnStop;
         
         [Header("Menus")]
         [SerializeField]
@@ -91,6 +95,7 @@ namespace Game.UI
             
             Time.timeScale = 0;
             OnPause?.Invoke();
+            OnStop?.Invoke();
         }
 
         public static void Lose()
@@ -103,6 +108,7 @@ namespace Game.UI
             
             Time.timeScale = 0;
             Instance.OnLose?.Invoke();
+            Instance.OnStop?.Invoke();
         }
 
         public void GoToMainMenu()
