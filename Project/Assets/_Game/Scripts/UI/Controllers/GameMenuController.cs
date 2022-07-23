@@ -71,7 +71,7 @@ namespace Game.UI
             
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-            Crosshair.Show();
+            HudController.Show();
             
             _pauseMenu.SetActive(false);
             
@@ -85,7 +85,7 @@ namespace Game.UI
             
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            Crosshair.Hide();
+            HudController.Hide();
             
             _pauseMenu.SetActive(true);
             
@@ -97,7 +97,7 @@ namespace Game.UI
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            Crosshair.Hide();
+            HudController.Hide();
             
             Instance._loseMenu.SetActive(true);
             

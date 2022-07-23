@@ -124,11 +124,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73e0c6f3810510040b6802f84c154ae6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fadeOutDuration: 0.1
+  _fadeOutDuration: 0.25
   _swordCooldown: {fileID: 8765019815073206334}
   _swordAnimator: {fileID: 7876706623806355236}
   _bowCooldown: {fileID: 7103592567063264991}
   _bowAnimator: {fileID: 6514990851274999146}
+  _timeInIdle: 0
 --- !u!1 &2307048678765466695
 GameObject:
   m_ObjectHideFlags: 0
