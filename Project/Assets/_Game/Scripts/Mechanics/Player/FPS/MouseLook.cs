@@ -1,26 +1,40 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Q3Movement
+namespace Game.Mechanics.Player.FPS
 {
     /// <summary>
     /// Custom script based on the version from the Standard Assets.
     /// </summary>
     [Serializable]
-    public class MouseLook : MonoBehaviour
+    public class MouseLook
     {
-        [SerializeField] private float m_XSensitivity = 2f;
-        [SerializeField] private float m_YSensitivity = 2f;
-        [SerializeField] private bool m_ClampVerticalRotation = true;
-        [SerializeField] private float m_MinimumX = -90F;
-        [SerializeField] private float m_MaximumX = 90F;
-        [SerializeField] private bool m_Smooth = false;
-        [SerializeField] private float m_SmoothTime = 5f;
-        [SerializeField] private bool m_LockCursor = true;
+        [SerializeField]
+        float m_XSensitivity = 2f;
+        
+        [SerializeField]
+        float m_YSensitivity = 2f;
+        
+        [SerializeField]
+        bool m_ClampVerticalRotation = true;
+        
+        [SerializeField]
+        float m_MinimumX = -90F;
+        
+        [SerializeField]
+        float m_MaximumX = 90F;
+        
+        [SerializeField]
+        bool m_Smooth = false;
+        
+        [SerializeField]
+        float m_SmoothTime = 5f;
+        
+        [SerializeField]
+        bool m_LockCursor = true;
 
-        private Quaternion m_CharacterTargetRot;
-        private Quaternion m_CameraTargetRot;
-        private bool m_cursorIsLocked = true;
+        Quaternion m_CharacterTargetRot;
+        Quaternion m_CameraTargetRot;
 
         public void Init(Transform character, Transform camera)
         {
@@ -53,8 +67,6 @@ namespace Q3Movement
                 character.localRotation = m_CharacterTargetRot;
                 camera.localRotation = m_CameraTargetRot;
             }
-
-            UpdateCursorLock();
         }
 
         public void SetCursorLock(bool value)
@@ -67,39 +79,7 @@ namespace Q3Movement
             }
         }
 
-        public void UpdateCursorLock()
-        {
-            //if the user set "lockCursor" we check & properly lock the cursos
-            if (m_LockCursor)
-            {
-                InternalLockUpdate();
-            }
-        }
-
-        private void InternalLockUpdate()
-        {
-            if (Input.GetKeyUp(KeyCode.Escape))
-            {
-                m_cursorIsLocked = false;
-            }
-            else if (Input.GetMouseButtonUp(0))
-            {
-                m_cursorIsLocked = true;
-            }
-
-            if (m_cursorIsLocked)
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-            }
-            else if (!m_cursorIsLocked)
-            {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-            }
-        }
-
-        private Quaternion ClampRotationAroundXAxis(Quaternion q)
+        Quaternion ClampRotationAroundXAxis(Quaternion q)
         {
             q.x /= q.w;
             q.y /= q.w;
