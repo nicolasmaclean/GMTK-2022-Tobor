@@ -931,7 +931,7 @@ MonoBehaviour:
   _bowAttackKey: 323
   _swordAnimator: {fileID: 7876706623806355236}
   Sword: {fileID: 11400000, guid: ec6a2217d63610747a6a0d948e6f836b, type: 2}
-  _earlySwing: 0.1
+  _earlySwing: 0.3
   _bowAnimator: {fileID: 6514990851274999146}
   Bow: {fileID: 11400000, guid: 99b54ad30cbaed542ac2ad3c84f07530, type: 2}
   _arrowSpawn: {fileID: 8566067609901436993}
