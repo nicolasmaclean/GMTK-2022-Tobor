@@ -13,63 +13,46 @@ public class CharacterMenuController : MonoBehaviour
 {
     [SerializeField]
     TMP_InputField IN_name;
-    
+
     [SerializeField]
-    GameObject _charactersParent;
-    
+    TMP_Text TXT_str;
+
     [SerializeField]
-    GameObject PF_Character;
+    TMP_Text TXT_dex;
+
+    [SerializeField]
+    TMP_Text TXT_con;
+
+    [SerializeField]
+    TMP_Text TXT_per;
     
     [SerializeField]
     Button _btn_play;
 
-    ToggleGroup group;
-
     void Start()
     {
-        DisplayCharacters();
+        RollStats();
     }
 
-    void Update()
+    public void RollStats()
     {
-        _btn_play.enabled = group.AnyTogglesOn();
+        PlayerStats stats = PlayerStats.Instance = PlayerStats.CreateRandom();
+        TXT_str.text = stats.Strength.ToString();
+        TXT_dex.text = stats.Agility.ToString();
+        TXT_con.text = stats.Constitution.ToString();
+        TXT_per.text = stats.Perception.ToString();
     }
 
-    void DisplayCharacters()
+    public String RollName()
     {
-        ToggleGroup g = this.group = _charactersParent.GetComponent<ToggleGroup>();
-        
-        for (int i = 0; i < 3; i++)
-        {
-            PlayerStats stats = PlayerStats.CreateRandom();
-            Transform statsView = CreateStatsView(stats);
-            statsView.SetParent(_charactersParent.transform);
-            statsView.localScale = Vector3.one;
-            
-            Toggle toggle = statsView.GetComponentInChildren<Toggle>();
-            toggle.group = g;
-            toggle.isOn = false;
-        }
-        
-        g.SetAllTogglesOff();
-    }
-
-    Transform CreateStatsView(PlayerStats stats)
-    {
-        StatsView view = Instantiate(PF_Character).GetComponent<StatsView>();
-        view.Stats = stats;
-        return view.transform;
+        String playerName = names[Random.Range(0, names.Length)];
+        IN_name.text = playerName;
+        return playerName;
     }
     
     public void Play()
     {
-        PlayerStats.Instance = group.ActiveToggles().First().transform.parent.GetComponent<StatsView>().Stats;
-        String playerName = IN_name.text;
-        if (string.IsNullOrEmpty(playerName))
-        {
-            playerName = names[Random.Range(0, names.Length)];
-        }
-        
+        String playerName = IN_name.text ?? RollName();
         PlayerStats.Instance.PlayerName = playerName;
         
         SceneController.LoadNextScene();
