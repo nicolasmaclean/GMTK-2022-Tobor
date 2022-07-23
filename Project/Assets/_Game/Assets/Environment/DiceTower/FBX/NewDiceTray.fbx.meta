@@ -1,32 +1,24 @@
 fileFormatVersion: 2
-guid: 0dbb117bd0c6f244391b6419edd33f20
+guid: 458ce62d73d863645ba4ff8a50945f8f
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
       74: -623603649343465320
-    second: Fire
+    second: Scene
   - first:
-      74: -3100369314251171874
-    second: Idle
+      74: -6892520264395927689
+    second: OnApproach
   - first:
-      74: 229770723416056496
-    second: Reload
+      74: 3953848737267595735
+    second: IdleSleeping
   - first:
-      74: -1452702638443036767
-    second: FirstTimePickUp
-  - first:
-      74: 1456024860640872092
-    second: Branded
+      74: -8724838657426307831
+    second: IdleAwake
   - first:
       74: -7420550600455611306
     second: RollTheBones
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Brand
-    second: {fileID: 2100000, guid: 9771646b17a9a10439f0aade267bc735, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -55,11 +47,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Idle
+      name: OnApproach
       takeName: Scene
       internalID: 0
-      firstFrame: 131
-      lastFrame: 132
+      firstFrame: 330
+      lastFrame: 480
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -84,11 +76,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 1
     - serializedVersion: 16
-      name: Fire
+      name: IdleSleeping
       takeName: Scene
       internalID: 0
-      firstFrame: 135
-      lastFrame: 150
+      firstFrame: 322
+      lastFrame: 323
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -113,69 +105,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 1
     - serializedVersion: 16
-      name: Reload
+      name: IdleAwake
       takeName: Scene
       internalID: 0
-      firstFrame: 150
-      lastFrame: 170
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 1
-    - serializedVersion: 16
-      name: FirstTimePickUp
-      takeName: Scene
-      internalID: 0
-      firstFrame: 174
-      lastFrame: 288
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 1
-    - serializedVersion: 16
-      name: Branded
-      takeName: Scene
-      internalID: 0
-      firstFrame: 420
-      lastFrame: 560
+      firstFrame: 480
+      lastFrame: 660
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -203,8 +137,8 @@ ModelImporter:
       name: RollTheBones
       takeName: Scene
       internalID: 0
-      firstFrame: 575
-      lastFrame: 682
+      firstFrame: 661
+      lastFrame: 800
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
