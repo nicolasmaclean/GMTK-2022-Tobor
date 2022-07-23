@@ -10,8 +10,6 @@ namespace Game.UI.Hud
     [RequireComponent(typeof(Image))]
     public class Crosshair : MonoBehaviour
     {
-        public static Crosshair Instance;
-        
         [SerializeField]
         Color _enemyColor = Color.red;
         
@@ -21,32 +19,27 @@ namespace Game.UI.Hud
 
         void Awake()
         {
-            if (Instance != null)
-            {
-                Destroy(gameObject);
-                return;
-            }
-            
-            Instance = this;
             _crosshair = GetComponent<Image>();
             _defaultColor = _crosshair.color;
+
+            HudController.OnShow += Show;
+            HudController.OnHide += Hide;
         }
 
         void OnDestroy()
         {
-            if (Instance != null) return;
-
-            Instance = null;
+            HudController.OnShow -= Show;
+            HudController.OnHide -= Hide;
         }
 
-        public static void Show()
+        public void Show()
         {
-            Instance._crosshair.enabled = true;
+            _crosshair.enabled = true;
         }
         
-        public static void Hide()
+        public void Hide()
         {
-            Instance._crosshair.enabled = false;
+            _crosshair.enabled = false;
         }
 
         void FixedUpdate() => EnemyHighlight();

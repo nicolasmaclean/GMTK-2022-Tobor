@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Game.Mechanics.Player;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,19 +26,29 @@ namespace Game.UI.Hud
 
         [SerializeField]
         Animator _bowAnimator;
-
-        PlayerController _controller;
         
+        float _transitionLength;
+
         void Start()
         {
-            _controller = PlayerController.Instance;
+            HudController.OnShow += Show;
+            HudController.OnHide += Hide;
         }
-        
+
+        void OnDestroy()
+        {
+            HudController.OnShow -= Show;
+            HudController.OnHide -= Hide;
+        }
+
         void Update()
         {
             UpdateSword(_swordCooldown, _swordAnimator);
             UpdateBow(_bowCooldown, _bowAnimator);
         }
+
+        void Show() => gameObject.SetActive(true);
+        void Hide() => gameObject.SetActive(false);
 
         void UpdateBow(Image img, Animator anim)
         {
@@ -54,7 +66,7 @@ namespace Game.UI.Hud
                 float timeInIdle = state.normalizedTime * state.length;
                 Color color = img.color;
                 color.a = Mathf.Lerp(1, 0, timeInIdle / _fadeOutDuration);
-                img.color = color;   
+                img.color = color;
             }
             else
             {
@@ -63,7 +75,7 @@ namespace Game.UI.Hud
                 img.color = color;
             }
         }
-        
+
         void UpdateSword(Image img, Animator anim)
         {
             AnimatorStateInfo state =      anim.GetCurrentAnimatorStateInfo(0);
@@ -77,13 +89,15 @@ namespace Game.UI.Hud
                 Color color = img.color;
                 color.a = 1;
                 img.color = color;
+
+                _transitionLength = trans.duration;
             }
             else if (state.IsName("Idle"))
             {
-                float timeInIdle = state.normalizedTime * state.length;
+                float timeInIdle = state.normalizedTime * state.length - _transitionLength;
                 Color color = img.color;
                 color.a = Mathf.Lerp(1, 0, timeInIdle / _fadeOutDuration);
-                img.color = color;   
+                img.color = color;
             }
             else
             {
