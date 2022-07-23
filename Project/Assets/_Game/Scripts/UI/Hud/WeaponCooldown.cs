@@ -47,15 +47,8 @@ namespace Game.UI.Hud
             UpdateBow(_bowCooldown, _bowAnimator);
         }
 
-        void Show()
-        {
-            gameObject.SetActive(true);
-        }
-        
-        void Hide()
-        {
-            gameObject.SetActive(false);
-        }
+        void Show() => gameObject.SetActive(true);
+        void Hide() => gameObject.SetActive(false);
 
         void UpdateBow(Image img, Animator anim)
         {
