@@ -21,12 +21,21 @@ ModelImporter:
   - first:
       74: -7420550600455611306
     second: RollTheBones
+  - first:
+      74: -2353638712164791637
+    second: RollStart
+  - first:
+      74: -7336881214448395501
+    second: RollLoop
+  - first:
+      74: -2868174665420383709
+    second: RollEnd
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Brand
-    second: {fileID: 2100000, guid: 9771646b17a9a10439f0aade267bc735, type: 2}
+    second: {fileID: 2100000, guid: 664631bc46fa4304285f64c70d09c7ec, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -228,6 +237,64 @@ ModelImporter:
       maskType: 3
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: RollStart
+      takeName: Scene
+      internalID: 0
+      firstFrame: 575
+      lastFrame: 617
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 120
+    - serializedVersion: 16
+      name: RollEnd
+      takeName: Scene
+      internalID: 0
+      firstFrame: 618
+      lastFrame: 682
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 120
     isReadable: 0
   meshes:
     lODScreenPercentages: []
