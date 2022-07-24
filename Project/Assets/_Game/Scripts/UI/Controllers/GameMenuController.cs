@@ -17,9 +17,13 @@ namespace Game.UI
         KeyCode _pauseKey = KeyCode.Escape;
         
         [Header("Events")]
-        public UnityEvent OnPause;
         public UnityEvent OnResume;
+        public UnityEvent OnPause;
         public UnityEvent OnLose;
+        // public UnityEvent OnWin;
+        
+        [Tooltip("Wrapper for OnPause, OnLose, and OnWin.")]
+        public UnityEvent OnStop;
         
         [Header("Menus")]
         [SerializeField]
@@ -71,7 +75,7 @@ namespace Game.UI
             
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-            Crosshair.Show();
+            HudController.Show();
             
             _pauseMenu.SetActive(false);
             
@@ -85,24 +89,26 @@ namespace Game.UI
             
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            Crosshair.Hide();
+            HudController.Hide();
             
             _pauseMenu.SetActive(true);
             
             Time.timeScale = 0;
             OnPause?.Invoke();
+            OnStop?.Invoke();
         }
 
         public static void Lose()
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            Crosshair.Hide();
+            HudController.Hide();
             
             Instance._loseMenu.SetActive(true);
             
             Time.timeScale = 0;
             Instance.OnLose?.Invoke();
+            Instance.OnStop?.Invoke();
         }
 
         public void GoToMainMenu()

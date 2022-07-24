@@ -8,15 +8,15 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Weapon
+  - 
   - Water
   - UI
   - Player
   - 
   - PostProcessing
   - Not in Reflection
-  - 
-  - 
+  - Weapon2
+  - Weapon
   - 
   - 
   - 
