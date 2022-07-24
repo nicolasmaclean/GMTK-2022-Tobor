@@ -202,6 +202,11 @@ namespace Game.Mechanics.Player
             currentBullet.transform.forward = targetPoint - pos;
         }
 
+        public void PlayRollAnimation()
+        {
+            _bowAnimator.SetTrigger(AT_BOW_ROLL);
+        }
+
         void UpdateSwordCollider()
         {
             if (_swordAnimator.IsInTransition(0))
@@ -253,7 +258,7 @@ namespace Game.Mechanics.Player
         #region Animator Constants
         readonly String AT_SWORD_ATTACK = "Attack_";
         readonly String AT_BOW_FIRE     = "Fire";
-        // readonly String AT_BOW_ROLL     = "Roll";
+        readonly String AT_BOW_ROLL     = "Roll";
         #endregion
     }
 }
