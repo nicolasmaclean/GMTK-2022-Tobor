@@ -84,11 +84,12 @@ namespace Game.Mechanics.Player
             }
 
             _swordCollider = GetComponentInChildren<SwordCollision>(true).GetComponent<Collider>();
+
+            SetHealth();
         }
 
         void Start()
         {
-            SetHealth();
             SetAttackSpeed();
             Modifiers.OnChange += SetAttackSpeed;
         }
