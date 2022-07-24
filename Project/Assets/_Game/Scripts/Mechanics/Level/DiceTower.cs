@@ -67,7 +67,7 @@ namespace Game.Mechanics.Level
         void Start()
         {
             _rollTrigger.OnEnter.AddListener(ShowPrompt);
-            _rollTrigger.OnExit.AddListener(InteractPrompt.Instance.Hide);
+            _rollTrigger.OnExit.AddListener(HidePrompt);
         }
 
         void OnEnable()
@@ -82,16 +82,18 @@ namespace Game.Mechanics.Level
             _approached = true;
         }
 
+        Coroutine _approachWaitCoroutine;
         void ShowPrompt()
         {
             AnimatorStateInfo state = _animator.GetCurrentAnimatorStateInfo(0);
             if (state.IsName("OnApproach"))
             {
-                StartCoroutine(WaitTillApproached());
+                if (_approachWaitCoroutine != null) StopCoroutine(_approachWaitCoroutine);
+                _approachWaitCoroutine = StartCoroutine(WaitTillApproached());
             }
             else
             {
-                InteractPrompt.Instance.Show();
+                Show();
             }
 
             IEnumerator WaitTillApproached()
@@ -105,9 +107,22 @@ namespace Game.Mechanics.Level
 
                 if (_rollTrigger.PlayerIsIn)
                 {
-                    InteractPrompt.Instance.Show();
+                    Show();
                 }
             }
+
+            void Show()
+            {
+                InteractPrompt.Instance.Show();
+                InteractPrompt.Instance.OnReset -= UpdateDisplay;
+                InteractPrompt.Instance.OnReset += UpdateDisplay;
+            }
+        }
+
+        void HidePrompt()
+        {
+            InteractPrompt.Instance.Hide();
+            InteractPrompt.Instance.OnReset -= UpdateDisplay;
         }
 
         void Update()
@@ -124,12 +139,9 @@ namespace Game.Mechanics.Level
             if (Input.GetKeyDown(S_interactKey))
             {
                 InteractPrompt.Instance.Pressed = true;
-                InteractPrompt.Instance.OnReset += UpdateDisplay;
             }
-            else if (Input.GetKeyUp(S_interactKey))
+            else if (Input.GetKeyUp(S_interactKey) && InteractPrompt.Instance.Pressed)
             {
-                InteractPrompt.Instance.OnReset -= UpdateDisplay;
-                
                 if (_diceAmount != 0)
                 {
                     Roll(_diceAmount);
@@ -137,12 +149,14 @@ namespace Game.Mechanics.Level
                     
                     InteractPrompt.Instance.Hide();
                     _rollTrigger.OnEnter.RemoveListener(ShowPrompt);
-                    _rollTrigger.OnExit.RemoveListener(InteractPrompt.Instance.Hide);
+                    _rollTrigger.OnExit.RemoveListener(HidePrompt);
                 }
                 else
                 {
                     InteractPrompt.Instance.Reset();
-                    Debug.Log("Ya gotta roll some of dem bones...");
+
+                    _diceAmount = 0;
+                    _displayMaterial.mainTexture = _displayTextures[_diceAmount];
                 }
             }
         }
@@ -176,7 +190,7 @@ namespace Game.Mechanics.Level
                 }
             }
             
-            _animator.SetTrigger(AT_Roll);
+            _animator.SetBool(AT_ROLL, true);
             Modifiers.SetMultipliers(rolls[0], rolls[1], rolls[2], rolls[3], rolls[4], rolls[5]);
             
             #if UNITY_EDITOR
@@ -202,7 +216,7 @@ namespace Game.Mechanics.Level
             callback?.Invoke();
         }
 
-        readonly String AT_Roll = "Roll";
+        readonly String AT_ROLL = "Rolled";
         readonly String AT_APPROACH = "Approached";
     }
 }

@@ -31,6 +31,7 @@ namespace Game.UI.Hud
         {
             this.enabled = true;
             _currentTime = 0;
+            _holdBar.fillAmount = 0;
             gameObject.SetActive(true);
             Pressed = false;
         }
