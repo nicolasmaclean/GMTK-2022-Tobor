@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using Game.Mechanics.Player;
 using Game.Utility;
+using Game.Utility.UI;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -34,12 +36,18 @@ namespace Game.UI.Hud
         }
         bool _pressed = false;
         
+        [Header("Hold")]
         [SerializeField]
         Image _holdBar;
 
         [FormerlySerializedAs("_cycleLength"),SerializeField]
         float _fillCycleLength;
 
+        [Header("In Animation")]
+        [SerializeField]
+        AnimationCurve _inCurve = AnimationCurve.Linear(0f, 0f, .3f, 1f);
+        
+        [Header("Idle Animation")]
         [SerializeField]
         Transform _idleTarget;
 
@@ -129,7 +137,15 @@ namespace Game.UI.Hud
         public void Show()
         {
             Enable();
-            // scale in animation (use coroutine)
+            StartCoroutine(Tween.UseCurve(_inCurve, (value) =>
+            {
+                var t = transform;
+                Vector3 scal = t.localScale;
+                
+                scal.y = value;
+                
+                t.localScale = scal;
+            }));
         }
 
         public void Hide()
