@@ -1,4 +1,5 @@
 using System;
+using Game.Mechanics.Player;
 using Game.Utility;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +9,26 @@ namespace Game.UI.Hud
     public class InteractPrompt : Singleton<InteractPrompt>
     {
         public event Action OnReset;
-        public bool Pressed = false;
+        public bool Pressed
+        {
+            get
+            {
+                return _pressed;
+            }
+            set
+            {
+                _pressed = value;
+                if (value)
+                {
+                    PlayerController.Instance.PlayRollAnimation();
+                }
+                else
+                {
+                    PlayerController.Instance.FinishRollAnimation();
+                }
+            }
+        }
+        bool _pressed = false;
         
         [SerializeField]
         Image _holdBar;

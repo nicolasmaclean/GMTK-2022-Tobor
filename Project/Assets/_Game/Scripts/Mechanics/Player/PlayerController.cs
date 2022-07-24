@@ -204,7 +204,13 @@ namespace Game.Mechanics.Player
 
         public void PlayRollAnimation()
         {
-            _bowAnimator.SetTrigger(AT_BOW_ROLL);
+            _bowAnimator.SetTrigger(AT_BOW_ROLL_ST);
+            _bowAnimator.ResetTrigger(AT_BOW_ROLL_END);
+        }
+
+        public void FinishRollAnimation()
+        {
+            _bowAnimator.SetTrigger(AT_BOW_ROLL_END);
         }
 
         void UpdateSwordCollider()
@@ -258,7 +264,8 @@ namespace Game.Mechanics.Player
         #region Animator Constants
         readonly String AT_SWORD_ATTACK = "Attack_";
         readonly String AT_BOW_FIRE     = "Fire";
-        readonly String AT_BOW_ROLL     = "Roll";
+        readonly String AT_BOW_ROLL_ST  = "RollStart";
+        readonly String AT_BOW_ROLL_END = "RollEnd";
         #endregion
     }
 }

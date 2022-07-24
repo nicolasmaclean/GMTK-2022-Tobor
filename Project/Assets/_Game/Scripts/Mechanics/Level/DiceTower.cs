@@ -147,8 +147,6 @@ namespace Game.Mechanics.Level
                     Roll(_diceAmount);
                     _haveRolled = true;
                     
-                    PlayerController.Instance.PlayRollAnimation();
-                    
                     InteractPrompt.Instance.Hide();
                     _rollTrigger.OnEnter.RemoveListener(ShowPrompt);
                     _rollTrigger.OnExit.RemoveListener(HidePrompt);
