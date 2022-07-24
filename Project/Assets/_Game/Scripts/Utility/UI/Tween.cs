@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering.HighDefinition;
 using UnityEngine.UI;
 
 namespace Game.Utility.UI
@@ -22,6 +23,24 @@ namespace Game.Utility.UI
             graphic.color = to;
             callback?.Invoke();
             yield break;
+        }
+
+        public static IEnumerator UseCurve(AnimationCurve curve, Action<float> Update)
+        {
+            Keyframe lastKey = curve.keys[curve.length - 1];
+            float curTime = 0;
+            float duration = lastKey.time;
+
+            while (curTime < duration)
+            {
+                
+                Update(curve.Evaluate(curTime));
+                
+                yield return null;
+                curTime += Time.deltaTime;
+            }
+            
+            Update(curve.Evaluate(lastKey.value));
         }
     }
 }
