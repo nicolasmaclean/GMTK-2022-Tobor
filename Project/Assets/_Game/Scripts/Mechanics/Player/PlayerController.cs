@@ -22,7 +22,7 @@ namespace Game.Mechanics.Player
                 return _health;
             }
         }
-
+        
         [FormerlySerializedAs("OnAttack"),Header("Events")]
         public UnityEvent OnSwordAttack;
         
@@ -45,6 +45,9 @@ namespace Game.Mechanics.Player
 
         [SerializeField]
         KeyCode _bowAttackKey = KeyCode.Mouse1;
+
+        [SerializeField]
+        public KeyCode InteractKey = KeyCode.E;
 
         [Header("Sword")]
         [SerializeField]

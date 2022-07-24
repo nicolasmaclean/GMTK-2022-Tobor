@@ -891,13 +891,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e932c5e19925b4c9a386ce8dc915df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnPause:
-    m_PersistentCalls:
-      m_Calls: []
   OnResume:
     m_PersistentCalls:
       m_Calls: []
+  OnPause:
+    m_PersistentCalls:
+      m_Calls: []
   OnLose:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStop:
     m_PersistentCalls:
       m_Calls: []
   _pauseMenu: {fileID: 3820370946769437003}

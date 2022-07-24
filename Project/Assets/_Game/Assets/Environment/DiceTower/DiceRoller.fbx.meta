@@ -18,7 +18,12 @@ ModelImporter:
   - first:
       74: -7420550600455611306
     second: RollTheBones
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Brand
+    second: {fileID: 2100000, guid: 9db8fa82b8026e14c9ea56a066d3fda8, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -116,8 +121,8 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
+      loopTime: 1
+      loopBlend: 1
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0

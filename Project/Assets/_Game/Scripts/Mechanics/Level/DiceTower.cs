@@ -2,41 +2,157 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Game.Core;
+using Game.Mechanics.Player;
+using Game.UI.Hud;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using Random = System.Random;
 
 namespace Game.Mechanics.Level
 {
     public class DiceTower : MonoBehaviour
     {
+        static KeyCode _interactKey = KeyCode.None;
+        static KeyCode S_interactKey
+        {
+            get
+            {
+                if (_interactKey == KeyCode.None)
+                {
+                    _interactKey = PlayerController.Instance.InteractKey;
+                }
+
+                return _interactKey;
+            }
+        }
+        
         [SerializeField]
         [Utility.ReadOnly]
         bool _haveRolled = false;
-        
+
+        [Header("Visuals")]
         [SerializeField]
         GameObject[] _dice;
 
+        [FormerlySerializedAs("_diceValues"),SerializeField]
+        Texture[] _diceTextures;
+
         [SerializeField]
-        Texture[] _diceValues;
-        
-        DiceTowerTrigger _trigger;
+        Texture[] _displayTextures;
+
+        [SerializeField]
+        Renderer _displayRenderer;
+
+        [Header("Colliders")]
+        [SerializeField]
+        PlayerTrigger _approachTrigger;
+
+        [SerializeField]
+        PlayerTrigger _rollTrigger;
+
         Animator _animator;
+        Material _displayMaterial;
+        bool _approached;
+        int _diceAmount;
 
         void Awake()
         {
-            _trigger = GetComponentInChildren<DiceTowerTrigger>();
             _animator = GetComponentInChildren<Animator>();
+            _displayMaterial = _displayRenderer.material;
+            _displayMaterial.mainTexture = _displayTextures[0];
+        }
+
+        void Start()
+        {
+            _rollTrigger.OnEnter.AddListener(ShowPrompt);
+            _rollTrigger.OnExit.AddListener(InteractPrompt.Instance.Hide);
+        }
+
+        void OnEnable()
+        {
+            _approachTrigger.OnEnter.AddListener(Approach);
+        }
+
+        void Approach()
+        {
+            _approachTrigger.OnEnter.RemoveListener(Approach);
+            _animator.SetBool(AT_APPROACH, true);
+            _approached = true;
+        }
+
+        void ShowPrompt()
+        {
+            AnimatorStateInfo state = _animator.GetCurrentAnimatorStateInfo(0);
+            if (state.IsName("OnApproach"))
+            {
+                StartCoroutine(WaitTillApproached());
+            }
+            else
+            {
+                InteractPrompt.Instance.Show();
+            }
+
+            IEnumerator WaitTillApproached()
+            {
+                yield return null;
+                yield return new WaitUntil(() =>
+                {
+                    AnimatorStateInfo s = _animator.GetCurrentAnimatorStateInfo(0);
+                    return s.IsName("IdleAwake") && !_animator.IsInTransition(0);
+                });
+
+                if (_rollTrigger.PlayerIsIn)
+                {
+                    InteractPrompt.Instance.Show();
+                }
+            }
         }
 
         void Update()
         {
-            if (_haveRolled) return;
+            // player is in range
+            if (!_rollTrigger.PlayerIsIn) return;
             
-            if (Input.GetKeyDown(KeyCode.E) && _trigger.PlayerInside)
+            // dice have not been rolled and 
+            if (_haveRolled || !_approached) return;
+
+            AnimatorStateInfo state = _animator.GetCurrentAnimatorStateInfo(0);
+            if (!state.IsName("IdleAwake") || _animator.IsInTransition(0)) return;
+
+            if (Input.GetKeyDown(S_interactKey))
             {
-                Roll(3);
-                _haveRolled = true;
+                InteractPrompt.Instance.Pressed = true;
+                InteractPrompt.Instance.OnReset += UpdateDisplay;
             }
+            else if (Input.GetKeyUp(S_interactKey))
+            {
+                InteractPrompt.Instance.OnReset -= UpdateDisplay;
+                
+                if (_diceAmount != 0)
+                {
+                    Roll(_diceAmount);
+                    _haveRolled = true;
+                    
+                    InteractPrompt.Instance.Hide();
+                    _rollTrigger.OnEnter.RemoveListener(ShowPrompt);
+                    _rollTrigger.OnExit.RemoveListener(InteractPrompt.Instance.Hide);
+                }
+                else
+                {
+                    InteractPrompt.Instance.Reset();
+                    Debug.Log("Ya gotta roll some of dem bones...");
+                }
+            }
+        }
+
+        void UpdateDisplay()
+        {
+            _diceAmount = (_diceAmount + 1) % 6;
+            if (_diceAmount == 0) _diceAmount++;
+            
+            _displayMaterial.mainTexture = _displayTextures[_diceAmount];
         }
 
         void Roll(int numberOfDice)
@@ -62,6 +178,11 @@ namespace Game.Mechanics.Level
             
             _animator.SetTrigger(AT_Roll);
             Modifiers.SetMultipliers(rolls[0], rolls[1], rolls[2], rolls[3], rolls[4], rolls[5]);
+            
+            #if UNITY_EDITOR
+            int index = SceneManager.GetActiveScene().buildIndex;
+            if (index == -1 || 3 <= index) return;
+            #endif
             StartCoroutine(WaitThen(3.3f, () =>
             {
                 LevelController.CurrentRoom.Done();
@@ -72,7 +193,7 @@ namespace Game.Mechanics.Level
         {
             Renderer rend = die.GetComponent<Renderer>();
             Material mat = rend.material;
-            mat.mainTexture = _diceValues[num-1];
+            mat.mainTexture = _diceTextures[num-1];
         }
 
         IEnumerator WaitThen(float seconds, Action callback)
@@ -82,5 +203,6 @@ namespace Game.Mechanics.Level
         }
 
         readonly String AT_Roll = "Roll";
+        readonly String AT_APPROACH = "Approached";
     }
 }
