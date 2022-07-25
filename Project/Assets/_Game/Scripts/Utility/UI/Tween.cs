@@ -42,5 +42,18 @@ namespace Game.Utility.UI
             
             Update(curve.Evaluate(lastKey.value));
         }
+
+        public static IEnumerator SliderNonLerp(Slider slider, float target, float lerpFactor, float EPSILON = .01f)
+        {
+            float val = slider.value;
+            while (Math.Abs(val - target) > EPSILON)
+            {
+                val = Mathf.Lerp(val, target, Time.deltaTime * lerpFactor);
+                slider.value = val;
+                yield return null;
+            }
+
+            slider.value = target;
+        }
     }
 }

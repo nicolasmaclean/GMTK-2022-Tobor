@@ -367,6 +367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca463978917a803419790c5a9520e8f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _updateFactor: 15
 --- !u!1 &2238941309959670928
 GameObject:
   m_ObjectHideFlags: 0
@@ -975,6 +976,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f991838be89045778d18fd1d630754cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnHealthChange:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5343567852094291388}
+        m_TargetAssemblyTypeName: Game.UI.HUD.HealthBar, Assembly-CSharp
+        m_MethodName: UpdateHeatlh
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnSwordSwing:
     m_PersistentCalls:
       m_Calls:
@@ -1035,18 +1051,6 @@ MonoBehaviour:
       - m_Target: {fileID: 7414230428192009232}
         m_TargetAssemblyTypeName: Game.UI.Hud.ScreenFlash, Assembly-CSharp
         m_MethodName: Flash
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 5343567852094291388}
-        m_TargetAssemblyTypeName: Game.UI.HUD.HealthBar, Assembly-CSharp
-        m_MethodName: UpdateHeatlhBar
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

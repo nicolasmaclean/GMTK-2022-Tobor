@@ -1,32 +1,39 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Game.Mechanics.Player;
+using Game.Utility.UI;
 
 namespace Game.UI.HUD
 {
     [RequireComponent(typeof(Slider))]
     public class HealthBar : MonoBehaviour
     {
-        Slider healthBarSlider;
+        [SerializeField]
+        float _updateFactor = 15f;
+        
+        Slider _slider;
 
-        private void Start()
+        void Awake()
         {
-            healthBarSlider = GetComponent<Slider>();
-
-            healthBarSlider.minValue = 0;
-            healthBarSlider.maxValue = PlayerStats.Instance.ConstitutionRange.y;
-            Debug.Log(PlayerStats.Instance.ConstitutionRange.y.ToString());
-
-            UpdateHeatlhBar();
-
+            _slider = GetComponent<Slider>();
         }
 
-        public void UpdateHeatlhBar()
+        void Start()
         {
-            healthBarSlider.value = PlayerController.Instance.Health;
-            Debug.Log(PlayerController.Instance.Health.ToString());
+            _slider.minValue = 0;
+            _slider.maxValue = PlayerStats.Instance.ConstitutionRange.y;
+
+            _slider.value = PlayerController.Instance.Health;
+        }
+
+        Coroutine updateAnimation = null;
+        public void UpdateHeatlh(float health)
+        {
+            if (updateAnimation != null) StopCoroutine(updateAnimation);
+            updateAnimation = StartCoroutine(Tween.SliderNonLerp(_slider, health, _updateFactor));
         }
     }
 }
