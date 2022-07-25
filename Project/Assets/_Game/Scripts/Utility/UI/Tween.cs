@@ -25,7 +25,7 @@ namespace Game.Utility.UI
             yield break;
         }
 
-        public static IEnumerator UseCurve(AnimationCurve curve, Action<float> Update)
+        public static IEnumerator UseCurve(AnimationCurve curve, Action<float> Update, Action callback = null)
         {
             Keyframe lastKey = curve.keys[curve.length - 1];
             float curTime = 0;
@@ -40,7 +40,8 @@ namespace Game.Utility.UI
                 curTime += Time.deltaTime;
             }
             
-            Update(curve.Evaluate(lastKey.value));
+            Update(curve.Evaluate(lastKey.time));
+            callback?.Invoke();
         }
 
         public static IEnumerator SliderNonLerp(Slider slider, float target, float lerpFactor, float EPSILON = .01f)
