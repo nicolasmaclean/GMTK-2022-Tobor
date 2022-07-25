@@ -40,14 +40,7 @@ namespace Game.Core
         
         public static void LoadSFX(AudioSource source, SOAudioClip clip)
         {
-            if (clip.Clips.Length != 0)
-            {
-                source.clip = clip.Clips[Random.Range(0, clip.Clips.Length)];
-            }
-            else
-            {
-                source.clip = clip.Clip;
-            }
+            source.clip = (clip.Clips != null && clip.Clips.Length != 0) ? clip.Clips[Random.Range(0, clip.Clips.Length)] : clip.Clip;
             
             source.volume = clip.Volume;
             source.pitch = clip.Pitch;
