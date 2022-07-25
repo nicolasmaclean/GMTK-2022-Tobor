@@ -64,6 +64,7 @@ namespace Game.UI
                 }
                 else
                 {
+                    if (InteractPrompt.Instance.Pressed) return;
                     Pause();
                 }
             }
