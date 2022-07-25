@@ -99,13 +99,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5836525155203262616}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0.16617663, z: -0, w: 0.986096}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5836525155943502469}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -19.131, z: 0}
 --- !u!212 &5836525155203262619
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -170,6 +170,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animation: {fileID: 11400000, guid: 65e6e36dad167174a8e97275eed90261, type: 2}
+  _currentFrame: 0
+  _speedMultiplier: 1
 --- !u!1 &5836525155943502468
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,8 +243,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _baseHealth: 5
   _attack: 1
-  _damageRate: 6
-  _rangeOfAttack: 120
+  _attackSpeed: 2
+  _range: 3
+  _lastAttack: 0
   OnHurt:
     m_PersistentCalls:
       m_Calls:
@@ -280,3 +283,4 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _bullet: {fileID: 7938779356315524346, guid: 589dae44a499a234299c6a878553a93d, type: 3}
+  _shootDelay: 3
