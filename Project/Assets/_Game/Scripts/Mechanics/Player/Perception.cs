@@ -27,7 +27,6 @@ public class Perception : MonoBehaviour
     void Start()
     {
         float t = PlayerStats.Instance.Perception / 20f;
-        Debug.Log(t);
         if (_volume.profile.TryGet(out _vig))
         {
             _vig.intensity.value = Mathf.Lerp(_vignette.y, _vignette.x, t);
