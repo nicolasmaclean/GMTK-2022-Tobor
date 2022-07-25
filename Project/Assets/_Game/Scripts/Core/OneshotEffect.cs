@@ -31,7 +31,7 @@ namespace Game.Core
         public void Play(Vector3 position) => Play(position, Vector3.up);
         public void Play(Vector3 position, Vector3 normal)
         {
-            Quaternion rot = Quaternion.LookRotation(Vector3.zero, normal);
+            Quaternion rot = Quaternion.LookRotation(Vector3.forward, normal);
             GameObject vfx = GetComponent<ParticleSystem>()?.gameObject;
             if (vfx != null)
             {

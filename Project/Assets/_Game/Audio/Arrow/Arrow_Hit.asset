@@ -12,5 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc5067c61fa77f54d84ecbc1bd68d272, type: 3}
   m_Name: Arrow_Hit
   m_EditorClassIdentifier: 
-  Clip: {fileID: 8300000, guid: 34aca9e3f1ade4802b9062b1380aa523, type: 3}
-  Volume: 0.25
+  Clip: {fileID: 8300000, guid: 2bc8225a23eb945578cfd49d8ba0dd67, type: 3}
+  Volume: 0.1
+  StartEarly: 0
+  Pitch: 1
+  SpatialBlend: 0
+  DopplerLevel: 1
+  Spread: 0
+  RolloffMode: 0
+  MinDistance: 1
+  MaxDistance: 500
