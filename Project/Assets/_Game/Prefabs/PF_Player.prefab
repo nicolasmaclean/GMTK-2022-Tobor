@@ -511,11 +511,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f991838be89045778d18fd1d630754cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnSwordAttack:
+  OnSwordSwing:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7314698367671725500}
-        m_TargetAssemblyTypeName: Game.Mechanics.Player.PlayerController, Assembly-CSharp
+        m_TargetAssemblyTypeName: Game.Core.MonoExtended, Assembly-CSharp
         m_MethodName: PlaySFX
         m_Mode: 2
         m_Arguments:
@@ -904,6 +904,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2361d2121a96e78429e13524a76163c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnHit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 975349051488158199}
+        m_TargetAssemblyTypeName: Game.Core.MonoExtended, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: b722876df0b244b6893dff4201e25475, type: 2}
+          m_ObjectArgumentAssemblyTypeName: Game.Core.SOAudioClip, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6284579826389730956
 GameObject:
   m_ObjectHideFlags: 0
@@ -2566,14 +2581,14 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 80009865c356f6848b635373a8cf2768, type: 3}
   m_PrefabInstance: {fileID: 412342537564746909}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &948144135482904598 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 617155100254692491, guid: 80009865c356f6848b635373a8cf2768, type: 3}
-  m_PrefabInstance: {fileID: 412342537564746909}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &158283662749143926 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 80009865c356f6848b635373a8cf2768, type: 3}
+  m_PrefabInstance: {fileID: 412342537564746909}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &948144135482904598 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 617155100254692491, guid: 80009865c356f6848b635373a8cf2768, type: 3}
   m_PrefabInstance: {fileID: 412342537564746909}
   m_PrefabAsset: {fileID: 0}
 --- !u!95 &3077176637184911951
@@ -2595,6 +2610,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &7418024476525135260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 682724752386247116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1570838b238481587467fb70b0b6f8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8416554904928613105
 PrefabInstance:
   m_ObjectHideFlags: 0

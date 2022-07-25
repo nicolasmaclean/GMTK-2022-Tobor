@@ -23,8 +23,8 @@ namespace Game.Mechanics.Player
             }
         }
         
-        [FormerlySerializedAs("OnAttack"),Header("Events")]
-        public UnityEvent OnSwordAttack;
+        [FormerlySerializedAs("OnSwordAttack"),FormerlySerializedAs("OnAttack"),Header("Events")]
+        public UnityEvent OnSwordSwing;
         
         [FormerlySerializedAs("OnShoot")]
         public UnityEvent OnBowAttack;
@@ -174,8 +174,9 @@ namespace Game.Mechanics.Player
             }
 
             _swordAnimator.SetTrigger(trigger_swing);
-            OnSwordAttack?.Invoke();
         }
+        
+        public void SwordSwing() => OnSwordSwing?.Invoke();
 
         void BowAttack()
         {

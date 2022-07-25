@@ -62,7 +62,6 @@ namespace Game.Mechanics.Enemy
         void Die()
         {
             OnHit?.Invoke();
-            gameObject.SetActive(false);
             Destroy(gameObject);
         }
     }

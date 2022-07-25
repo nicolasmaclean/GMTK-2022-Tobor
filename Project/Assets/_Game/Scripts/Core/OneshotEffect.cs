@@ -31,7 +31,7 @@ namespace Game.Core
         public void Play(Vector3 position) => Play(position, Vector3.up);
         public void Play(Vector3 position, Vector3 normal)
         {
-            Quaternion rot = Quaternion.LookRotation(Vector3.zero, normal);
+            Quaternion rot = Quaternion.LookRotation(Vector3.forward, normal);
             GameObject vfx = GetComponent<ParticleSystem>()?.gameObject;
             if (vfx != null)
             {
@@ -79,7 +79,7 @@ namespace Game.Core
 
             AudioSource source = gameObject.AddComponent<AudioSource>();
             SOAudioClip.LoadSFX(source, clip);
-            Destroy(gameObject, clip.Clip.length);
+            Destroy(gameObject, source.clip.length);
         }
 
         void Play(ParticleSystem vfx)
