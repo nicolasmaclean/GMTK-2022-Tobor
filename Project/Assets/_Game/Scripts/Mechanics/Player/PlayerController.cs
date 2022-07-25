@@ -22,6 +22,10 @@ namespace Game.Mechanics.Player
             {
                 return _health;
             }
+            set
+            {
+                _health = Mathf.Clamp(value, 0, _maxHealth);
+            }
         }
         
         [FormerlySerializedAs("OnSwordAttack"),FormerlySerializedAs("OnAttack"),Header("Events")]
@@ -39,6 +43,10 @@ namespace Game.Mechanics.Player
         [SerializeField]
         [ReadOnly]
         float _health = 0;
+        
+        [SerializeField]
+        [ReadOnly]
+        float _maxHealth;
 
         [Header("Controls")]
         [SerializeField]
@@ -89,13 +97,13 @@ namespace Game.Mechanics.Player
 
             _swordCollider = GetComponentInChildren<SwordCollision>(true).GetComponent<Collider>();
 
+            _maxHealth = PlayerStats.Instance.ConstitutionRange.y;
             SetHealth();
         }
 
         void Start()
         {
-            SetAttackSpeed();
-            Modifiers.OnChange += SetAttackSpeed;
+            Modifiers.OnChange += ApplyModifiers;
         }
 
         void OnDestroy()
@@ -103,7 +111,7 @@ namespace Game.Mechanics.Player
             if (Instance != this) return;
             
             Instance = null;
-            Modifiers.OnChange -= SetAttackSpeed;
+            Modifiers.OnChange -= ApplyModifiers;
         }
 
         void Update()
@@ -124,13 +132,26 @@ namespace Game.Mechanics.Player
         #region Stats
         void SetHealth()
         {
-            _health = PlayerStats.GetInRange(PlayerStats.Instance.Constitution, PlayerStats.Instance.ConstitutionRange);
+            Health = PlayerStats.GetInRange(PlayerStats.Instance.Constitution, PlayerStats.Instance.ConstitutionRange);
         }
 
-        void SetAttackSpeed()
+        void ApplyModifiers()
         {
             _swordAnimator.speed = Modifiers.AttackSpeedMultiplier;
             _bowAnimator.speed   = Modifiers.AttackSpeedMultiplier;
+
+            float oldHealth = Health;
+            Health += Heal(Modifiers.Heal);
+            if (Math.Abs(oldHealth - Health) > .01f)
+            {
+                OnHealthChange?.Invoke(Health);
+            }
+        }
+
+        float Heal(float amount)
+        {
+            float scale = PlayerStats.Instance.ConstitutionRange.y / 5;
+            return amount == 0 ? 0 : scale * Mathf.Pow(2, amount - 1); // (max / 10) * 2^(x-1) / 2
         }
         #endregion
         
@@ -242,9 +263,9 @@ namespace Game.Mechanics.Player
         
         public void Hurt(float damage)
         {
-            _health -= damage * Modifiers.DamageMultiplier;
+            Health -= damage * Modifiers.DamageMultiplier;
 
-            if (_health < 0)
+            if (Health <= 0)
             {
                 OnDeath?.Invoke();
                 GameMenuController.Lose();
@@ -252,7 +273,7 @@ namespace Game.Mechanics.Player
             else
             {
                 OnHurt?.Invoke();
-                OnHealthChange?.Invoke(_health);
+                OnHealthChange?.Invoke(Health);
             }
         }
         

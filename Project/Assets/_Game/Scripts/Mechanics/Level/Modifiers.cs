@@ -10,18 +10,18 @@ public static class Modifiers
     public static int SpeedMultiplier { get; private set; } = 1;
     public static int AttackSpeedMultiplier { get; private set; } = 1;
     public static int JumpMultiplier { get; private set; } = 1;
-    public static int BaseStatsMultiplier { get; private set; } = 1;
+    public static int Heal { get; private set; } = 0;
 
     public static Action OnChange;
 
-    public static void SetMultipliers(int enemy, int damage, int speed, int attack, int jump, int stats)
+    public static void SetMultipliers(int enemy, int damage, int speed, int attack, int jump, int heal)
     {
         EnemyMultiplier         = (int) Mathf.Pow(2 , enemy);
         DamageMultiplier        = (int) Mathf.Pow(2 , damage);
         SpeedMultiplier         = (int) Mathf.Pow(2 , speed);
         AttackSpeedMultiplier   = (int) Mathf.Pow(2 , attack);
         JumpMultiplier          = (int) Mathf.Pow(2 , jump);
-        BaseStatsMultiplier     = (int) Mathf.Pow(2 , stats);
+        Heal                    = heal;
         
         OnChange?.Invoke();
     }
