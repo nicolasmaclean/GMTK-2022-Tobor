@@ -13,4 +13,13 @@ MonoBehaviour:
   m_Name: Sword_Hit
   m_EditorClassIdentifier: 
   Clip: {fileID: 8300000, guid: 4ae4fe17d19c04e10920bfaca3bd8290, type: 3}
-  Volume: 0.2
+  Clips: []
+  Volume: 0
+  StartEarly: 0
+  Pitch: 1
+  SpatialBlend: 0
+  DopplerLevel: 1
+  Spread: 0
+  RolloffMode: 0
+  MinDistance: 1
+  MaxDistance: 500
