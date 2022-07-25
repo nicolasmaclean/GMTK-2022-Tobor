@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 269.8, y: -65}
+  m_AnchoredPosition: {x: 120, y: -60}
   m_SizeDelta: {x: 121.4, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3983761544034847795
@@ -249,8 +249,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 522.11, y: -65}
-  m_SizeDelta: {x: 197.4, y: 50}
+  m_AnchoredPosition: {x: 530, y: -60}
+  m_SizeDelta: {x: 485.99, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5956101751106970649
 CanvasRenderer:
@@ -280,7 +280,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: to   Roll
+  m_text: to Roll Dem Bones
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 405cdacd4275d804fbe2a03a1687f82a, type: 2}
   m_sharedMaterial: {fileID: -3547725444792099883, guid: 405cdacd4275d804fbe2a03a1687f82a, type: 2}
@@ -318,7 +318,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_wordSpacing: 0
+  m_wordSpacing: 37.1
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
@@ -458,7 +458,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 372, y: -65}
+  m_AnchoredPosition: {x: 227.70499, y: -65}
   m_SizeDelta: {x: 130, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8329179871372881483

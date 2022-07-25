@@ -13,6 +13,9 @@ namespace Game.UI.HUD
     {
         [SerializeField]
         float _updateFactor = 15f;
+
+        [SerializeField]
+        Image _heart;
         
         Slider _slider;
 

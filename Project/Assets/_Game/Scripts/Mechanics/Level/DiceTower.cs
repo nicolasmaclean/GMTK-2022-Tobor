@@ -178,7 +178,7 @@ namespace Game.Mechanics.Level
                 GameObject go = _dice[i];
                 if (i < numberOfDice)
                 {
-                    int roll = UnityEngine.Random.Range(1, 6);
+                    int roll = UnityEngine.Random.Range(1, 7);
                     rolls[roll-1]++;
                     
                     go.SetActive(true);

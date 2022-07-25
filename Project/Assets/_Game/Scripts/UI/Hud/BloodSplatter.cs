@@ -26,6 +26,7 @@ public class BloodSplatter : MonoBehaviour
     {
         AnimatedImage img = AnimatedImage.Create(_animation);
         img.IsOneShot = true;
+        Destroy(img.gameObject, _animation.Frames.Length / _animation.Fps);
         img.GetComponent<Image>().color = _color;
         
         RectTransform t = img.transform as RectTransform;
