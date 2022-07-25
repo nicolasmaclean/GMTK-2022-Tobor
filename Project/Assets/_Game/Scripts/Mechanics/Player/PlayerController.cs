@@ -14,7 +14,8 @@ namespace Game.Mechanics.Player
     {
         #region Public
         public static PlayerController Instance { get; private set; }
-        
+
+        public UnityEvent<float> OnHealthChange;
         public float Health
         {
             get
@@ -87,11 +88,12 @@ namespace Game.Mechanics.Player
             }
 
             _swordCollider = GetComponentInChildren<SwordCollision>(true).GetComponent<Collider>();
+
+            SetHealth();
         }
 
         void Start()
         {
-            SetHealth();
             SetAttackSpeed();
             Modifiers.OnChange += SetAttackSpeed;
         }
@@ -250,6 +252,7 @@ namespace Game.Mechanics.Player
             else
             {
                 OnHurt?.Invoke();
+                OnHealthChange?.Invoke(_health);
             }
         }
         
