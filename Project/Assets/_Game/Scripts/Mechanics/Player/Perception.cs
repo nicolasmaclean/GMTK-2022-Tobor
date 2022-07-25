@@ -9,8 +9,15 @@ using UnityEngine.Rendering.HighDefinition;
 [RequireComponent(typeof(Volume))]
 public class Perception : MonoBehaviour
 {
+    [SerializeField]
+    Vector2 _vignette = new Vector2(.1f, .55f);
+
+    [SerializeField]
+    Vector2 _aberration = new Vector2(.05f, .2f);
+    
     Volume _volume;
-    Vignette vig;
+    Vignette _vig;
+    ChromaticAberration _ab;
 
     void Awake()
     {
@@ -19,9 +26,15 @@ public class Perception : MonoBehaviour
 
     void Start()
     {
-        if (_volume.profile.TryGet<Vignette>(out vig))
+        float t = PlayerStats.Instance.Perception / 20f;
+        Debug.Log(t);
+        if (_volume.profile.TryGet(out _vig))
         {
-            vig.intensity.value = PlayerStats.GetInRange(PlayerStats.Instance.Perception, PlayerStats.Instance.PerceptionRange);
+            _vig.intensity.value = Mathf.Lerp(_vignette.y, _vignette.x, t);
+        }
+        if (_volume.profile.TryGet(out _ab))
+        {
+            _ab.intensity.value = Mathf.Lerp(_aberration.y, _aberration.x, t);
         }
     }
 }
