@@ -6,7 +6,7 @@ namespace Game.Core
     {
         public void PlaySFX(SOAudioClip clip)
         {
-            if (clip == null || clip.Clip == null) return;
+            if (clip == null || (clip.Clip == null && clip.Clips.Length == 0)) return;
             OneshotEffect.PlaySFX(clip);
         }
     }

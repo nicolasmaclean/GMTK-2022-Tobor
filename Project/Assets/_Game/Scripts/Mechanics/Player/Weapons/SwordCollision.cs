@@ -1,12 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.Core;
 using Game.Mechanics.Enemy;
 using Game.Mechanics.Player;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class SwordCollision : MonoBehaviour
+public class SwordCollision : MonoExtended
 {
+    public UnityEvent OnHit;
     PlayerController _player;
 
     void Awake()
@@ -21,6 +24,10 @@ public class SwordCollision : MonoBehaviour
     
     void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.layer == LayerMask.GetMask("Player")) return;
+        
+        OnHit?.Invoke();
+        
         EnemyBase em = other.GetComponentInParent<EnemyBase>();
         if (!em) return;
 

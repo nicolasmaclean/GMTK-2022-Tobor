@@ -9,6 +9,8 @@ namespace Game.Core
     {
         public AudioClip Clip;
 
+        public AudioClip[] Clips;
+
         [Range(0, 1)]
         public float Volume;
 
@@ -36,11 +38,17 @@ namespace Game.Core
         [Min(1)]
         public float MaxDistance = 500;
         
-        
-        
         public static void LoadSFX(AudioSource source, SOAudioClip clip)
         {
-            source.clip = clip.Clip;
+            if (clip.Clips.Length != 0)
+            {
+                source.clip = clip.Clips[Random.Range(0, clip.Clips.Length)];
+            }
+            else
+            {
+                source.clip = clip.Clip;
+            }
+            
             source.volume = clip.Volume;
             source.pitch = clip.Pitch;
             

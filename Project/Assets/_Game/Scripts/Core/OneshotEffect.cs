@@ -79,7 +79,7 @@ namespace Game.Core
 
             AudioSource source = gameObject.AddComponent<AudioSource>();
             SOAudioClip.LoadSFX(source, clip);
-            Destroy(gameObject, clip.Clip.length);
+            Destroy(gameObject, source.clip.length);
         }
 
         void Play(ParticleSystem vfx)
