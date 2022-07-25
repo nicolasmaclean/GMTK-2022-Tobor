@@ -11,5 +11,12 @@ namespace Game.Core
 
         [Range(0, 1)]
         public float Volume;
+        
+        public static void LoadSFX(AudioSource source, SOAudioClip clip)
+        {
+            source.clip = clip.Clip;
+            source.volume = clip.Volume;
+            source.Play();
+        }
     }
 }

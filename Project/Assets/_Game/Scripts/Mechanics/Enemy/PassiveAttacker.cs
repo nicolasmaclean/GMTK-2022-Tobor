@@ -37,9 +37,9 @@ namespace Game.Mechanics.Enemy
             _anim.LoadAnimationRandom(_idleAnimation);
         }
 
-        public override void Harm(float damage)
+        public override void Harm(float damage, Vector3 hitPosition, Vector3 hitNormal)
         {
-            base.Harm(damage);
+            base.Harm(damage, hitPosition, hitNormal);
             if (_passive)
             {
                 _passive = false;

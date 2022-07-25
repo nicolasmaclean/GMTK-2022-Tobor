@@ -23,7 +23,9 @@ public class SwordCollision : MonoBehaviour
     {
         EnemyBase em = other.GetComponentInParent<EnemyBase>();
         if (!em) return;
-    
-        em.Harm((int) _player.Sword.Damage);
+
+        Vector3 hitPosition = other.ClosestPoint(transform.position);
+        Vector3 hitNormal = (_player.transform.position - em.transform.position).normalized;
+        em.Harm((int) _player.Sword.Damage, hitPosition, hitNormal);
     }
 }
