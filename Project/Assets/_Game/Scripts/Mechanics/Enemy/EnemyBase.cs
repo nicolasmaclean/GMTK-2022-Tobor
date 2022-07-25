@@ -12,7 +12,7 @@ namespace Game.Mechanics.Enemy
 {
     [SelectionBase]
     [RequireComponent(typeof(NavMeshAgent))]
-    public abstract class EnemyBase : MonoBehaviour
+    public abstract class EnemyBase : MonoExtended
     {
         public float Health { get; protected set; }
         public Action<EnemyBase> OnKilled;
@@ -35,8 +35,8 @@ namespace Game.Mechanics.Enemy
         protected float _lastAttack;
         
         [Header("Events")]
-        public UnityEvent OnHurt;
-        public UnityEvent OnDead;
+        public UnityEvent<Vector3, Vector3> OnHurt;
+        public UnityEvent <Vector3> OnDead;
 
         [Header("Animations")]
         [SerializeField]
@@ -112,10 +112,10 @@ namespace Game.Mechanics.Enemy
 
         protected abstract void EnemyAttack();
 
-        public virtual void Harm(float damage)
+        public virtual void Harm(float damage, Vector3 hitPosition, Vector3 hitNormal)
         {
             Health -= damage * Modifiers.DamageMultiplier;
-            OnHurt?.Invoke();
+            OnHurt?.Invoke(hitPosition, hitNormal);
             
             if (Health <= 0)
             {
@@ -125,7 +125,7 @@ namespace Game.Mechanics.Enemy
 
         protected virtual void Kill()
         {
-            OnDead?.Invoke();
+            OnDead?.Invoke(transform.position);
             OnKilled?.Invoke(this);
             gameObject.SetActive(false);
         }
@@ -141,11 +141,6 @@ namespace Game.Mechanics.Enemy
             NavMeshPath path = new NavMeshPath();
             _agent.CalculatePath(_player.transform.position, path);
             return path;
-        }
-
-        public void PlaySFX(SOAudioClip clip)
-        {
-            SFXManager.PlaySFX(clip);
         }
     }
 }

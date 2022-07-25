@@ -170,6 +170,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animation: {fileID: 11400000, guid: 65e6e36dad167174a8e97275eed90261, type: 2}
+  _currentFrame: 0
+  _speedMultiplier: 1
 --- !u!1 &5836525155943502468
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,8 +243,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _baseHealth: 5
   _attack: 1
-  _damageRate: 6
-  _rangeOfAttack: 120
+  _attackSpeed: 2
+  _range: 3
+  _lastAttack: 0
   OnHurt:
     m_PersistentCalls:
       m_Calls:
@@ -253,6 +256,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: a90ec951f45cbba42ab1f43984110d9c, type: 2}
           m_ObjectArgumentAssemblyTypeName: Game.Core.SOAudioClip, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: -4555884122020277101, guid: ac02e46e0c9f2d047b48c2493e4a0970, type: 3}
+        m_TargetAssemblyTypeName: Game.Core.OneshotEffect, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -273,6 +288,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: -2497243540679649381, guid: b0411cdafe06cab46a6f33ca9db98eea, type: 3}
+        m_TargetAssemblyTypeName: Game.Core.OneshotEffect, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _walkAnimation: {fileID: 11400000, guid: 65e6e36dad167174a8e97275eed90261, type: 2}
   _attackAnimation: {fileID: 11400000, guid: 10b7465b9e868164aafe85960831db25, type: 2}
   _bulletSpawnPoint: {fileID: 5836525155098644751}
@@ -280,3 +307,4 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _bullet: {fileID: 7938779356315524346, guid: 589dae44a499a234299c6a878553a93d, type: 3}
+  _shootDelay: 3

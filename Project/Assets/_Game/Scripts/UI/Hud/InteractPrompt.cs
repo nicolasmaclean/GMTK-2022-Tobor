@@ -69,8 +69,6 @@ namespace Game.UI.Hud
             _initialPosition = _idleTarget.position;
         }
         
-        // need to integrate with HudController
-
         public void Enable()
         {
             _down = false;
@@ -148,11 +146,7 @@ namespace Game.UI.Hud
             }));
         }
 
-        public void Hide()
-        {
-            Disable();
-            // scale out (or fade) animation (use coroutine)
-        }
+        public void Hide() => Disable();
 
         public void Reset()
         {

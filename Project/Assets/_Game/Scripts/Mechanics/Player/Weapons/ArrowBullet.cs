@@ -9,9 +9,8 @@ using UnityEngine.Events;
 namespace Game.Mechanics.Enemy
 {
     [RequireComponent(typeof(Rigidbody))]
-    public class ArrowBullet : MonoBehaviour
+    public class ArrowBullet : MonoExtended
     {
-
         static float Damage
         {
             get
@@ -27,61 +26,44 @@ namespace Game.Mechanics.Enemy
         static float damage = -1f;
         
         [SerializeField]
-        float _arrowSpeed;
+        float _arrowSpeed = 100f;
 
         [SerializeField]
         float _lifeSpan = 20f;
         
         PlayerController _player;
-        float _timeAlive = 0;
         public UnityEvent OnHit;
 
-        void Awake()
+        void Start()
         {
             _player = PlayerController.Instance;
+            Destroy(gameObject, _lifeSpan);
         }
 
         void Update()
         {
             var t = transform;
             t.position += t.forward * (_arrowSpeed * Time.deltaTime);
-            
-            if (_timeAlive > _lifeSpan)
-            {
-                Die();
-            }
-            
-            _timeAlive += Time.deltaTime;
         }
 
         void OnTriggerEnter(Collider other)
         {
-            Transform parent = other.transform.parent;
-            if (!parent)
+            EnemyBase em = other.GetComponentInParent<EnemyBase>();
+            if (em)
             {
-                Destroy(gameObject, .01f);
-                return;
+                Vector3 hitPosition = other.ClosestPoint(transform.position);
+                Vector3 hitNormal = (_player.transform.position - em.transform.position).normalized;
+                em.Harm(Damage, hitPosition, hitNormal);
             }
             
-            EnemyBase em = parent.GetComponentInParent<EnemyBase>();
-            if (!em)
-            {
-                Die();
-                return;
-            }
-            
-            em.Harm(Damage);
+            Die();
         }
 
         void Die()
         {
             OnHit?.Invoke();
-            Destroy(gameObject, 0.01f);
-        }
-
-        public void PlaySFX(SOAudioClip clip)
-        {
-            SFXManager.PlaySFX(clip);
+            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
 }

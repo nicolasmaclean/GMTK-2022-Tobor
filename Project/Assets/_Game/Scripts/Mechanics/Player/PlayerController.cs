@@ -10,7 +10,7 @@ using UnityEngine.Serialization;
 
 namespace Game.Mechanics.Player
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoExtended
     {
         #region Public
         public static PlayerController Instance { get; private set; }
@@ -252,13 +252,6 @@ namespace Game.Mechanics.Player
             }
         }
         
-        #region Inspector Utilities
-        public void PlaySFX(SOAudioClip clip)
-        {
-            SFXManager.PlaySFX(clip);
-        }
-        #endregion
-
         readonly float HORIZON_DISTANCE = 75;
 
         #region Animator Constants

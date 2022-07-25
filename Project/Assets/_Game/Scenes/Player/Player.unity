@@ -1195,6 +1195,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PF_DiceRoller
       objectReference: {fileID: 0}
+    - target: {fileID: 3527886337142424226, guid: 9a842e709136c544382991f2c6c8cb6d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3527886337142424237, guid: 9a842e709136c544382991f2c6c8cb6d, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -1629,10 +1633,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PF_Slime
       objectReference: {fileID: 0}
-    - target: {fileID: 5836525155943502468, guid: a8801fbe2ce8e4c4c89e4996dc5453ec, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5836525155943502469, guid: a8801fbe2ce8e4c4c89e4996dc5453ec, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1676,10 +1676,6 @@ PrefabInstance:
     - target: {fileID: 5836525155943502469, guid: a8801fbe2ce8e4c4c89e4996dc5453ec, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5836525155943502470, guid: a8801fbe2ce8e4c4c89e4996dc5453ec, type: 3}
-      propertyPath: _range
-      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8801fbe2ce8e4c4c89e4996dc5453ec, type: 3}
