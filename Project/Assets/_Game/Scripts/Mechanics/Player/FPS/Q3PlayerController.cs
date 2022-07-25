@@ -23,9 +23,10 @@ namespace Game.Mechanics.Player.FPS
         
         [SerializeField]
         float m_Gravity = 20;
-        
+
         [SerializeField]
-        float m_JumpForce = 8;
+        [Tooltip("Unity meters jump will go vertically. Adjusting this at runtime will not behave as intended.")]
+        float m_jumpHeight = 5f;
         
         [SerializeField] 
         [Tooltip("Automatically jump when holding jump button")]
@@ -43,6 +44,38 @@ namespace Game.Mechanics.Player.FPS
         
         [SerializeField]
         MovementSettings m_StrafeSettings = new MovementSettings(1, 50, 50);
+        
+        [Header("Debug")]
+        [SerializeField]
+        [Utility.ReadOnly]
+        float m_JumpForce;
+        
+        [SerializeField]
+        [Utility.ReadOnly]
+        float _speedMultiplier = 1;
+
+#if UNITY_EDITOR
+        [SerializeField]
+        [Utility.ReadOnly]
+        float _jumpMultiplier = 1;
+        
+        
+        [SerializeField]
+        [Utility.ReadOnly]
+        float _currentSpeed;
+
+        [SerializeField]
+        [Utility.ReadOnly]
+        bool _grounded;
+
+        [SerializeField]
+        [Utility.ReadOnly]
+        float _deltaTime;
+
+        [SerializeField]
+        [Utility.ReadOnly]
+        float _appliedVelocity;
+#endif
         
         /// <summary>
         /// Returns player's current speed.
@@ -71,6 +104,8 @@ namespace Game.Mechanics.Player.FPS
 
             m_CamTran = m_Camera.transform;
             m_MouseLook.Init(m_Tran, m_CamTran);
+
+            m_JumpForce = CalculateJumpForce(m_jumpHeight);
             
             GameMenuController.Instance.OnStop.AddListener(Disable);
             GameMenuController.Instance.OnResume.AddListener(Enable);
@@ -87,6 +122,7 @@ namespace Game.Mechanics.Player.FPS
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+            Modifiers.OnChange += ApplyModifiers;
         }
 
         void Disable() => enabled = false;
@@ -94,6 +130,7 @@ namespace Game.Mechanics.Player.FPS
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+            Modifiers.OnChange -= ApplyModifiers;
         }
 
         void Update()
@@ -115,10 +152,32 @@ namespace Game.Mechanics.Player.FPS
             m_MouseLook.LookRotation(m_Tran, m_CamTran);
 
             // Move the character.
-            m_Character.Move(m_PlayerVelocity * Time.deltaTime);
+            Vector3 velocity = m_PlayerVelocity;
+            velocity.x *= _speedMultiplier;
+            velocity.z *= _speedMultiplier;
+            m_Character.Move(velocity * Time.deltaTime);
+
+#if UNITY_EDITOR
+            _currentSpeed = velocity.magnitude;
+            _grounded = m_Character.isGrounded;
+            _deltaTime = Time.deltaTime;
+            _appliedVelocity = (m_PlayerVelocity * Time.deltaTime).magnitude;
+#endif
         }
 
-        // Queues the next jump.
+        void ApplyModifiers()
+        {
+            _speedMultiplier = Modifiers.SpeedMultiplier;
+            m_JumpForce = CalculateJumpForce(m_jumpHeight * Modifiers.JumpMultiplier);
+            
+#if UNITY_EDITOR
+            _jumpMultiplier  = Modifiers.JumpMultiplier;
+#endif
+        }
+
+        /// <summary>
+        /// Queues the next jump
+        /// </summary>
         void QueueJump()
         {
             if (m_AutoBunnyHop)
@@ -138,7 +197,9 @@ namespace Game.Mechanics.Player.FPS
             }
         }
 
-        // Handle air movement.
+        /// <summary>
+        /// Handle air movement
+        /// </summary>
         void AirMove()
         {
             float accel;
@@ -149,7 +210,7 @@ namespace Game.Mechanics.Player.FPS
             float wishspeed = wishdir.magnitude;
             wishspeed *= m_AirSettings.MaxSpeed;
 
-            wishdir.Normalize();
+            wishdir = wishdir.normalized;
 
             // CPM Air control.
             float wishspeed2 = wishspeed;
@@ -183,8 +244,12 @@ namespace Game.Mechanics.Player.FPS
             m_PlayerVelocity.y -= m_Gravity * Time.deltaTime;
         }
 
-        // Air control occurs when the player is in the air, it allows players to move side 
-        // to side much faster rather than being 'sluggish' when it comes to cornering.
+        /// <summary>
+        /// Air control occurs when the player is in the air, it allows players to move side 
+        /// to side much faster rather than being 'sluggish' when it comes to cornering
+        /// </summary>
+        /// <param name="targetDir"></param>
+        /// <param name="targetSpeed"></param>
         void AirControl(Vector3 targetDir, float targetSpeed)
         {
             // Only control air movement when moving forward or backward.
@@ -218,7 +283,9 @@ namespace Game.Mechanics.Player.FPS
             m_PlayerVelocity.z *= speed;
         }
 
-        // Handle ground movement.
+        /// <summary>
+        /// Handle ground movement
+        /// </summary>
         void GroundMove()
         {
             // Do not apply friction if the player is queueing up the next jump
@@ -299,6 +366,11 @@ namespace Game.Mechanics.Player.FPS
 
             m_PlayerVelocity.x += accelspeed * targetDir.x;
             m_PlayerVelocity.z += accelspeed * targetDir.z;
+        }
+
+        float CalculateJumpForce(float height)
+        {
+            return Mathf.Sqrt(2 * m_Gravity * height);
         }
     }
     

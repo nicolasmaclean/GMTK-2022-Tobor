@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Game.Mechanics.Player;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Game.Utility.UI
@@ -16,14 +17,21 @@ namespace Game.Utility.UI
         [ReadOnly]
         int _currentFrame;
         
-        [SerializeField]
-        SOSpriteAnimation _animation;
+        [FormerlySerializedAs("_animation"),SerializeField]
+        public SOSpriteAnimation Animation;
 
-        [SerializeField]
-        bool _oneShot = false;
+        [FormerlySerializedAs("_oneShot"),SerializeField]
+        public bool IsOneShot = false;
 
         Image _image;
         float _timer = 0;
+
+        public static AnimatedImage Create(SOSpriteAnimation data)
+        {
+            AnimatedImage img = new GameObject(data.name).AddComponent<Image>().gameObject.AddComponent<AnimatedImage>();
+            img.Animation = data;
+            return img;
+        }
 
         void Awake()
         {
@@ -38,7 +46,7 @@ namespace Game.Utility.UI
         void OnValidate()
         {
             if (!_image) _image = GetComponent<Image>();
-            if (!_animation)
+            if (!Animation)
             {
                 _image.sprite = null;
                 return;
@@ -61,24 +69,24 @@ namespace Game.Utility.UI
         void NextFrame()
         {
             _currentFrame++;
-            if (_currentFrame >= _animation.Frames.Length)
+            if (_currentFrame >= Animation.Frames.Length)
             {
-                if (_oneShot)
+                if (IsOneShot)
                 {
-                    this.enabled = false;
+                    Destroy(gameObject);
                     return;
                 }
                 _currentFrame = 0;
             }
 
-            _image.sprite = _animation.Frames[_currentFrame];
+            _image.sprite = Animation.Frames[_currentFrame];
         }
 
         void LoadAnimation()
         {
-            Spf = 1f / _animation.Fps;
-            _currentFrame = _animation.InitialFrame;
-            _image.sprite = _animation.Frames[_currentFrame];
+            Spf = 1f / Animation.Fps;
+            _currentFrame = Animation.InitialFrame;
+            _image.sprite = Animation.Frames[_currentFrame];
         }
     }
 }

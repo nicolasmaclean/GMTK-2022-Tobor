@@ -12,5 +12,7 @@ namespace Game.UI.Hud
 
         public static void Show() => OnShow?.Invoke();
         public static void Hide() => OnHide?.Invoke();
+
+        public static InteractPrompt InteractPrompt;
     }
 }

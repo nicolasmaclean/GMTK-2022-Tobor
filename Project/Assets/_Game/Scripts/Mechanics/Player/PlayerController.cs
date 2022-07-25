@@ -10,7 +10,7 @@ using UnityEngine.Serialization;
 
 namespace Game.Mechanics.Player
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoExtended
     {
         #region Public
         public static PlayerController Instance { get; private set; }
@@ -22,9 +22,9 @@ namespace Game.Mechanics.Player
                 return _health;
             }
         }
-
-        [FormerlySerializedAs("OnAttack"),Header("Events")]
-        public UnityEvent OnSwordAttack;
+        
+        [FormerlySerializedAs("OnSwordAttack"),FormerlySerializedAs("OnAttack"),Header("Events")]
+        public UnityEvent OnSwordSwing;
         
         [FormerlySerializedAs("OnShoot")]
         public UnityEvent OnBowAttack;
@@ -45,6 +45,9 @@ namespace Game.Mechanics.Player
 
         [SerializeField]
         KeyCode _bowAttackKey = KeyCode.Mouse1;
+
+        [SerializeField]
+        public KeyCode InteractKey = KeyCode.E;
 
         [Header("Sword")]
         [SerializeField]
@@ -172,8 +175,9 @@ namespace Game.Mechanics.Player
             }
 
             _swordAnimator.SetTrigger(trigger_swing);
-            OnSwordAttack?.Invoke();
         }
+        
+        public void SwordSwing() => OnSwordSwing?.Invoke();
 
         void BowAttack()
         {
@@ -198,6 +202,17 @@ namespace Game.Mechanics.Player
             var pos = _arrowSpawn.transform.position;
             GameObject currentBullet = Instantiate(PF_Arrow, pos, Quaternion.identity);
             currentBullet.transform.forward = targetPoint - pos;
+        }
+
+        public void PlayRollAnimation()
+        {
+            _bowAnimator.SetTrigger(AT_BOW_ROLL_ST);
+            _bowAnimator.ResetTrigger(AT_BOW_ROLL_END);
+        }
+
+        public void FinishRollAnimation()
+        {
+            _bowAnimator.SetTrigger(AT_BOW_ROLL_END);
         }
 
         void UpdateSwordCollider()
@@ -239,19 +254,13 @@ namespace Game.Mechanics.Player
             }
         }
         
-        #region Inspector Utilities
-        public void PlaySFX(SOAudioClip clip)
-        {
-            SFXManager.PlaySFX(clip);
-        }
-        #endregion
-
         readonly float HORIZON_DISTANCE = 75;
 
         #region Animator Constants
         readonly String AT_SWORD_ATTACK = "Attack_";
         readonly String AT_BOW_FIRE     = "Fire";
-        // readonly String AT_BOW_ROLL     = "Roll";
+        readonly String AT_BOW_ROLL_ST  = "RollStart";
+        readonly String AT_BOW_ROLL_END = "RollEnd";
         #endregion
     }
 }
