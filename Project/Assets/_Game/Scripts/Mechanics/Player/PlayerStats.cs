@@ -42,7 +42,6 @@ namespace Game.Mechanics.Player
 
         [Range(1, 20)]
         public int Perception = 1;
-        public Vector2 PerceptionRange = new Vector2(.4f, .1f);
         #endregion
         
         public static PlayerStats CreateRandom()

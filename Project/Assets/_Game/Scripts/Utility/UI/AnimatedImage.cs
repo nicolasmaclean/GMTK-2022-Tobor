@@ -73,7 +73,6 @@ namespace Game.Utility.UI
             {
                 if (IsOneShot)
                 {
-                    Destroy(gameObject);
                     return;
                 }
                 _currentFrame = 0;
