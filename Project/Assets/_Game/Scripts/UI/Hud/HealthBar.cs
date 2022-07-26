@@ -15,9 +15,13 @@ namespace Game.UI.HUD
         float _updateFactor = 15f;
 
         [SerializeField]
-        Image _heart;
+        Image _icon;
+
+        [SerializeField]
+        Sprite _heart;
         
         Slider _slider;
+        float _target;
 
         void Awake()
         {
@@ -29,14 +33,20 @@ namespace Game.UI.HUD
             _slider.minValue = 0;
             _slider.maxValue = PlayerStats.Instance.ConstitutionRange.y;
 
-            _slider.value = PlayerController.Instance.Health;
+            _slider.value = _target = PlayerController.Instance.Health;
         }
 
         Coroutine updateAnimation = null;
         public void UpdateHeatlh(float health)
         {
+            if (health > _target)
+            {
+                _icon.sprite = _heart;
+                _icon.color = Color.white;
+            }
             if (updateAnimation != null) StopCoroutine(updateAnimation);
             updateAnimation = StartCoroutine(Tween.SliderNonLerp(_slider, health, _updateFactor));
+            _target = health;
         }
     }
 }

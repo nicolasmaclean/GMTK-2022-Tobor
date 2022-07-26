@@ -110,5 +110,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a6ea53f249dc0f44ab311f02b9f9122, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _vignette: {x: 0.1, y: 0.55}
-  _aberration: {x: 0.05, y: 0.2}
+  _vignette: {x: 0.1, y: 0.75}
+  _aberration: {x: 0.05, y: 0.45}
