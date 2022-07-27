@@ -85,6 +85,7 @@ GameObject:
   - component: {fileID: 5836525155203262617}
   - component: {fileID: 5836525155203262619}
   - component: {fileID: 5836525155203262618}
+  - component: {fileID: 5052350676284130266}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -170,6 +171,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animation: {fileID: 11400000, guid: 65e6e36dad167174a8e97275eed90261, type: 2}
+  _currentFrame: 0
+  _speedMultiplier: 1
+--- !u!114 &5052350676284130266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5836525155203262616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6d8fa6c884f95e428c996ba3bee70f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 10
+  angle: 30
+  height: 1
+  meshColor: {r: 1, g: 0, b: 0, a: 1}
+  scanFrequency: 30
+  layers:
+    serializedVersion: 2
+    m_Bits: 64
+  occlusionLayers:
+    serializedVersion: 2
+    m_Bits: 1
+  Objects: []
 --- !u!1 &5836525155943502468
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,8 +268,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _baseHealth: 5
   _attack: 1
-  _damageRate: 6
-  _rangeOfAttack: 120
+  _attackSpeed: 2
+  _range: 3
+  _lastAttack: 0
   OnHurt:
     m_PersistentCalls:
       m_Calls:
@@ -279,4 +307,6 @@ MonoBehaviour:
   OnShoot:
     m_PersistentCalls:
       m_Calls: []
+  sensor: {fileID: 5052350676284130266}
   _bullet: {fileID: 7938779356315524346, guid: 589dae44a499a234299c6a878553a93d, type: 3}
+  _shootDelay: 3

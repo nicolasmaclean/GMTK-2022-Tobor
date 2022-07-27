@@ -1200,7 +1200,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17e6bf092cc04dea81cb16561b3eb1d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Pressed: 0
   _holdBar: {fileID: 2635423920760141928}
   _cycleLength: 1
   _currentTime: 0
