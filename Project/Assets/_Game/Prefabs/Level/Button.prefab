@@ -94,8 +94,8 @@ MonoBehaviour:
       m_Calls: []
   _isEnabled: 0
   _enabledOnStart: 0
-  _enabled: {r: 0, g: 6.548584, b: 64, a: 0}
-  _activated: {r: 0, g: 63.999992, b: 0.0355072, a: 0}
+  _enabled: {r: 0, g: 191.74902, b: 0, a: 0}
+  _activated: {r: 95.87451, g: 0, b: 0, a: 0}
 --- !u!1001 &5381363028412477823
 PrefabInstance:
   m_ObjectHideFlags: 0
