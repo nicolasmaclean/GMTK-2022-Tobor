@@ -8,7 +8,10 @@ namespace Game.Mechanics.Level
 {
     public class Interactable : MonoBehaviour
     {
-        public UnityEvent OnInteract; 
+        public UnityEvent OnInteract;
+
+        [SerializeField]
+        InteractionType _type = InteractionType.None;
         
         PlayerTrigger _playerTrigger;
         KeyCode _key;
@@ -43,6 +46,15 @@ namespace Game.Mechanics.Level
             Hide();
             OnInteract?.Invoke();
             this.enabled = false;
+
+            if (_type == InteractionType.Brand)
+            {
+                PlayerController.Instance.PlayBrandAnimation();
+            }
+            else if (_type == InteractionType.Weapons)
+            {
+                PlayerController.Instance.PlayPickupAnimation();
+            }
         }
 
         bool _playerInRange = false;
@@ -56,6 +68,11 @@ namespace Game.Mechanics.Level
         {
             ClickPrompt.Instance.Hide();
             _playerInRange = false;
+        }
+
+        enum InteractionType
+        {
+            None = 0, Brand = 1, Weapons = 2
         }
     }
 }

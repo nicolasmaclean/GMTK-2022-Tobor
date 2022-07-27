@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Game.Core;
+using Game.Mechanics.Level;
 using Game.Mechanics.Player;
 using UnityEngine;
 using UnityEngine.Events;
@@ -49,11 +50,16 @@ namespace Game.Mechanics.Enemy
         void OnTriggerEnter(Collider other)
         {
             EnemyBase em = other.GetComponentInParent<EnemyBase>();
+            ShootButton btn = other.GetComponentInParent<ShootButton>();
             if (em)
             {
                 Vector3 hitPosition = other.ClosestPoint(transform.position);
                 Vector3 hitNormal = (_player.transform.position - em.transform.position).normalized;
                 em.Harm(Damage, hitPosition, hitNormal);
+            }
+            else if (btn)
+            {
+                btn.Activate();
             }
             
             Die();

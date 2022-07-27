@@ -1,35 +1,56 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-[RequireComponent(typeof(Renderer))]
-public class ShootButton : MonoBehaviour
+namespace Game.Mechanics.Level
 {
-    [SerializeField]
-    [ColorUsage(false, true)]
-    Color _enabled;
-    
-    [SerializeField]
-    [ColorUsage(false, true)]
-    Color _activated;
-    
-    Material _mat;
-
-    void Awake()
+    public class ShootButton : MonoBehaviour
     {
-        Renderer rend = GetComponent<Renderer>();
-        _mat = rend.material;
-    }
+        public UnityEvent OnShot;
+
+        [SerializeField]
+        [Utility.ReadOnly]
+        bool _isEnabled;
     
-    public void Enable()
-    {
-        _mat.SetColor(S_EMISSION, _enabled);
-    }
+        [SerializeField]
+        bool _enabledOnStart = false;
+    
+        [SerializeField]
+        [ColorUsage(false, true)]
+        Color _enabled;
+    
+        [SerializeField]
+        [ColorUsage(false, true)]
+        Color _activated;
+    
+        Material _mat;
 
-    public void Activate()
-    {
-        _mat.SetColor(S_EMISSION, _activated);
-    }
+        void Awake()
+        {
+            Renderer rend = GetComponentInChildren<Renderer>();
+            _mat = rend.material;
+        }
 
-    readonly static int S_EMISSION = Shader.PropertyToID("_EmissiveColor");
+        void Start()
+        {
+            if (!_enabledOnStart) return;
+            Enable();
+        }
+    
+        public void Enable()
+        {
+            _mat.SetColor(S_EMISSION, _enabled);
+            _isEnabled = true;
+        }
+
+        public void Activate()
+        {
+            if (!_isEnabled) return;
+            _mat.SetColor(S_EMISSION, _activated);
+            OnShot?.Invoke();
+        }
+
+        readonly static int S_EMISSION = Shader.PropertyToID("_EmissiveColor");
+    }
 }
