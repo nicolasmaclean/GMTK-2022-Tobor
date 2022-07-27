@@ -5,6 +5,7 @@ using System.Linq;
 using Game.Core;
 using Game.Mechanics.Player;
 using Game.UI.Hud;
+using Game.Utility.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
@@ -44,6 +45,12 @@ namespace Game.Mechanics.Level
 
         [SerializeField]
         Renderer _displayRenderer;
+
+        [SerializeField]
+        AnimationCurve _swapIn;
+
+        [SerializeField]
+        AnimationCurve _swapOut;
 
         [Header("Colliders")]
         [SerializeField]
@@ -165,8 +172,21 @@ namespace Game.Mechanics.Level
         {
             _diceAmount = (_diceAmount + 1) % 6;
             if (_diceAmount == 0) _diceAmount++;
-            
-            _displayMaterial.mainTexture = _displayTextures[_diceAmount];
+
+            StartCoroutine(DissolveSwapDissolve());
+
+            IEnumerator DissolveSwapDissolve()
+            {
+                yield return StartCoroutine(Tween.UseCurve(_swapIn, (val) =>
+                {
+                    _displayMaterial.SetFloat(P_DISSOLVE, Mathf.Clamp(val, 0, 1));
+                }));
+                _displayMaterial.mainTexture = _displayTextures[_diceAmount];
+                yield return StartCoroutine(Tween.UseCurve(_swapOut, (val) =>
+                {
+                    _displayMaterial.SetFloat(P_DISSOLVE, Mathf.Clamp(val, 0, 1));
+                }));
+            }
         }
 
         void Roll(int numberOfDice)
@@ -218,5 +238,6 @@ namespace Game.Mechanics.Level
 
         readonly String AT_ROLL = "Rolled";
         readonly String AT_APPROACH = "Approached";
+        readonly int P_DISSOLVE = Shader.PropertyToID("_Dissolve");
     }
 }
