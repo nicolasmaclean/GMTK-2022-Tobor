@@ -80,6 +80,9 @@ namespace Game.Mechanics.Player
         [SerializeField]
         GameObject PF_Arrow;
 
+        [SerializeField]
+        float _pickupDelay = 1f;
+
         Collider _swordCollider;
         #endregion
 
@@ -237,6 +240,21 @@ namespace Game.Mechanics.Player
             _bowAnimator.SetTrigger(AT_BOW_ROLL_END);
         }
 
+        public void PlayBrandAnimation()
+        {
+            _bowAnimator.SetTrigger(AT_BOW_BRAND);
+        }
+
+        public void PlayPickupAnimation()
+        {
+            _swordAnimator.SetBool(AT_SWORD_PICK, true);
+            
+            StartCoroutine(Coroutines.WaitThen(_pickupDelay, () =>
+            {
+                _bowAnimator.SetBool(AT_BOW_PICK, true);
+            }));
+        }
+
         void UpdateSwordCollider()
         {
             if (_swordAnimator.IsInTransition(0))
@@ -260,15 +278,15 @@ namespace Game.Mechanics.Player
             }
         }
         #endregion
-        
+
+        #region DEATH
         public void Hurt(float damage)
         {
             Health -= damage * Modifiers.DamageMultiplier;
 
             if (Health <= 0)
             {
-                OnDeath?.Invoke();
-                GameMenuController.Lose();
+                Kill();
             }
             else
             {
@@ -276,14 +294,26 @@ namespace Game.Mechanics.Player
                 OnHealthChange?.Invoke(Health);
             }
         }
-        
-        readonly float HORIZON_DISTANCE = 75;
 
-        #region Animator Constants
-        readonly String AT_SWORD_ATTACK = "Attack_";
-        readonly String AT_BOW_FIRE     = "Fire";
-        readonly String AT_BOW_ROLL_ST  = "RollStart";
-        readonly String AT_BOW_ROLL_END = "RollEnd";
+        public void Kill()
+        {
+            OnDeath?.Invoke();
+            GameMenuController.Lose();
+        }
+        #endregion
+        
+        #region Constants
+        
+        const float HORIZON_DISTANCE = 75;
+        
+        const string AT_SWORD_ATTACK        = "Attack_";
+        static readonly int AT_SWORD_PICK   = Animator.StringToHash("Pickup");
+        
+        static readonly int AT_BOW_FIRE     = Animator.StringToHash("Fire");
+        static readonly int AT_BOW_ROLL_ST  = Animator.StringToHash("RollStart");
+        static readonly int AT_BOW_ROLL_END = Animator.StringToHash("RollEnd");
+        static readonly int AT_BOW_BRAND    = Animator.StringToHash("Branded");
+        static readonly int AT_BOW_PICK     = Animator.StringToHash("Pickup");
         #endregion
     }
 }

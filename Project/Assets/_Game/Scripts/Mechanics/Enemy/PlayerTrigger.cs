@@ -31,4 +31,9 @@ public class PlayerTrigger : MonoBehaviour
         PlayerIsIn = false;
         OnExit?.Invoke();
     }
+
+    public void KillPlayer()
+    {
+        PlayerController.Instance.Kill();
+    }
 }
