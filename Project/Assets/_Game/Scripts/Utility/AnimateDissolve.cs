@@ -10,6 +10,9 @@ namespace Game.Utility
     public class AnimateDissolve : MonoBehaviour
     {
         [SerializeField]
+        int _matIndex = 0;
+        
+        [SerializeField]
         AnimationCurve _inCurve = AnimationCurve.Linear(0, 0, 1, 1);
         
         [SerializeField]
@@ -22,7 +25,7 @@ namespace Game.Utility
         void Awake()
         {
             Renderer rend = GetComponent<Renderer>();
-            _mat = rend.material;
+            _mat = rend.materials[_matIndex];
         }
 
         void Start()

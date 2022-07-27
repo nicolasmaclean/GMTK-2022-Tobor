@@ -213,14 +213,14 @@ namespace Game.Mechanics.Level
             _animator.SetBool(AT_ROLL, true);
             Modifiers.SetMultipliers(rolls[0], rolls[1], rolls[2], rolls[3], rolls[4], rolls[5]);
             
-            #if UNITY_EDITOR
-            int index = SceneManager.GetActiveScene().buildIndex;
-            if (index == -1 || 3 <= index) return;
-            #endif
-            StartCoroutine(WaitThen(3.3f, () =>
-            {
-                LevelController.CurrentRoom.Done();
-            }));
+            // #if UNITY_EDITOR
+            // int index = SceneManager.GetActiveScene().buildIndex;
+            // if (index == -1 || 3 <= index) return;
+            // #endif
+            // StartCoroutine(WaitThen(3.3f, () =>
+            // {
+            //     LevelController.CurrentRoom.Done();
+            // }));
         }
 
         void ShowDie(GameObject die, int num)
