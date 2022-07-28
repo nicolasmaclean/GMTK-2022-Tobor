@@ -134,6 +134,11 @@ namespace Game.UI
             Paused = false;
             SceneController.LoadScene(GameScene.Start);
         }
+        
+        public void Credits()
+        {
+            SceneController.LoadScene(GameScene.Credits);
+        }
 
         public void Quit()
         {
