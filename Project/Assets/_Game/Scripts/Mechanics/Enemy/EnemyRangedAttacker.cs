@@ -18,7 +18,7 @@ namespace Game.Mechanics.Enemy
         [SerializeField]
         Transform _bulletSpawnPoint;
         public UnityEvent OnShoot;
-        [SerializeField] public EnemyAISensor sensor;
+        EnemyAISensor sensor;
 
         [SerializeField]
         GameObject _bullet;
@@ -29,7 +29,7 @@ namespace Game.Mechanics.Enemy
         protected override void OnStart()
         {
             base.OnStart();
-            sensor = GetComponent<EnemyAISensor>();
+            sensor = GetComponentInChildren<EnemyAISensor>();
         }
         protected override void EnemyAttack()
         {
