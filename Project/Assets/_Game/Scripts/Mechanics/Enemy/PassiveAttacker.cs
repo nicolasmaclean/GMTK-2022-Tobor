@@ -24,6 +24,13 @@ namespace Game.Mechanics.Enemy
         [SerializeField]
         public UnityEvent OnAttack;
 
+        [Header("Colliders")]
+        [SerializeField]
+        Collider _deafultCollider;
+        
+        [SerializeField]
+        Collider _aggressiveCollider;
+
         PlayerTrigger _playerTrigger;
         bool _passive = true;
 
@@ -36,6 +43,7 @@ namespace Game.Mechanics.Enemy
         protected override void OnStart()
         {
             _anim.LoadAnimationRandom(_idleAnimation);
+            _aggressiveCollider.gameObject.SetActive(false);
         }
 
         public override void Harm(float damage, Vector3 hitPosition, Vector3 hitNormal)
@@ -44,6 +52,10 @@ namespace Game.Mechanics.Enemy
             if (_passive)
             {
                 _passive = false;
+                
+                _deafultCollider.gameObject.SetActive(false);
+                _aggressiveCollider.gameObject.SetActive(true);
+                
                 _anim.PlayOneShot(_transformAnimation, () =>
                 {
                     _anim.LoadAnimation(_walkAnimation);
