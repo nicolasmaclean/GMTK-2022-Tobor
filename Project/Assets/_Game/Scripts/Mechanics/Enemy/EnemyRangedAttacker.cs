@@ -32,6 +32,7 @@ namespace Game.Mechanics.Enemy
             base.OnStart();
             _sensor = GetComponentInChildren<EnemyAISensor>();
         }
+
         protected override void EnemyAttack()
         {
             if (_sensor.IsInSight(_player.gameObject))
@@ -52,7 +53,5 @@ namespace Game.Mechanics.Enemy
                 }));
             }
         }
-
-        
     }
 }

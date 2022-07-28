@@ -85,7 +85,7 @@ GameObject:
   - component: {fileID: 5836525155203262617}
   - component: {fileID: 5836525155203262619}
   - component: {fileID: 5836525155203262618}
-  - component: {fileID: 7469772729386299542}
+  - component: {fileID: 3394716169185614783}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -173,7 +173,7 @@ MonoBehaviour:
   _animation: {fileID: 11400000, guid: 65e6e36dad167174a8e97275eed90261, type: 2}
   _currentFrame: 0
   _speedMultiplier: 1
---- !u!114 &7469772729386299542
+--- !u!114 &3394716169185614783
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -185,9 +185,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6d8fa6c884f95e428c996ba3bee70f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 10
-  angle: 30
-  height: 1
+  distance: 18.57
+  angle: 22.49
+  height: 4.2
   meshColor: {r: 1, g: 0, b: 0, a: 1}
   scanFrequency: 30
   layers:
@@ -269,8 +269,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _baseHealth: 5
   _attack: 1
-  _attackSpeed: 2
-  _range: 3
+  _attackSpeed: 3.4
+  _range: 18.57
   _lastAttack: 0
   OnHurt:
     m_PersistentCalls:
@@ -332,7 +332,6 @@ MonoBehaviour:
   OnShoot:
     m_PersistentCalls:
       m_Calls: []
-  sensor: {fileID: 7469772729386299542}
   _bullet: {fileID: 7938779356315524346, guid: 589dae44a499a234299c6a878553a93d, type: 3}
   _shootDelay: 3
 --- !u!1001 &9049218334313791217
@@ -345,6 +344,10 @@ PrefabInstance:
     - target: {fileID: 3888484830202856793, guid: 190d931245f8fdd4fb3f590bc4d54e27, type: 3}
       propertyPath: m_Name
       value: PS_SlimeMove
+      objectReference: {fileID: 0}
+    - target: {fileID: 3888484830202856795, guid: 190d931245f8fdd4fb3f590bc4d54e27, type: 3}
+      propertyPath: ShapeModule.m_Rotation.y
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 3888484830202856796, guid: 190d931245f8fdd4fb3f590bc4d54e27, type: 3}
       propertyPath: m_RootOrder
