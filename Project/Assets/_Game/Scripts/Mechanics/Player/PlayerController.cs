@@ -1,30 +1,35 @@
 ﻿using System;
 using System.Linq;
 using Game.Core;
+using Game.Mechanics.Level;
 using Game.UI;
 using Game.Utility;
-using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 namespace Game.Mechanics.Player
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoExtended
     {
         #region Public
         public static PlayerController Instance { get; private set; }
-        
+
+        public UnityEvent<float> OnHealthChange;
         public float Health
         {
             get
             {
                 return _health;
             }
+            set
+            {
+                _health = Mathf.Clamp(value, 0, _maxHealth);
+            }
         }
         
-        [FormerlySerializedAs("OnAttack"),Header("Events")]
-        public UnityEvent OnSwordAttack;
+        [FormerlySerializedAs("OnSwordAttack"),FormerlySerializedAs("OnAttack"),Header("Events")]
+        public UnityEvent OnSwordSwing;
         
         [FormerlySerializedAs("OnShoot")]
         public UnityEvent OnBowAttack;
@@ -38,6 +43,10 @@ namespace Game.Mechanics.Player
         [SerializeField]
         [ReadOnly]
         float _health = 0;
+        
+        [SerializeField]
+        [ReadOnly]
+        float _maxHealth;
 
         [Header("Controls")]
         [SerializeField]
@@ -71,6 +80,9 @@ namespace Game.Mechanics.Player
         [SerializeField]
         GameObject PF_Arrow;
 
+        [SerializeField]
+        float _pickupDelay = 1f;
+
         Collider _swordCollider;
         #endregion
 
@@ -87,13 +99,14 @@ namespace Game.Mechanics.Player
             }
 
             _swordCollider = GetComponentInChildren<SwordCollision>(true).GetComponent<Collider>();
+
+            _maxHealth = PlayerStats.Instance.ConstitutionRange.y;
+            SetHealth();
         }
 
         void Start()
         {
-            SetHealth();
-            SetAttackSpeed();
-            Modifiers.OnChange += SetAttackSpeed;
+            Modifiers.OnChange += ApplyModifiers;
         }
 
         void OnDestroy()
@@ -101,7 +114,7 @@ namespace Game.Mechanics.Player
             if (Instance != this) return;
             
             Instance = null;
-            Modifiers.OnChange -= SetAttackSpeed;
+            Modifiers.OnChange -= ApplyModifiers;
         }
 
         void Update()
@@ -122,13 +135,26 @@ namespace Game.Mechanics.Player
         #region Stats
         void SetHealth()
         {
-            _health = PlayerStats.GetInRange(PlayerStats.Instance.Constitution, PlayerStats.Instance.ConstitutionRange);
+            Health = PlayerStats.GetInRange(PlayerStats.Instance.Constitution, PlayerStats.Instance.ConstitutionRange);
         }
 
-        void SetAttackSpeed()
+        void ApplyModifiers()
         {
             _swordAnimator.speed = Modifiers.AttackSpeedMultiplier;
             _bowAnimator.speed   = Modifiers.AttackSpeedMultiplier;
+
+            float oldHealth = Health;
+            Health += Heal(Modifiers.Heal);
+            if (Math.Abs(oldHealth - Health) > .01f)
+            {
+                OnHealthChange?.Invoke(Health);
+            }
+        }
+
+        float Heal(float amount)
+        {
+            float scale = PlayerStats.Instance.ConstitutionRange.y / 5;
+            return amount == 0 ? 0 : scale * Mathf.Pow(2, amount - 1); // (max / 10) * 2^(x-1) / 2
         }
         #endregion
         
@@ -174,8 +200,9 @@ namespace Game.Mechanics.Player
             }
 
             _swordAnimator.SetTrigger(trigger_swing);
-            OnSwordAttack?.Invoke();
         }
+        
+        public void SwordSwing() => OnSwordSwing?.Invoke();
 
         void BowAttack()
         {
@@ -213,6 +240,21 @@ namespace Game.Mechanics.Player
             _bowAnimator.SetTrigger(AT_BOW_ROLL_END);
         }
 
+        public void PlayBrandAnimation()
+        {
+            _bowAnimator.SetTrigger(AT_BOW_BRAND);
+        }
+
+        public void PlayPickupAnimation()
+        {
+            _swordAnimator.SetBool(AT_SWORD_PICK, true);
+            
+            StartCoroutine(Coroutines.WaitThen(_pickupDelay, () =>
+            {
+                _bowAnimator.SetBool(AT_BOW_PICK, true);
+            }));
+        }
+
         void UpdateSwordCollider()
         {
             if (_swordAnimator.IsInTransition(0))
@@ -236,36 +278,42 @@ namespace Game.Mechanics.Player
             }
         }
         #endregion
-        
+
+        #region DEATH
         public void Hurt(float damage)
         {
-            _health -= damage * Modifiers.DamageMultiplier;
+            Health -= damage * Modifiers.DamageMultiplier;
 
-            if (_health < 0)
+            if (Health <= 0)
             {
-                OnDeath?.Invoke();
-                GameMenuController.Lose();
+                Kill();
             }
             else
             {
                 OnHurt?.Invoke();
+                OnHealthChange?.Invoke(Health);
             }
         }
-        
-        #region Inspector Utilities
-        public void PlaySFX(SOAudioClip clip)
+
+        public void Kill()
         {
-            SFXManager.PlaySFX(clip);
+            OnDeath?.Invoke();
+            GameMenuController.Lose();
         }
         #endregion
-
-        readonly float HORIZON_DISTANCE = 75;
-
-        #region Animator Constants
-        readonly String AT_SWORD_ATTACK = "Attack_";
-        readonly String AT_BOW_FIRE     = "Fire";
-        readonly String AT_BOW_ROLL_ST  = "RollStart";
-        readonly String AT_BOW_ROLL_END = "RollEnd";
+        
+        #region Constants
+        
+        const float HORIZON_DISTANCE = 75;
+        
+        const string AT_SWORD_ATTACK        = "Attack_";
+        static readonly int AT_SWORD_PICK   = Animator.StringToHash("Pickup");
+        
+        static readonly int AT_BOW_FIRE     = Animator.StringToHash("Fire");
+        static readonly int AT_BOW_ROLL_ST  = Animator.StringToHash("RollStart");
+        static readonly int AT_BOW_ROLL_END = Animator.StringToHash("RollEnd");
+        static readonly int AT_BOW_BRAND    = Animator.StringToHash("Branded");
+        static readonly int AT_BOW_PICK     = Animator.StringToHash("Pickup");
         #endregion
     }
 }

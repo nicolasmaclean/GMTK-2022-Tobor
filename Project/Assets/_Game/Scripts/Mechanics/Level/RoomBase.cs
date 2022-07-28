@@ -12,7 +12,8 @@ namespace Game.Mechanics.Level
 
         void Awake()
         {
-            OnAwake();
+            this.enabled = false;
+            // OnAwake();
         }
 
         protected virtual void OnAwake()

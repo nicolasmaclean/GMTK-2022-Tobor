@@ -7,24 +7,29 @@ namespace Game.Utility
         public static T Instance => _instance;
         static T _instance;
 
-        protected virtual void Awake()
+        void Awake()
         {
             // enforce single instance rule
             if (_instance == null)
             {
                 _instance = this as T;
+                OnAwake();
             }
             else
             {
                 Destroy(this);
             }
         }
+        
+        protected virtual void OnAwake() { }
 
-        protected virtual void OnDestroy()
+        void OnDestroy()
         {
             if (_instance != this) return;
 
             _instance = null;
+            OnDestroyed();
         }
+        protected virtual void OnDestroyed() { }
     }
 }
