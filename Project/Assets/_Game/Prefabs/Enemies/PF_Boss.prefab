@@ -324,7 +324,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _baseHealth: 150
   _attack: 2
-  _attackSpeed: 50
+  _attackSpeed: 0.5
   _range: 100
   _lastAttack: 0
   OnHurt:
