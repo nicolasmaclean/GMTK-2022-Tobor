@@ -4,6 +4,7 @@ using Game.Mechanics.Level;
 using UnityEngine;
 using UnityEngine.AI;
 using Game.Mechanics.Player;
+using Game.Utility;
 using UnityEngine.Events;
 
 namespace Game.Mechanics.Enemy
@@ -24,6 +25,32 @@ namespace Game.Mechanics.Enemy
 
         [SerializeField]
         int _shootDelay = 3;
+
+        bool _waiting = false;
+        protected override void DetectPlayer()
+        {
+            Vector3 dir = transform.position - _player.transform.position;
+            float distSqr = dir.sqrMagnitude;
+            if (distSqr <= _rangeSqr)
+            {
+                float cooldown = _attackSpeed / Modifiers.AttackSpeedMultiplier;
+                if (_lastAttack > cooldown)
+                {
+                    _lastAttack = 0;
+                    EnemyAttack();
+                }
+                else if (!_waiting)
+                {
+                    _waiting = true;
+                    _agent.isStopped = true;
+                    StartCoroutine(Coroutines.WaitThen(cooldown - _lastAttack, () =>
+                    {
+                        _waiting = false;
+                        _agent.isStopped = false;
+                    }));
+                }
+            }
+        }
 
         protected override void EnemyAttack()
         {
