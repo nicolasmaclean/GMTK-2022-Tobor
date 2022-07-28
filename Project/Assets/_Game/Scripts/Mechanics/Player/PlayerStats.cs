@@ -34,7 +34,7 @@ namespace Game.Mechanics.Player
 
         [Range(1, 20)]
         public int Agility = 1;
-        public Vector2 AgilityRange = new Vector2(8, 24);
+        public Vector2 AgilityRange = new Vector2(10, 20);
 
         [Range(1, 20)]
         public int Luck = 1;
