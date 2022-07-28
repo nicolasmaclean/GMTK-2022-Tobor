@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using UnityEngine;
 
 namespace Game.Core
@@ -19,6 +20,8 @@ namespace Game.Core
 
         [Range(-3, 3)]
         public float Pitch = 1;
+
+        public bool Loop = false;
         
         [Header("3D Settings")]
         [Range(0, 1)]
@@ -41,6 +44,7 @@ namespace Game.Core
         public static void LoadSFX(AudioSource source, SOAudioClip clip)
         {
             source.clip = (clip.Clips != null && clip.Clips.Length != 0) ? clip.Clips[Random.Range(0, clip.Clips.Length)] : clip.Clip;
+            source.loop = clip.Loop;
             
             source.volume = clip.Volume;
             source.pitch = clip.Pitch;

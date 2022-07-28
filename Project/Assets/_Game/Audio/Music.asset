@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc5067c61fa77f54d84ecbc1bd68d272, type: 3}
+  m_Name: Music
+  m_EditorClassIdentifier: 
+  Clip: {fileID: 8300000, guid: a2796f857c48a244486d6488e21b55d3, type: 3}
+  Clips: []
+  Volume: 0.4
+  StartEarly: 0
+  Pitch: 1
+  Loop: 0
+  SpatialBlend: 0
+  DopplerLevel: 1
+  Spread: 0
+  RolloffMode: 0
+  MinDistance: 1
+  MaxDistance: 500
