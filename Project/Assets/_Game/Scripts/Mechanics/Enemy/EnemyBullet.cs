@@ -61,6 +61,7 @@ namespace Game.Mechanics.Enemy
         
         void OnTriggerEnter(Collider other)
         {
+            if (other.isTrigger) return;
             PlayerController player = other.gameObject.GetComponentInParent<PlayerController>();
             
             if (player != null)

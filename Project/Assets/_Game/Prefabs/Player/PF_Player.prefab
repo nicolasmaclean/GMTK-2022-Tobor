@@ -212,6 +212,7 @@ MonoBehaviour:
   Bow: {fileID: 11400000, guid: 99b54ad30cbaed542ac2ad3c84f07530, type: 2}
   _arrowSpawn: {fileID: 3538479326806641962}
   PF_Arrow: {fileID: 2582692282013095460, guid: c33fa1dd8a487dc4092c1cd2e6d17d83, type: 3}
+  _pickupDelay: 1
 --- !u!1 &3497908370990856373
 GameObject:
   m_ObjectHideFlags: 0

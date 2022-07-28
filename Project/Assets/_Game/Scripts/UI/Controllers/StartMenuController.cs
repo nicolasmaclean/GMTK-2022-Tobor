@@ -7,6 +7,14 @@ namespace Game.UI.Utility
 {
     public class StartMenuController : MonoBehaviour
     {
+        [SerializeField]
+        SOAudioClip _musicTrack;
+        
+        void Start()
+        {
+            MusicManager.Instance.Play(_musicTrack);
+        }
+        
         public void Play()
         {
             SceneController.LoadNextScene();

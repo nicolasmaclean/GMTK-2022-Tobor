@@ -107,6 +107,7 @@ namespace Game.Mechanics.Player.FPS
             m_MouseLook.Init(m_Tran, m_CamTran);
 
             m_JumpForce = CalculateJumpForce(m_jumpHeight);
+            m_GroundSettings.MaxSpeed = PlayerStats.GetInRange(PlayerStats.Instance.Agility, PlayerStats.Instance.AgilityRange);
             
             GameMenuController.Instance.OnStop.AddListener(Disable);
             GameMenuController.Instance.OnResume.AddListener(Enable);

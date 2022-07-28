@@ -46,6 +46,7 @@ namespace Game.Mechanics.Enemy
         protected NavMeshAgent _agent;
         protected PlayerController _player;
         protected AnimatedSprite _anim;
+        protected float _rangeSqr;
         
         protected readonly float SEARCH_INTERVAL = 0.2f;
 
@@ -55,8 +56,16 @@ namespace Game.Mechanics.Enemy
             Health = _baseHealth;
             _anim = transform.GetComponentInChildren<AnimatedSprite>();
             _agent = GetComponent<NavMeshAgent>();
+            _rangeSqr = _range * _range;
             OnAwake();
         }
+        
+        #if UNITY_EDITOR
+        void OnValidate()
+        {
+            _rangeSqr = _range * _range;
+        }
+        #endif
 
         void Start()
         {
@@ -100,8 +109,9 @@ namespace Game.Mechanics.Enemy
 
         protected virtual void DetectPlayer()
         {
-            float currentTargetDistance = Vector3.Distance(transform.position, _player.transform.position);
-            if (currentTargetDistance <= _range)
+            Vector3 dir = transform.position - _player.transform.position;
+            float distSqr = dir.sqrMagnitude;
+            if (distSqr <= _rangeSqr)
             {
                 if (_lastAttack > _attackSpeed / Modifiers.AttackSpeedMultiplier)
                 {
@@ -142,6 +152,12 @@ namespace Game.Mechanics.Enemy
             NavMeshPath path = new NavMeshPath();
             _agent.CalculatePath(_player.transform.position, path);
             return path;
+        }
+
+        void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, _range);
         }
     }
 }

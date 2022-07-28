@@ -4,6 +4,7 @@ using Game.Mechanics.Level;
 using UnityEngine;
 using UnityEngine.AI;
 using Game.Mechanics.Player;
+using Game.Utility;
 using UnityEngine.Events;
 
 namespace Game.Mechanics.Enemy
@@ -24,35 +25,48 @@ namespace Game.Mechanics.Enemy
 
         [SerializeField]
         int _shootDelay = 3;
-        
-        EnemyAISensor _sensor;
 
-        protected override void OnStart()
+        bool _waiting = false;
+        protected override void DetectPlayer()
         {
-            base.OnStart();
-            _sensor = GetComponentInChildren<EnemyAISensor>();
-        }
-        protected override void EnemyAttack()
-        {
-            if (_sensor.IsInSight(_player.gameObject))
+            Vector3 dir = transform.position - _player.transform.position;
+            float distSqr = dir.sqrMagnitude;
+            if (distSqr <= _rangeSqr)
             {
-                Debug.Log("Found Human");
-                _agent.isStopped = true;
-                _anim.PlayOneShot(_attackAnimation, speedMultiplier: Modifiers.AttackSpeedMultiplier, callback: () =>
+                float cooldown = _attackSpeed / Modifiers.AttackSpeedMultiplier;
+                if (_lastAttack > cooldown)
                 {
-                    _anim.LoadAnimation(_walkAnimation);
-                    _agent.isStopped = false;
-                });
-
-                StartCoroutine(WaitThen((_anim.Spf / Modifiers.AttackSpeedMultiplier) * _shootDelay, () =>
+                    _lastAttack = 0;
+                    EnemyAttack();
+                }
+                else if (!_waiting)
                 {
-                    OnShoot?.Invoke();
-                    EnemyBullet bullet = Instantiate(_bullet, _bulletSpawnPoint.transform.position, _bulletSpawnPoint.transform.rotation).GetComponent<EnemyBullet>();
-                    bullet._damage = _attack;
-                }));
+                    _waiting = true;
+                    _agent.isStopped = true;
+                    StartCoroutine(Coroutines.WaitThen(cooldown - _lastAttack, () =>
+                    {
+                        _waiting = false;
+                        _agent.isStopped = false;
+                    }));
+                }
             }
         }
 
-        
+        protected override void EnemyAttack()
+        {
+            _agent.isStopped = true;
+            _anim.PlayOneShot(_attackAnimation, speedMultiplier: Modifiers.AttackSpeedMultiplier, callback: () =>
+            {
+                _anim.LoadAnimation(_walkAnimation);
+                _agent.isStopped = false;
+            });
+
+            StartCoroutine(WaitThen((_anim.Spf / Modifiers.AttackSpeedMultiplier) * _shootDelay, () =>
+            {
+                OnShoot?.Invoke();
+                EnemyBullet bullet = Instantiate(_bullet, _bulletSpawnPoint.position, _bulletSpawnPoint.rotation).GetComponent<EnemyBullet>();
+                bullet._damage = _attack;
+            }));
+        }
     }
 }
