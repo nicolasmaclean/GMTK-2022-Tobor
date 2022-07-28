@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3796786799713306166}
+  - component: {fileID: 8122678225583216161}
   m_Layer: 0
   m_Name: Enemies_02
   m_TagString: Untagged
@@ -35,6 +36,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8122678225583216161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407640890607695914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d57c938d18974d1380585aa00ee6fcaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnEnemiesKilled:
+    m_PersistentCalls:
+      m_Calls: []
+  _enemiesLeft: 0
+  _default: {fileID: 8164982484620013381}
+  _x2: {fileID: 3932861235087547376}
+  _x4: {fileID: 8207804406005038281}
+  _x6: {fileID: 5929066609689546399}
+  _x8: {fileID: 4286943699507622226}
 --- !u!1 &3932861235087547376
 GameObject:
   m_ObjectHideFlags: 0

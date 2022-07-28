@@ -20,7 +20,7 @@ namespace Game.UI
         public UnityEvent OnResume;
         public UnityEvent OnPause;
         public UnityEvent OnLose;
-        // public UnityEvent OnWin;
+        public UnityEvent OnWin;
         
         [Tooltip("Wrapper for OnPause, OnLose, and OnWin.")]
         public UnityEvent OnStop;
@@ -31,6 +31,9 @@ namespace Game.UI
         
         [SerializeField]
         GameObject _loseMenu;
+
+        [SerializeField]
+        GameObject _winMenu;
 
         void Awake()
         {
@@ -109,6 +112,19 @@ namespace Game.UI
             
             Time.timeScale = 0;
             Instance.OnLose?.Invoke();
+            Instance.OnStop?.Invoke();
+        }
+
+        public static void Win()
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            HudController.Hide();
+            
+            Instance._winMenu.SetActive(true);
+            
+            Time.timeScale = 0;
+            Instance.OnWin?.Invoke();
             Instance.OnStop?.Invoke();
         }
 

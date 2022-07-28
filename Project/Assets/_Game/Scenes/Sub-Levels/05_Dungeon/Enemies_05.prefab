@@ -168,6 +168,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6916312543826428679}
+  - component: {fileID: 3196898036093162701}
   m_Layer: 0
   m_Name: Enemies_05
   m_TagString: Untagged
@@ -194,6 +195,39 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3196898036093162701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6175287771069717549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d57c938d18974d1380585aa00ee6fcaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnEnemiesKilled:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3196898036093162701}
+        m_TargetAssemblyTypeName: Game.Mechanics.Level.EnemiesKilled, Assembly-CSharp
+        m_MethodName: Win
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _enemiesLeft: 0
+  _default: {fileID: 6124960534606489993}
+  _x2: {fileID: 905241828673994079}
+  _x4: {fileID: 1766247727394989177}
+  _x6: {fileID: 4322867131942148138}
+  _x8: {fileID: 2919674822099490618}
 --- !u!1001 &975360701167536663
 PrefabInstance:
   m_ObjectHideFlags: 0

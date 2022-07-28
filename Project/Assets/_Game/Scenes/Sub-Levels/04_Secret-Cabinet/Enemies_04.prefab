@@ -111,6 +111,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2523099632938954632}
+  - component: {fileID: 5985794798578485317}
   m_Layer: 0
   m_Name: Enemies_04
   m_TagString: Untagged
@@ -137,6 +138,39 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5985794798578485317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4109140924141118825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d57c938d18974d1380585aa00ee6fcaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnEnemiesKilled:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Game.Mechanics.Level.ShootButton, Assembly-CSharp
+        m_MethodName: Enable
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _enemiesLeft: 0
+  _default: {fileID: 3257037113443359294}
+  _x2: {fileID: 524590887275040157}
+  _x4: {fileID: 3887074721014929819}
+  _x6: {fileID: 7116693276173679894}
+  _x8: {fileID: 5556685244542193138}
 --- !u!1 &5556685244542193138
 GameObject:
   m_ObjectHideFlags: 0

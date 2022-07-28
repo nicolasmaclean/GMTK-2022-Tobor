@@ -18,7 +18,7 @@ namespace Game.Mechanics.Level
 
         public static void SetMultipliers(int enemy, int damage, int speed, int attack, int jump, int heal)
         {
-            EnemyMultiplier         = (int) Mathf.Pow(2 , enemy);
+            EnemyMultiplier         += enemy;
             DamageMultiplier        = (int) Mathf.Pow(2 , damage);
             SpeedMultiplier         = (int) Mathf.Pow(2 , speed);
             AttackSpeedMultiplier   = (int) Mathf.Pow(2 , attack);

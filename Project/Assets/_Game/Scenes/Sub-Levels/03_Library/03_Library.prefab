@@ -14614,7 +14614,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4971200892195269730}
-  - component: {fileID: 968857703945608311}
   m_Layer: 0
   m_Name: Buffer_ToLibrary
   m_TagString: Untagged
@@ -14636,25 +14635,11 @@ Transform:
   - {fileID: 3465170039803558519}
   - {fileID: 3399373133352791359}
   - {fileID: 8045366334660401123}
-  - {fileID: 2036532844123974637}
   - {fileID: 7408998393076227540}
   - {fileID: 6346534402866748016}
   m_Father: {fileID: 4977450327871124235}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &968857703945608311
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3942846536908957646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90eb32dc08b14eb4ac9ab6505665aad5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _doorExit: {fileID: 4684569622947841373}
 --- !u!1 &4019181648398715872
 GameObject:
   m_ObjectHideFlags: 0
@@ -16198,80 +16183,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.00000011920929, z: 0}
---- !u!1 &4554723436863384638
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5640524375802126060}
-  - component: {fileID: 8438215722701307569}
-  - component: {fileID: 4866089609339839986}
-  - component: {fileID: 3531641881881690661}
-  m_Layer: 0
-  m_Name: Enter Trigger
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
---- !u!4 &5640524375802126060
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4554723436863384638}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 16.940002, y: 59.6, z: -63.05}
-  m_LocalScale: {x: 3.6249, y: 20.975, z: 27.327}
-  m_Children: []
-  m_Father: {fileID: 2809370393257161183}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &8438215722701307569
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4554723436863384638}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
---- !u!65 &4866089609339839986
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4554723436863384638}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1.0000002, z: 1.0000002}
-  m_Center: {x: 0, y: 1.1368684e-13, z: 0.0000009536744}
---- !u!114 &3531641881881690661
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4554723436863384638}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fd57ed461c007c4c91b1db64049eb4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4572256449315696846
 GameObject:
   m_ObjectHideFlags: 0
@@ -21409,7 +21320,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2809370393257161183}
-  - component: {fileID: 6997178418463986940}
   m_Layer: 0
   m_Name: Room_Library
   m_TagString: Untagged
@@ -21431,23 +21341,9 @@ Transform:
   - {fileID: 1453807530110579399}
   - {fileID: 5637421295263981684}
   - {fileID: 1727804425678379100}
-  - {fileID: 5640524375802126060}
   m_Father: {fileID: 4977450327871124235}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6997178418463986940
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5268477287566468608}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bfd11ed9fb49474f91812d5ee54176f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _doorExit: {fileID: 7562863750612437675}
 --- !u!1 &5313903495843336702
 GameObject:
   m_ObjectHideFlags: 0
@@ -31036,80 +30932,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.00000011920929, z: 0}
---- !u!1 &7868276772537735487
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2036532844123974637}
-  - component: {fileID: 5822422310054087760}
-  - component: {fileID: 1262079282974904563}
-  - component: {fileID: 2108701967464194187}
-  m_Layer: 0
-  m_Name: Enter Trigger
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
---- !u!4 &2036532844123974637
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7868276772537735487}
-  m_LocalRotation: {x: -0.09229599, y: 0.7010574, z: -0.09229599, w: -0.7010574}
-  m_LocalPosition: {x: 1.6803349, y: 34.786404, z: 186.09636}
-  m_LocalScale: {x: 6.342522, y: 36.544918, z: 99.45897}
-  m_Children: []
-  m_Father: {fileID: 4971200892195269730}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &5822422310054087760
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7868276772537735487}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
---- !u!65 &1262079282974904563
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7868276772537735487}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1.0000002, z: 1.0000002}
-  m_Center: {x: 0, y: 1.1368684e-13, z: 0.0000009536744}
---- !u!114 &2108701967464194187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7868276772537735487}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fd57ed461c007c4c91b1db64049eb4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7872675980138493298
 GameObject:
   m_ObjectHideFlags: 0
@@ -36999,7 +36821,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9160963582533066896, guid: 8c040b8b951007b428617b309439d03e, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 9160963582533066896, guid: 8c040b8b951007b428617b309439d03e, type: 3}
       propertyPath: m_LocalScale.x
@@ -37055,11 +36877,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c040b8b951007b428617b309439d03e, type: 3}
---- !u!4 &7408998393076227540 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 9160963582533066896, guid: 8c040b8b951007b428617b309439d03e, type: 3}
-  m_PrefabInstance: {fileID: 1869076445525179716}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3994048155529376580 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3359120985053859328, guid: 8c040b8b951007b428617b309439d03e, type: 3}
@@ -37071,6 +36888,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 651a5227eab1d6e42a5fb68cc95a8c13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &7408998393076227540 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9160963582533066896, guid: 8c040b8b951007b428617b309439d03e, type: 3}
+  m_PrefabInstance: {fileID: 1869076445525179716}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3729459315723862429
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -37215,7 +37037,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8049455090712033214, guid: 142091cfce7c0774b84c8c3a6a091402, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8049455090712033214, guid: 142091cfce7c0774b84c8c3a6a091402, type: 3}
       propertyPath: m_LocalScale.x
@@ -64233,46 +64055,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemies_03
       objectReference: {fileID: 0}
+    - target: {fileID: 6575762917386586759, guid: ba49401792a0fad4ba267ab3ef9c315e, type: 3}
+      propertyPath: OnEnemiesKilled.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3994048155529376580}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba49401792a0fad4ba267ab3ef9c315e, type: 3}
---- !u!1 &889362647552188942 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6559583125753352235, guid: ba49401792a0fad4ba267ab3ef9c315e, type: 3}
-  m_PrefabInstance: {fileID: 6296019655869182501}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1727804425678379100 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4658288253565004409, guid: ba49401792a0fad4ba267ab3ef9c315e, type: 3}
   m_PrefabInstance: {fileID: 6296019655869182501}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5536180954832408284
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 889362647552188942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d57c938d18974d1380585aa00ee6fcaa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnEnemiesKilled:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3994048155529376580}
-        m_TargetAssemblyTypeName: Game.Mechanics.Level.ShootButton, Assembly-CSharp
-        m_MethodName: Enable
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _enemiesLeft: 0
 --- !u!1001 &6543708796706258086
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -64573,9 +64366,9 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 2085070092018177483, guid: 142091cfce7c0774b84c8c3a6a091402, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 142091cfce7c0774b84c8c3a6a091402, type: 3}
---- !u!4 &390916587930369316 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7809235947818001759, guid: 142091cfce7c0774b84c8c3a6a091402, type: 3}
+--- !u!1 &994611920645092735 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7277456827508976900, guid: 142091cfce7c0774b84c8c3a6a091402, type: 3}
   m_PrefabInstance: {fileID: 7580448952915499131}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &470136780438056901 stripped
@@ -64583,9 +64376,9 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8049455090712033214, guid: 142091cfce7c0774b84c8c3a6a091402, type: 3}
   m_PrefabInstance: {fileID: 7580448952915499131}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &994611920645092735 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7277456827508976900, guid: 142091cfce7c0774b84c8c3a6a091402, type: 3}
+--- !u!4 &390916587930369316 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7809235947818001759, guid: 142091cfce7c0774b84c8c3a6a091402, type: 3}
   m_PrefabInstance: {fileID: 7580448952915499131}
   m_PrefabAsset: {fileID: 0}
 --- !u!95 &995660663813280295
