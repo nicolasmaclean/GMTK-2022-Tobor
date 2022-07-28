@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game.Mechanics.Level;
 using UnityEngine;
 using UnityEngine.AI;
+using Game.Mechanics.Player;
+using Game.Utility;
 using UnityEngine.Events;
 
 namespace Game.Mechanics.Enemy
@@ -9,6 +12,9 @@ namespace Game.Mechanics.Enemy
     [RequireComponent(typeof(NavMeshAgent))]
     public class EnemyRangedAttacker : EnemyBase
     {
+        [SerializeField]
+        SOSpriteAnimation _attackAnimation;
+        
         [Header("Ranged")]
         [SerializeField]
         Transform _bulletSpawnPoint;
@@ -17,75 +23,50 @@ namespace Game.Mechanics.Enemy
         [SerializeField]
         GameObject _bullet;
 
-        [Header("Animation")]
         [SerializeField]
-        SOSpriteAnimation _walkAnimation;
-        
-        [SerializeField]
-        SOSpriteAnimation _attackAnimation;
+        int _shootDelay = 3;
 
-        readonly float SEARCH_INTERVAL = 0.2f;
-
-        NavMeshAgent _agent;
-        
-        float _stampForNextAttack;
-
-        protected override void OnAwake()
+        bool _waiting = false;
+        protected override void DetectPlayer()
         {
-            base.OnAwake();
-            _agent = GetComponent<NavMeshAgent>();
-        }
-
-        protected override void OnStart()
-        {
-            base.OnStart();
-            StartCoroutine(SeekLoop());
-        }
-
-        IEnumerator SeekLoop()
-        {
-            while (true)
+            Vector3 dir = transform.position - _player.transform.position;
+            float distSqr = dir.sqrMagnitude;
+            if (distSqr <= _rangeSqr)
             {
-                _agent.SetDestination(_player.transform.position);
-                DetectPlayer();
-                
-                yield return new WaitForSeconds(SEARCH_INTERVAL);
-            }
-        }
-
-        void DetectPlayer()
-        {
-            float currentTargetDistance = Vector3.Distance(transform.position, _player.transform.position);
-            if (currentTargetDistance <= _rangeOfAttack)
-            {
-                _agent.isStopped = true;
-                if (Time.time > _stampForNextAttack)
+                float cooldown = _attackSpeed / Modifiers.AttackSpeedMultiplier;
+                if (_lastAttack > cooldown)
                 {
-                    _stampForNextAttack = Time.time + _damageRate;
+                    _lastAttack = 0;
                     EnemyAttack();
                 }
-            }
-            else
-            {
-                _agent.isStopped = false;
+                else if (!_waiting)
+                {
+                    _waiting = true;
+                    _agent.isStopped = true;
+                    StartCoroutine(Coroutines.WaitThen(cooldown - _lastAttack, () =>
+                    {
+                        _waiting = false;
+                        _agent.isStopped = false;
+                    }));
+                }
             }
         }
 
-        void EnemyAttack()
+        protected override void EnemyAttack()
         {
-            _anim.LoadAnimation(_attackAnimation);
-            _anim.PlayOneShot(_attackAnimation, () =>
+            _agent.isStopped = true;
+            _anim.PlayOneShot(_attackAnimation, speedMultiplier: Modifiers.AttackSpeedMultiplier, callback: () =>
             {
                 _anim.LoadAnimation(_walkAnimation);
+                _agent.isStopped = false;
             });
 
-            StartCoroutine(WaitThen(_anim.Spf * 3, () =>
-                {
-                    OnShoot?.Invoke();
-                    EnemyBullet bullet = Instantiate(_bullet, _bulletSpawnPoint.transform.position, _bulletSpawnPoint.transform.rotation).GetComponent<EnemyBullet>();
-                    bullet._damage = _attack;
-                }
-            ));
+            StartCoroutine(WaitThen((_anim.Spf / Modifiers.AttackSpeedMultiplier) * _shootDelay, () =>
+            {
+                OnShoot?.Invoke();
+                EnemyBullet bullet = Instantiate(_bullet, _bulletSpawnPoint.position, _bulletSpawnPoint.rotation).GetComponent<EnemyBullet>();
+                bullet._damage = _attack;
+            }));
         }
     }
 }

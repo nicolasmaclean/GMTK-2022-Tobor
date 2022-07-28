@@ -15,8 +15,8 @@ GameObject:
   m_Name: Window Open
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 4294967293
   m_IsActive: 1
 --- !u!4 &6928785944571048480
 Transform:
@@ -97,8 +97,8 @@ GameObject:
   m_Name: Cube.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 4294967293
   m_IsActive: 1
 --- !u!4 &2691625995237265826
 Transform:

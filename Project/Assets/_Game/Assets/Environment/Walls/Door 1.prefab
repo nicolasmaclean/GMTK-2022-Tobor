@@ -15,8 +15,8 @@ GameObject:
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 4294967293
   m_IsActive: 1
 --- !u!4 &8929943658508605537
 Transform:
@@ -68,8 +68,8 @@ GameObject:
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 4294967293
   m_IsActive: 1
 --- !u!4 &1612292211691830990
 Transform:
@@ -121,8 +121,8 @@ GameObject:
   m_Name: Door 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 4294967293
   m_IsActive: 1
 --- !u!4 &7898503169196539132
 Transform:
@@ -205,8 +205,8 @@ GameObject:
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 4294967293
   m_IsActive: 1
 --- !u!4 &1546532749979424661
 Transform:

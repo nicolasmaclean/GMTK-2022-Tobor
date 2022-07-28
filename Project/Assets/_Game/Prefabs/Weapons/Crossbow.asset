@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Crossbow
   m_EditorClassIdentifier: 
   WeaponType: 1
-  Cooldown: 0.6
+  Cooldown: 0
   Damage: 1
   Speed: 1

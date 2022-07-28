@@ -23,5 +23,5 @@ MonoBehaviour:
   - {fileID: 56248618051000704, guid: d2cb6030bdf93b343aeadb1def61906e, type: 3}
   - {fileID: 3342148845903687433, guid: d2cb6030bdf93b343aeadb1def61906e, type: 3}
   - {fileID: -5081589235941362818, guid: d2cb6030bdf93b343aeadb1def61906e, type: 3}
-  Fps: 3.5
+  Fps: 4
   InitialFrame: 0

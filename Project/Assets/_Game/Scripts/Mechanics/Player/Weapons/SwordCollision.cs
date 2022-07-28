@@ -1,27 +1,34 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.Core;
 using Game.Mechanics.Enemy;
 using Game.Mechanics.Player;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class SwordCollision : MonoBehaviour
+public class SwordCollision : MonoExtended
 {
+    public UnityEvent OnHit;
     PlayerController _player;
 
-    void Awake()
+    void Start()
     {
         _player = PlayerController.Instance;        
     }
     
     void OnTriggerEnter(Collider other)
     {
-        var parent = other.transform.parent;
-        if (!parent) return;
+        if (other.isTrigger) return;
+        if (other.gameObject.layer == LayerMask.GetMask("Player")) return;
         
-        EnemyBase em = parent.GetComponent<EnemyBase>();
+        OnHit?.Invoke();
+        
+        EnemyBase em = other.GetComponentInParent<EnemyBase>();
         if (!em) return;
-    
-        em.Harm((int) _player.Weapon.Damage);
+
+        Vector3 hitPosition = other.ClosestPoint(transform.position);
+        Vector3 hitNormal = (_player.transform.position - em.transform.position).normalized;
+        em.Harm((int) _player.Sword.Damage, hitPosition, hitNormal);
     }
 }

@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8191378d8f48c24dbd721f9734282a0, type: 3}
+  m_Name: Blood 1
+  m_EditorClassIdentifier: 
+  Frames:
+  - {fileID: 8501342357058316700, guid: a089efa1d3eb1c4459553e6cc2da936d, type: 3}
+  - {fileID: 5341044179218576293, guid: a089efa1d3eb1c4459553e6cc2da936d, type: 3}
+  - {fileID: 3834879349191664817, guid: a089efa1d3eb1c4459553e6cc2da936d, type: 3}
+  - {fileID: -6124833539390406599, guid: a089efa1d3eb1c4459553e6cc2da936d, type: 3}
+  - {fileID: -6087378961301271646, guid: a089efa1d3eb1c4459553e6cc2da936d, type: 3}
+  - {fileID: 2612803600318979628, guid: a089efa1d3eb1c4459553e6cc2da936d, type: 3}
+  - {fileID: -4009187406587202175, guid: a089efa1d3eb1c4459553e6cc2da936d, type: 3}
+  - {fileID: -7124780866165456912, guid: a089efa1d3eb1c4459553e6cc2da936d, type: 3}
+  - {fileID: 3032907243965934041, guid: a089efa1d3eb1c4459553e6cc2da936d, type: 3}
+  - {fileID: 5346794184899426727, guid: a089efa1d3eb1c4459553e6cc2da936d, type: 3}
+  - {fileID: 6812764775149353497, guid: a089efa1d3eb1c4459553e6cc2da936d, type: 3}
+  - {fileID: -3195044282494543421, guid: a089efa1d3eb1c4459553e6cc2da936d, type: 3}
+  - {fileID: -330354176945195752, guid: a089efa1d3eb1c4459553e6cc2da936d, type: 3}
+  - {fileID: -7948158043435345787, guid: a089efa1d3eb1c4459553e6cc2da936d, type: 3}
+  - {fileID: 8501342357058316700, guid: a089efa1d3eb1c4459553e6cc2da936d, type: 3}
+  - {fileID: -8465355723169828918, guid: a089efa1d3eb1c4459553e6cc2da936d, type: 3}
+  - {fileID: 2206170050236940523, guid: a089efa1d3eb1c4459553e6cc2da936d, type: 3}
+  Fps: 10
+  InitialFrame: 0

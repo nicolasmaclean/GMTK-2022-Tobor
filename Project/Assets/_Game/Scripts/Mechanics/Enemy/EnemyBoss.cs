@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game.Mechanics.Level;
 using JetBrains.Annotations;
 using Game.Mechanics.Player;
 using UnityEngine;
@@ -11,130 +12,82 @@ namespace Game.Mechanics.Enemy
     [RequireComponent(typeof(NavMeshAgent))]
     public class EnemyBoss : EnemyBase
     {
-        [Header("Boss")]
-        [SerializeField]
-        GameObject _attackCollider;
-        public UnityEvent OnAttack;
-        public UnityEvent OnShoot;
-
-        [SerializeField]
-        SOSpriteAnimation _walkAnimation;
-
         [SerializeField]
         SOSpriteAnimation _attackAnimation;
 
         [SerializeField]
         SOSpriteAnimation _shootAnimation;
 
-        [SerializeField] float _rangeOfShot = 6f;
-        [SerializeField] Transform _bulletSpawnPoint;
-        [SerializeField] GameObject _bullet;
-        [SerializeField] float _fireRate = 3f;
+        [SerializeField]
+        [Tooltip("The number of frames into the shoot animation to wait before spawning a bullet.")]
+        float _shootDelay = 3;
 
-        readonly float SEARCH_INTERVAL = 0.2f;
-
-        NavMeshAgent _agent;
-        float _stampForNextAttack;
-        float _stampForNextShot;
-        bool canShoot;
+        [Header("More Stats!")]
+        [SerializeField]
+        float _meleeRange = 10f;
         
+        [SerializeField]
+        Transform _bulletSpawnPoint;
+        
+        [SerializeField]
+        GameObject _bullet;
+        
+        
+        [Header("More Events")]
+        public UnityEvent OnAttack;
+        public UnityEvent OnShoot;
+
+        PlayerTrigger _playerTrigger;
 
         protected override void OnAwake()
         {
             base.OnAwake();
-            _agent = GetComponent<NavMeshAgent>();
+            _playerTrigger = GetComponentInChildren<PlayerTrigger>();
         }
-
-        protected override void OnStart()
+        
+        protected override void EnemyAttack()
         {
-            base.OnStart();
-            _attackCollider.SetActive(false);
-            StartCoroutine(SeekLoop());
-            canShoot = true;
-        }
-
-        IEnumerator SeekLoop()
-        {
-            _anim.LoadAnimation(_walkAnimation);
-            while (true)
-            {
-                _agent.SetDestination(_player.transform.position);
-                DetectPlayer();
-
-                yield return new WaitForSeconds(SEARCH_INTERVAL);
-            }
-        }
-
-        void DetectPlayer()
-        {
+            _agent.isStopped = true;
             float currentTargetDistance = Vector3.Distance(transform.position, _player.transform.position);
-            if (currentTargetDistance <= _rangeOfShot)
+            if (currentTargetDistance < _meleeRange)
             {
-                if (Time.time > _stampForNextShot)
-                {
-                    _stampForNextShot = Time.time + _fireRate;
-                    EnemyShoot(canShoot);
-                }
-                if (currentTargetDistance <= _rangeOfAttack)
-                {
-                    _agent.isStopped = true;
-                    canShoot = false;
-                    if (Time.time > _stampForNextAttack)
-                    {
-                        _stampForNextAttack = Time.time + _damageRate;
-                        EnemyAttack();
-                    }
-                }
-                else
-                {
-                    canShoot = true;
-                    _agent.isStopped = false;
-                }
+                EnemyMelee();
+            }
+            else
+            {
+                EnemyRanged();
             }
         }
 
-        void EnemyAttack()
+        void EnemyMelee()
         {
-            Collider[] hitPlayers = Physics.OverlapBox(_attackCollider.transform.position, _attackCollider.transform.position);
-            foreach (Collider player in hitPlayers)
+            if (_playerTrigger.PlayerIsIn)
             {
-                PlayerController hero = player.GetComponentInParent<PlayerController>();
-                if (hero != null)
-                {
-                    hero.Hurt(_attack);
-                    Debug.Log("Attacked Player");
-                }
-
+                PlayerController.Instance.Hurt(_attack);
             }
-
-            _anim.LoadAnimation(_attackAnimation);
+            
             OnAttack?.Invoke();
-            StartCoroutine(SwapToWalk(_anim.Length));
-        }
-
-        void EnemyShoot(bool rangeCheck)
-        {
-            if (rangeCheck)
+            _anim.PlayOneShot(_attackAnimation, speedMultiplier: Modifiers.AttackSpeedMultiplier, callback: () =>
             {
-                _anim.LoadAnimation(_shootAnimation);
-                _anim.PlayOneShot(_shootAnimation, () =>
-                {
-                    _anim.LoadAnimation(_walkAnimation);
-                });
-
-                StartCoroutine(WaitThen(_anim.Spf * 3, () =>
-                {
-                    OnShoot?.Invoke();
-                    Instantiate(_bullet, _bulletSpawnPoint.transform.position, _bulletSpawnPoint.transform.rotation);
-                }
-                ));
-            }
+                _anim.LoadAnimation(_walkAnimation);
+                _agent.isStopped = false;
+            });
         }
 
-        IEnumerator SwapToWalk(float seconds)
+        void EnemyRanged()
         {
-            yield return new WaitForSeconds(seconds);
-            _anim.LoadAnimation(_walkAnimation);
+            _anim.PlayOneShot(_shootAnimation, speedMultiplier: Modifiers.AttackSpeedMultiplier, callback:() =>
+            {
+                _anim.LoadAnimation(_walkAnimation);
+                _agent.isStopped = false;
+            });
+
+            StartCoroutine(WaitThen((_anim.Spf / Modifiers.AttackSpeedMultiplier) * _shootDelay, () =>
+            {
+                OnShoot?.Invoke();
+                var bulletSpawn = _bulletSpawnPoint.transform;
+                Instantiate(_bullet, bulletSpawn.position, bulletSpawn.rotation);
+            }));
         }
     }
 }

@@ -15,8 +15,8 @@ GameObject:
   m_Name: Railing 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 4294967293
   m_IsActive: 1
 --- !u!4 &909381879404686113
 Transform:
@@ -97,8 +97,8 @@ GameObject:
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 4294967293
   m_IsActive: 1
 --- !u!4 &1384466499616282753
 Transform:

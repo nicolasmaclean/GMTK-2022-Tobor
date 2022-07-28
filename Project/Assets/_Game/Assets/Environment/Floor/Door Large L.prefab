@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 806845459266743647}
   - component: {fileID: 4367830002498282234}
   - component: {fileID: 1979703083556722224}
+  - component: {fileID: 2722368578823718080}
   m_Layer: 0
   m_Name: Door Large L
   m_TagString: Untagged
@@ -82,6 +83,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!208 &2722368578823718080
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34248717868169189}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 3.3190002, y: 9.01, z: 1.199}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -2.9620001, y: 9.01, z: 0.83800006}
+  m_TimeToStationary: 0.5
 --- !u!1 &3251845776761446753
 GameObject:
   m_ObjectHideFlags: 0

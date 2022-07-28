@@ -1,59 +1,41 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+using System.Linq;
 using Game.Core;
+using Game.Mechanics.Level;
+using Game.UI;
 using Game.Utility;
-using UnityEngine.UI;
-using Game.Mechanics.Enemy;
 using UnityEngine;
-using Game.Mechanics;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace Game.Mechanics.Player
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoExtended
     {
         #region Public
         public static PlayerController Instance { get; private set; }
-        
-        public float LastAttackTime { get; private set; } = float.MaxValue;
+
+        public UnityEvent<float> OnHealthChange;
         public float Health
         {
             get
             {
                 return _health;
             }
-        }
-        
-        [Header("UI")]
-        [SerializeField] Image hurtScreen;
-        [SerializeField] Color hurt;
-        [SerializeField] Color fine;
-        [SerializeField] GameObject pauseMenu;
-        [SerializeField] Image _IMG_Crosshair;
-        [SerializeField] GameObject winMenu;
-        [SerializeField] GameObject loseMenu;
-
-        [Header("SFX")]
-        public UnityEvent OnAttack;
-        public UnityEvent OnShoot;
-        public UnityEvent OnSwitch;
-        public UnityEvent OnHurt;
-
-        public SOWeapon Weapon
-        {
-            get
+            set
             {
-                switch (_currentWeapon)
-                {
-                    default:
-                    case WeaponType.Sword:
-                        return Sword;
-                    case WeaponType.Bow:
-                        return Bow;
-                }
+                _health = Mathf.Clamp(value, 0, _maxHealth);
             }
         }
+        
+        [FormerlySerializedAs("OnSwordAttack"),FormerlySerializedAs("OnAttack"),Header("Events")]
+        public UnityEvent OnSwordSwing;
+        
+        [FormerlySerializedAs("OnShoot")]
+        public UnityEvent OnBowAttack;
+        
+        public UnityEvent OnHurt;
+        public UnityEvent OnDeath;
         #endregion
 
         #region Serialized or Private
@@ -61,40 +43,47 @@ namespace Game.Mechanics.Player
         [SerializeField]
         [ReadOnly]
         float _health = 0;
-
-        [SerializeField]
-        WeaponType _currentWeapon;
         
+        [SerializeField]
+        [ReadOnly]
+        float _maxHealth;
+
         [Header("Controls")]
         [SerializeField]
-        KeyCode _primaryKey = KeyCode.Mouse0;
+        KeyCode _swordAttackKey = KeyCode.Mouse0;
 
         [SerializeField]
-        KeyCode _secondaryKey = KeyCode.Mouse1;
+        KeyCode _bowAttackKey = KeyCode.Mouse1;
 
         [SerializeField]
-        KeyCode _switchKey = KeyCode.Q;
-        
+        public KeyCode InteractKey = KeyCode.E;
+
         [Header("Sword")]
+        [SerializeField]
+        Animator _swordAnimator;
+        
         public SOWeapon Sword;
 
         [SerializeField]
-        [Min(0)]
-        float _maxTimeInChain = 1f;
+        [Tooltip("Seconds before swing end that the next attack can be queued up.")]
+        float _earlySwing = .1f; 
 
         [Header("Bow")]
-        public SOWeapon Bow;
-        
         [SerializeField]
-        GameObject PF_Arrow;
+        Animator _bowAnimator;
+        
+        public SOWeapon Bow;
         
         [SerializeField]
         Transform _arrowSpawn;
         
-        Animator _animator;
-        RaycastHit _hitinfo;
-        int _curSwing = 0;
-        float _lastSwing = 0;
+        [SerializeField]
+        GameObject PF_Arrow;
+
+        [SerializeField]
+        float _pickupDelay = 1f;
+
+        Collider _swordCollider;
         #endregion
 
         #region MonoBehaviour
@@ -109,243 +98,197 @@ namespace Game.Mechanics.Player
                 Destroy(gameObject);
             }
 
-            _animator = GetComponent<Animator>();
-        }
+            _swordCollider = GetComponentInChildren<SwordCollision>(true).GetComponent<Collider>();
 
-        void OnDestroy()
-        {
-            if (Instance == this)
-            {
-                Instance = null;
-            }
+            _maxHealth = PlayerStats.Instance.ConstitutionRange.y;
+            SetHealth();
         }
 
         void Start()
         {
-            ChangeWeapon(_currentWeapon);
-            SetHealth();
+            Modifiers.OnChange += ApplyModifiers;
+        }
+
+        void OnDestroy()
+        {
+            if (Instance != this) return;
+            
+            Instance = null;
+            Modifiers.OnChange -= ApplyModifiers;
         }
 
         void Update()
         {
-            LastAttackTime += Time.deltaTime;
-            if (LastAttackTime < Weapon.Cooldown) return;
-            EnemyTargeted();
-            
-            if (Input.GetKeyDown(_primaryKey))
+            if (Input.GetKeyDown(_swordAttackKey))
             {
-                PrimaryAttack();
+                SwordAttack();
             }
-            else if (Input.GetKeyDown(_secondaryKey))
+            else if (Input.GetKeyDown(_bowAttackKey))
             {
-                SecondaryAttack();
+                BowAttack();
             }
-            else if (Input.GetKeyDown(_switchKey))
-            {
-                SwitchWeapons();
-            }
-            else if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                PauseGame();
-            }
-        }
-        #endregion
-
-        #region UI
-        void PauseGame()
-        {
-            StopGame();
-            pauseMenu.SetActive(true);
-        }
-
-        public void WinGame()
-        {
-            StopGame();
-            winMenu.SetActive(true);
-        }
-
-        void LoseGame()
-        {
-            StopGame();
-            loseMenu.SetActive(true);
-        }
-
-        void StopGame()
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            
-            Time.timeScale = 0;
-        }
-
-        void EnemyTargeted()
-        {
-
-            Ray ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0f));
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
-            {
-                EnemyBase enemy = hit.transform.gameObject.GetComponentInParent<EnemyBase>();
-                if(enemy != null)
-                {
-                    _IMG_Crosshair.color = Color.red;
-                }
-                else
-                {
-                    _IMG_Crosshair.color = Color.white;
-                }
-            }
-            
         }
         #endregion
 
         #region Stats
         void SetHealth()
         {
-            _health = PlayerStats.GetInRange(PlayerStats.Instance.Constitution, PlayerStats.Instance.ConstitutionRange);
+            Health = PlayerStats.GetInRange(PlayerStats.Instance.Constitution, PlayerStats.Instance.ConstitutionRange);
+        }
+
+        void ApplyModifiers()
+        {
+            _swordAnimator.speed = Modifiers.AttackSpeedMultiplier;
+            _bowAnimator.speed   = Modifiers.AttackSpeedMultiplier;
+
+            float oldHealth = Health;
+            Health += Heal(Modifiers.Heal);
+            if (Math.Abs(oldHealth - Health) > .01f)
+            {
+                OnHealthChange?.Invoke(Health);
+            }
+        }
+
+        float Heal(float amount)
+        {
+            float scale = PlayerStats.Instance.ConstitutionRange.y / 5;
+            return amount == 0 ? 0 : scale * Mathf.Pow(2, amount - 1); // (max / 10) * 2^(x-1) / 2
         }
         #endregion
         
-        void PrimaryAttack()
+        #region Weapons
+        void SwordAttack()
         {
-            if (_currentWeapon == WeaponType.Sword)
+            if (_swordAnimator.IsInTransition(0)) return;
+
+            AnimatorStateInfo state = _swordAnimator.GetCurrentAnimatorStateInfo(0);
+            String trigger_swing;
+            if (state.IsName("Swing 1") || state.IsName("Swing 2"))
             {
-                PrimaryAttackSword();
+                float normalizedCooldown = (state.length - _earlySwing) / state.length;
+                if (state.normalizedTime < normalizedCooldown)
+                {
+                    return;
+                }
+
+                trigger_swing = AT_SWORD_ATTACK + (state.IsName("Swing 1") ? "2" : "3");
             }
-            else if (_currentWeapon == WeaponType.Bow)
+            else if (state.IsName("Idle"))
             {
-                PrimaryAttackBow();
-            }
+                float timeInIdle = state.normalizedTime * state.length;
+                if (timeInIdle < Sword.Cooldown)
+                {
+                    return;
+                }
 
-            LastAttackTime = 0;
-        }
-
-        void PrimaryAttackSword()
-        {
-            // reset chain
-            if (Time.time - _lastSwing >= _maxTimeInChain || _curSwing > 1)
-            {
-                _curSwing = 0;
-            }
-
-            LastAttackTime = _curSwing == 0 ? .33f : .55f;
-            _lastSwing = Time.time;
-            _animator.SetTrigger(AT_SWORD_PRIMARY_ + (_curSwing + 1).ToString());
-            OnAttack?.Invoke();
-            _curSwing++;
-        }
-
-        void PrimaryAttackBow()
-        {
-            _animator.SetTrigger(AT_BOW_FIRE);
-            OnShoot?.Invoke();
-            StartCoroutine(WaitThen(.12f , () =>
-            {
-                // target is horizon from center of screen
-                Ray ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0f));
-                Vector3 targetPoint = ray.GetPoint(HORIZON_DISTANCE);
-
-                var pos = _arrowSpawn.transform.position;
-                GameObject currentBullet = Instantiate(PF_Arrow, pos, Quaternion.identity);
-                currentBullet.transform.forward = targetPoint - pos;
-            }));
-        }
-
-        void SecondaryAttack()
-        {
-            // if (_CurrentWeapon == WeaponType.Sword)
-            // {
-            //     
-            // }
-        }
-
-        void SwitchWeapons()
-        {
-            ChangeWeapon(_currentWeapon == WeaponType.Sword ? WeaponType.Bow : WeaponType.Sword);
-            OnSwitch?.Invoke();
-        }
-
-        void ChangeWeapon(WeaponType weaponType)
-        {
-            SOWeapon weapon;
-            switch (weaponType)
-            {
-                default:
-                case WeaponType.Sword:
-                    weapon = Sword;
-                    _animator.SetTrigger(AT_SWORD_DRAW);
-                    break;
-                
-                case WeaponType.Bow:
-                    weapon = Bow;
-                    _animator.SetTrigger(AT_BOW_DRAW);
-                    break;
-            }
-
-            _currentWeapon = weaponType;
-            _animator.speed = weapon.Speed;
-        }
-        
-        static IEnumerator WaitThen(float seconds, Action callback)
-        {
-            yield return new WaitForSeconds(seconds);
-            callback?.Invoke();
-        }
-
-        public void Hurt(float damage)
-        {
-            _health -= damage * Modifiers.DamageMultiplier;
-            OnHurt?.Invoke();
-
-            if (_health > 0)
-            {
-                StartCoroutine(dispayHurtScreen(hurtScreen, fine, hurt, .3f));
+                trigger_swing = AT_SWORD_ATTACK + "1";
             }
             else
             {
-                LoseGame();
+                return;
             }
-        }
-        public void PlaySFX(SOAudioClip clip)
-        {
-            SFXManager.PlaySFX(clip);
-        }
-
-        static IEnumerator dispayHurtScreen(Graphic hurtScreen, Color from, Color to, float seconds)
-        {
-            float startTime = Time.time;
-            float TimeSinceStarted = Time.time - startTime;
-            float percentageComplete = TimeSinceStarted / seconds;
             
-            while (true)
+            
+            if (state.IsName("Idle"))
             {
-                TimeSinceStarted = Time.time - startTime;
-                percentageComplete = TimeSinceStarted / seconds;
-                hurtScreen.color = Color.Lerp(from, to, percentageComplete);
-                if (percentageComplete >= 1) break;
-                yield return new WaitForEndOfFrame();
+                for (int i = 0; i < 3; i++)
+                {
+                    _swordAnimator.ResetTrigger(AT_SWORD_ATTACK + (i+1).ToString());
+                }
             }
-            
-            float reverseStartTime = Time.time;
-            float reverseTimeSinceStarted = Time.time - reverseStartTime;
-            float reversePercentageComplete = reverseTimeSinceStarted / seconds;
-            
-            while (true)
-            {
-                reverseTimeSinceStarted = Time.time - reverseStartTime;
-                reversePercentageComplete = reverseTimeSinceStarted / seconds;
-                hurtScreen.color = Color.Lerp(to, from, reversePercentageComplete);
-                if (reversePercentageComplete >= 1) break;
-                yield return new WaitForEndOfFrame();
-            }
-        }
-       
-        readonly float HORIZON_DISTANCE = 75;
 
-        readonly String AT_SWORD_DRAW      = "Sword_Draw";
-        readonly String AT_SWORD_PRIMARY_   = "Sword_Primary_";
+            _swordAnimator.SetTrigger(trigger_swing);
+        }
         
-        readonly String AT_BOW_DRAW   = "Bow_Draw";
-        readonly String AT_BOW_FIRE   = "Bow_Fire";
+        public void SwordSwing() => OnSwordSwing?.Invoke();
+
+        void BowAttack()
+        {
+            if (_bowAnimator.IsInTransition(0)) return;
+            AnimatorStateInfo state = _bowAnimator.GetCurrentAnimatorStateInfo(0);
+
+            if (!state.IsName("Idle")) return;
+            
+            float timeInIdle = state.normalizedTime * state.length;
+            if (timeInIdle < Bow.Cooldown) return;
+            
+            _bowAnimator.SetTrigger(AT_BOW_FIRE);
+            OnBowAttack?.Invoke();
+        }
+
+        public void FireArrow()
+        {
+            // target is horizon from center of screen
+            Ray ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0f));
+            Vector3 targetPoint = ray.GetPoint(HORIZON_DISTANCE);
+
+            var pos = _arrowSpawn.transform.position;
+            GameObject currentBullet = Instantiate(PF_Arrow, pos, Quaternion.identity);
+            currentBullet.transform.forward = targetPoint - pos;
+        }
+
+        public void PlayRollAnimation()
+        {
+            _bowAnimator.SetTrigger(AT_BOW_ROLL_ST);
+            _bowAnimator.ResetTrigger(AT_BOW_ROLL_END);
+        }
+
+        public void FinishRollAnimation()
+        {
+            _bowAnimator.SetTrigger(AT_BOW_ROLL_END);
+        }
+
+        public void PlayBrandAnimation()
+        {
+            _bowAnimator.SetTrigger(AT_BOW_BRAND);
+        }
+
+        public void PlayPickupAnimation()
+        {
+            _bowAnimator.SetBool(AT_BOW_PICK, true);
+            
+            StartCoroutine(Coroutines.WaitThen(_pickupDelay, () =>
+            {
+                _swordAnimator.SetBool(AT_SWORD_PICK, true);
+            }));
+        }
+        #endregion
+
+        #region DEATH
+        public void Hurt(float damage)
+        {
+            Health -= damage * Modifiers.DamageMultiplier;
+
+            if (Health <= 0)
+            {
+                Kill();
+            }
+            else
+            {
+                OnHurt?.Invoke();
+                OnHealthChange?.Invoke(Health);
+            }
+        }
+
+        public void Kill()
+        {
+            OnDeath?.Invoke();
+            GameMenuController.Lose();
+        }
+        #endregion
+        
+        #region Constants
+        
+        const float HORIZON_DISTANCE = 75;
+        
+        const string AT_SWORD_ATTACK        = "Attack_";
+        static readonly int AT_SWORD_PICK   = Animator.StringToHash("Pickup");
+        
+        static readonly int AT_BOW_FIRE     = Animator.StringToHash("Fire");
+        static readonly int AT_BOW_ROLL_ST  = Animator.StringToHash("RollStart");
+        static readonly int AT_BOW_ROLL_END = Animator.StringToHash("RollEnd");
+        static readonly int AT_BOW_BRAND    = Animator.StringToHash("Branded");
+        static readonly int AT_BOW_PICK     = Animator.StringToHash("Pickup");
+        #endregion
     }
 }

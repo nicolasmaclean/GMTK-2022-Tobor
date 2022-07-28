@@ -8,7 +8,7 @@ using UnityEngine.Events;
 namespace Game.Mechanics.Enemy
 {
     [RequireComponent(typeof(Rigidbody))]
-    public class EnemyBullet : MonoBehaviour
+    public class EnemyBullet : MonoExtended
     {
         public float _damage = 1;
         
@@ -61,6 +61,7 @@ namespace Game.Mechanics.Enemy
         
         void OnTriggerEnter(Collider other)
         {
+            if (other.isTrigger) return;
             PlayerController player = other.gameObject.GetComponentInParent<PlayerController>();
             
             if (player != null)
@@ -85,11 +86,6 @@ namespace Game.Mechanics.Enemy
 
             OnHit?.Invoke();
             Destroy(gameObject, .01f);
-        }
-
-        public void PlaySFX(SOAudioClip clip)
-        {
-            SFXManager.PlaySFX(clip);
         }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.Mechanics.Level;
 using Game.Mechanics.Player;
 using UnityEngine;
 using UnityEngine.AI;
@@ -10,92 +11,73 @@ namespace Game.Mechanics.Enemy
 {
     public class PassiveAttacker : EnemyBase
     {
-        [Header("Melee")]
         [SerializeField]
-        GameObject _attackCollider;
-        public UnityEvent OnAttack;
-
+        SOSpriteAnimation _idleAnimation;
+        
+        [SerializeField]
+        SOSpriteAnimation _attackAnimation;
+        
         [SerializeField]
         SOSpriteAnimation _transformAnimation;
         
+        [Header("More Events!")]
         [SerializeField]
-        SOSpriteAnimation _walkAnimation;
+        public UnityEvent OnAttack;
 
+        [Header("Colliders")]
         [SerializeField]
-        SOSpriteAnimation _attackAnimation;
-
-        readonly float SEARCH_INTERVAL = 0.2f;
+        Collider _deafultCollider;
+        
+        [SerializeField]
+        Collider _aggressiveCollider;
 
         PlayerTrigger _playerTrigger;
-        NavMeshAgent _agent;
         bool _passive = true;
-        float _stampForNextAttack;
 
         protected override void OnAwake()
         {
             base.OnAwake();
-            _agent = GetComponent<NavMeshAgent>();
             _playerTrigger = GetComponentInChildren<PlayerTrigger>();
         }
 
-        public override void Harm(float damage)
+        protected override void OnStart()
         {
-            base.Harm(damage);
+            _anim.LoadAnimationRandom(_idleAnimation);
+            _aggressiveCollider.gameObject.SetActive(false);
+        }
+
+        public override void Harm(float damage, Vector3 hitPosition, Vector3 hitNormal)
+        {
+            base.Harm(damage, hitPosition, hitNormal);
             if (_passive)
             {
                 _passive = false;
-                _anim.LoadAnimation(_transformAnimation);
-                StartCoroutine(WaitThen(_anim.Length, () =>
+                
+                _deafultCollider.gameObject.SetActive(false);
+                _aggressiveCollider.gameObject.SetActive(true);
+                
+                _anim.PlayOneShot(_transformAnimation, () =>
                 {
                     _anim.LoadAnimation(_walkAnimation);
                     StartCoroutine(SeekLoop());
-                }));
+                });
             }
         }
 
-        IEnumerator SeekLoop()
+        protected override void EnemyAttack()
         {
-            _anim.LoadAnimation(_walkAnimation);
-            while (true)
-            {
-                _agent.SetDestination(_player.transform.position);
-                DetectPlayer();
-
-                yield return new WaitForSeconds(SEARCH_INTERVAL);
-            }
-        }
-
-        void DetectPlayer()
-        {
-            float currentTargetDistance = Vector3.Distance(transform.position, _player.transform.position);
-            if (currentTargetDistance <= _rangeOfAttack)
-            {
-                _agent.isStopped = true;
-                if (Time.time > _stampForNextAttack)
-                {
-                    _stampForNextAttack = Time.time + _damageRate;
-                    EnemyAttack();
-                }
-            }
-            else
-            {
-                _agent.isStopped = false;
-            }
-        }
-
-        void EnemyAttack()
-        {
+            _agent.isStopped = true;
             if (_playerTrigger.PlayerIsIn)
             {
                 PlayerController.Instance.Hurt(_attack);
             }
 
-            _anim.LoadAnimation(_attackAnimation);
             OnAttack?.Invoke();
-            StartCoroutine(WaitThen(_anim.Length, () =>
-                {
-                    _anim.LoadAnimation(_walkAnimation);
-                }));
+            _anim.PlayOneShot(_attackAnimation, speedMultiplier: Modifiers.AttackSpeedMultiplier, callback: () =>
+            {
+                _anim.LoadAnimation(_walkAnimation);
+                _agent.isStopped = false;
+            });
         }
     }
 }

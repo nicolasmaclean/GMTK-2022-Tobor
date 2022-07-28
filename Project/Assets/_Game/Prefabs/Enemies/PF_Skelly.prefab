@@ -74,6 +74,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86189e480ab06df4ea86dbcdf8a3a8be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  OnExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &9173503801398427199
 GameObject:
   m_ObjectHideFlags: 0
@@ -100,7 +106,7 @@ Transform:
   m_GameObject: {fileID: 9173503801398427199}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.098, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 0.22813}
   m_Children: []
   m_Father: {fileID: 9173503802575703147}
   m_RootOrder: 1
@@ -214,6 +220,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animation: {fileID: 11400000, guid: 8bbd12ff2708bc741ba956d27c1accc6, type: 2}
+  _currentFrame: 0
+  _speedMultiplier: 1
 --- !u!1 &9173503802575703146
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,7 +249,7 @@ Transform:
   m_GameObject: {fileID: 9173503802575703146}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 9173503801835468407}
   - {fileID: 9173503801398427196}
@@ -259,13 +267,13 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
-  m_Acceleration: Infinity
+  m_Speed: 22
+  m_Acceleration: 50
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 3
   m_BaseOffset: 0
@@ -283,10 +291,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67675545db283c746bcc344a2e519a83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _baseHealth: 2
+  _baseHealth: 8
   _attack: 1
-  _damageRate: 2
-  _rangeOfAttack: 2
+  _attackSpeed: 2
+  _range: 4
+  _lastAttack: 0
   OnHurt:
     m_PersistentCalls:
       m_Calls:
@@ -297,6 +306,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 9f904b621dc9b44b5baf3d7344423412, type: 2}
           m_ObjectArgumentAssemblyTypeName: Game.Core.SOAudioClip, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: -4555884122020277101, guid: ac02e46e0c9f2d047b48c2493e4a0970, type: 3}
+        m_TargetAssemblyTypeName: Game.Core.OneshotEffect, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -317,9 +338,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _attackCollider: {fileID: 9173503801023729773}
+      - m_Target: {fileID: -2497243540679649381, guid: b0411cdafe06cab46a6f33ca9db98eea, type: 3}
+        m_TargetAssemblyTypeName: Game.Core.OneshotEffect, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _walkAnimation: {fileID: 11400000, guid: 8bbd12ff2708bc741ba956d27c1accc6, type: 2}
+  _attackAnimation: {fileID: 11400000, guid: 6759f58d6c155784bb8d1eb39e768db2, type: 2}
   OnAttack:
     m_PersistentCalls:
       m_Calls: []
-  _walkAnimation: {fileID: 11400000, guid: 8bbd12ff2708bc741ba956d27c1accc6, type: 2}
-  _attackAnimation: {fileID: 11400000, guid: 6759f58d6c155784bb8d1eb39e768db2, type: 2}

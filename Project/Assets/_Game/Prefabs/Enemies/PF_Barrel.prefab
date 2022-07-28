@@ -27,11 +27,9 @@ Transform:
   m_GameObject: {fileID: 5076993582541176503}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children:
   - {fileID: 5076993583818245290}
-  - {fileID: 5076993583651343585}
-  - {fileID: 5076993583001805503}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -45,7 +43,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
+  m_Speed: 25
   m_Acceleration: Infinity
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -69,10 +67,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ad699b9f112c914897eb9b79021d0f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _baseHealth: 5
-  _attack: 1
-  _damageRate: 2
-  _rangeOfAttack: 3
+  _baseHealth: 20
+  _attack: 3
+  _attackSpeed: 2
+  _range: 18
+  _lastAttack: 0
   OnHurt:
     m_PersistentCalls:
       m_Calls:
@@ -83,6 +82,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 5ad49d25d07d944d5b458d3d4f71e475, type: 2}
           m_ObjectArgumentAssemblyTypeName: Game.Core.SOAudioClip, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: -4555884122020277101, guid: ac02e46e0c9f2d047b48c2493e4a0970, type: 3}
+        m_TargetAssemblyTypeName: Game.Core.OneshotEffect, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -103,13 +114,27 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _attackCollider: {fileID: 5076993583001805488}
+      - m_Target: {fileID: -2497243540679649381, guid: b0411cdafe06cab46a6f33ca9db98eea, type: 3}
+        m_TargetAssemblyTypeName: Game.Core.OneshotEffect, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _walkAnimation: {fileID: 11400000, guid: aac03988a0a8387469621db8727b8c8b, type: 2}
+  _idleAnimation: {fileID: 11400000, guid: d977bd9e7724c7646af9c5a61e1aed18, type: 2}
+  _attackAnimation: {fileID: 11400000, guid: cae1cf1ed2915b4479b90c715e864cc5, type: 2}
+  _transformAnimation: {fileID: 11400000, guid: 6cac4ee6cd3fba44ea790989a8e54f8e, type: 2}
   OnAttack:
     m_PersistentCalls:
       m_Calls: []
-  _transformAnimation: {fileID: 11400000, guid: 6cac4ee6cd3fba44ea790989a8e54f8e, type: 2}
-  _walkAnimation: {fileID: 11400000, guid: aac03988a0a8387469621db8727b8c8b, type: 2}
-  _attackAnimation: {fileID: 11400000, guid: cae1cf1ed2915b4479b90c715e864cc5, type: 2}
+  _deafultCollider: {fileID: 5076993583651343584}
+  _aggressiveCollider: {fileID: 4250802293996020543}
 --- !u!1 &5076993583001805488
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,12 +161,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5076993583001805488}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: -1.63}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2, z: 1.63}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 5076993582541176502}
-  m_RootOrder: 2
+  m_Father: {fileID: 5076993583818245290}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &5076993583001805502
 BoxCollider:
@@ -184,6 +209,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86189e480ab06df4ea86dbcdf8a3a8be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  OnExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5076993583651343586
 GameObject:
   m_ObjectHideFlags: 0
@@ -195,7 +226,7 @@ GameObject:
   - component: {fileID: 5076993583651343585}
   - component: {fileID: 5076993583651343584}
   m_Layer: 0
-  m_Name: Collider
+  m_Name: Default Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -208,11 +239,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5076993583651343586}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.098, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.098000005, y: 0, z: 0}
+  m_LocalScale: {x: 1.2, y: 1.55, z: 0.30532}
   m_Children: []
-  m_Father: {fileID: 5076993582541176502}
+  m_Father: {fileID: 5076993583818245290}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &5076993583651343584
@@ -226,8 +257,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.2, y: 3, z: 0.4}
-  m_Center: {x: 0, y: 1.5, z: 0}
+  m_Size: {x: 1, y: 1, z: 0.4}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &5076993583818245291
 GameObject:
   m_ObjectHideFlags: 0
@@ -256,7 +287,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 5076993583001805503}
+  - {fileID: 5076993583651343585}
+  - {fileID: 575182332789818614}
   m_Father: {fileID: 5076993582541176502}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -324,3 +358,49 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animation: {fileID: 11400000, guid: d977bd9e7724c7646af9c5a61e1aed18, type: 2}
+  _currentFrame: 0
+  _speedMultiplier: 1
+--- !u!1 &7994714259563875775
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 575182332789818614}
+  - component: {fileID: 4250802293996020543}
+  m_Layer: 0
+  m_Name: Aggressive Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &575182332789818614
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7994714259563875775}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.04, y: 0, z: 0}
+  m_LocalScale: {x: 1.73, y: 6.21, z: 0.30532}
+  m_Children: []
+  m_Father: {fileID: 5076993583818245290}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4250802293996020543
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7994714259563875775}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 0.4}
+  m_Center: {x: 0, y: 0.5, z: 0}
