@@ -42,7 +42,6 @@ namespace Game.UI.HUD
             if (health > _target)
             {
                 _icon.sprite = _heart;
-                _icon.color = Color.white;
             }
             if (updateAnimation != null) StopCoroutine(updateAnimation);
             updateAnimation = StartCoroutine(Tween.SliderNonLerp(_slider, health, _updateFactor));
