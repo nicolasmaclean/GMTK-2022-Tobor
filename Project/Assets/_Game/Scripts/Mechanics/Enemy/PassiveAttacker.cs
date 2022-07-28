@@ -44,12 +44,11 @@ namespace Game.Mechanics.Enemy
             if (_passive)
             {
                 _passive = false;
-                _anim.LoadAnimation(_transformAnimation);
-                StartCoroutine(WaitThen(_anim.Length, () =>
+                _anim.PlayOneShot(_transformAnimation, () =>
                 {
                     _anim.LoadAnimation(_walkAnimation);
                     StartCoroutine(SeekLoop());
-                }));
+                });
             }
         }
 

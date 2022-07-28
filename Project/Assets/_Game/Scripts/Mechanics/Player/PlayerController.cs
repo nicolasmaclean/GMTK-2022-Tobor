@@ -127,8 +127,6 @@ namespace Game.Mechanics.Player
             {
                 BowAttack();
             }
-
-            UpdateSwordCollider();
         }
         #endregion
 
@@ -253,29 +251,6 @@ namespace Game.Mechanics.Player
             {
                 _swordAnimator.SetBool(AT_SWORD_PICK, true);
             }));
-        }
-
-        void UpdateSwordCollider()
-        {
-            if (_swordAnimator.IsInTransition(0))
-            {
-                Disable();
-                return;
-            }
-
-            AnimatorStateInfo state = _swordAnimator.GetCurrentAnimatorStateInfo(0);
-            if (state.IsName("Idle"))
-            {
-                Disable();
-                return;
-            }
-            
-            _swordCollider.gameObject.SetActive(true);
-
-            void Disable()
-            {
-                _swordCollider.gameObject.SetActive(false);
-            }
         }
         #endregion
 

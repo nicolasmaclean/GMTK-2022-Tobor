@@ -70,7 +70,7 @@ MonoBehaviour:
   _baseHealth: 20
   _attack: 3
   _attackSpeed: 2
-  _range: 5
+  _range: 18
   _lastAttack: 0
   OnHurt:
     m_PersistentCalls:

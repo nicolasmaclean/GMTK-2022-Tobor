@@ -49,6 +49,7 @@ namespace Game.Mechanics.Enemy
 
         void OnTriggerEnter(Collider other)
         {
+            if (other.isTrigger) return;
             EnemyBase em = other.GetComponentInParent<EnemyBase>();
             ShootButton btn = other.GetComponentInParent<ShootButton>();
             if (em)
