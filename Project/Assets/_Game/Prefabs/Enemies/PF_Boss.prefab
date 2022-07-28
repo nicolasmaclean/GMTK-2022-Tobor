@@ -322,7 +322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b34645d9b1df44a46b88ea0d6ded110a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _baseHealth: 150
+  _baseHealth: 100
   _attack: 2
   _attackSpeed: 0.5
   _range: 100
