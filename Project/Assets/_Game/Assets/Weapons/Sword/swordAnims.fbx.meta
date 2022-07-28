@@ -110,6 +110,20 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0.22807017
+        functionName: EnableCollider
+        data: 
+        objectReferenceParameter: {fileID: 3497908370777131226, guid: 863137060b0eced438f49cd1b0431248, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.8333334
+        functionName: DisableCollider
+        data: 
+        objectReferenceParameter: {fileID: 3497908370777131226, guid: 863137060b0eced438f49cd1b0431248, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -146,6 +160,20 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0.08333336
+        functionName: EnableCollider
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.8596492
+        functionName: DisableCollider
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -175,6 +203,13 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
+      - time: 0.0672255
+        functionName: EnableCollider
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.11320745
         functionName: Swing
         data: 
@@ -184,6 +219,13 @@ ModelImporter:
         messageOptions: 0
       - time: 0.5811322
         functionName: Swing
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.97807026
+        functionName: DisableCollider
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

@@ -12,11 +12,6 @@ public class SwordCollision : MonoExtended
     public UnityEvent OnHit;
     PlayerController _player;
 
-    void Awake()
-    {
-        gameObject.SetActive(false);
-    }
-
     void Start()
     {
         _player = PlayerController.Instance;        
@@ -24,6 +19,7 @@ public class SwordCollision : MonoExtended
     
     void OnTriggerEnter(Collider other)
     {
+        if (other.isTrigger) return;
         if (other.gameObject.layer == LayerMask.GetMask("Player")) return;
         
         OnHit?.Invoke();
