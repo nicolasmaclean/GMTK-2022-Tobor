@@ -24,34 +24,22 @@ namespace Game.Mechanics.Enemy
 
         [SerializeField]
         int _shootDelay = 3;
-        
-        EnemyAISensor _sensor;
-
-        protected override void OnStart()
-        {
-            base.OnStart();
-            _sensor = GetComponentInChildren<EnemyAISensor>();
-        }
 
         protected override void EnemyAttack()
         {
-            if (_sensor.IsInSight(_player.gameObject))
+            _agent.isStopped = true;
+            _anim.PlayOneShot(_attackAnimation, speedMultiplier: Modifiers.AttackSpeedMultiplier, callback: () =>
             {
-                Debug.Log("Found Human");
-                _agent.isStopped = true;
-                _anim.PlayOneShot(_attackAnimation, speedMultiplier: Modifiers.AttackSpeedMultiplier, callback: () =>
-                {
-                    _anim.LoadAnimation(_walkAnimation);
-                    _agent.isStopped = false;
-                });
+                _anim.LoadAnimation(_walkAnimation);
+                _agent.isStopped = false;
+            });
 
-                StartCoroutine(WaitThen((_anim.Spf / Modifiers.AttackSpeedMultiplier) * _shootDelay, () =>
-                {
-                    OnShoot?.Invoke();
-                    EnemyBullet bullet = Instantiate(_bullet, _bulletSpawnPoint.transform.position, _bulletSpawnPoint.transform.rotation).GetComponent<EnemyBullet>();
-                    bullet._damage = _attack;
-                }));
-            }
+            StartCoroutine(WaitThen((_anim.Spf / Modifiers.AttackSpeedMultiplier) * _shootDelay, () =>
+            {
+                OnShoot?.Invoke();
+                EnemyBullet bullet = Instantiate(_bullet, _bulletSpawnPoint.position, _bulletSpawnPoint.rotation).GetComponent<EnemyBullet>();
+                bullet._damage = _attack;
+            }));
         }
     }
 }
