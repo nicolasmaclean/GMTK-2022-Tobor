@@ -37,6 +37,6 @@ namespace Game.Core
 
     public enum GameScene
     {
-        Start = 0, Character = 1, Game = 2
+        Start = 0, Character = 1, Game = 2, Credits = 3,
     }
 }
