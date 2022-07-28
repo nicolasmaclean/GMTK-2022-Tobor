@@ -20,6 +20,11 @@ namespace Game.UI.Utility
             SceneController.LoadNextScene();
         }
 
+        public void Credits()
+        {
+            SceneController.LoadScene(GameScene.Credits);
+        }
+
         public void Quit()
         {
             SceneController.Quit();
