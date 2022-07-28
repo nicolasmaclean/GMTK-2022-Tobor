@@ -43,7 +43,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 22
+  m_Speed: 25
   m_Acceleration: Infinity
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -68,9 +68,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _baseHealth: 20
-  _attack: 1
+  _attack: 3
   _attackSpeed: 2
-  _range: 3
+  _range: 5
   _lastAttack: 0
   OnHurt:
     m_PersistentCalls:

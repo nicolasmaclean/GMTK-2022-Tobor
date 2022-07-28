@@ -158,7 +158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 1
-  _bulletSpeed: 6
+  _bulletSpeed: 50
   _lifeSpan: 20
   OnHit:
     m_PersistentCalls:
