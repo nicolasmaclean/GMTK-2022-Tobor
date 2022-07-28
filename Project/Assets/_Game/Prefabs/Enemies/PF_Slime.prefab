@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 5836525155036225745}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.187, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 0.24928}
   m_Children: []
   m_Father: {fileID: 5836525155943502469}
   m_RootOrder: 1
@@ -85,7 +85,6 @@ GameObject:
   - component: {fileID: 5836525155203262617}
   - component: {fileID: 5836525155203262619}
   - component: {fileID: 5836525155203262618}
-  - component: {fileID: 3394716169185614783}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -100,13 +99,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5836525155203262616}
-  m_LocalRotation: {x: -0, y: -0.16617663, z: -0, w: 0.986096}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5836525155943502469}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -19.131, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5836525155203262619
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -173,30 +172,6 @@ MonoBehaviour:
   _animation: {fileID: 11400000, guid: 65e6e36dad167174a8e97275eed90261, type: 2}
   _currentFrame: 0
   _speedMultiplier: 1
---- !u!114 &3394716169185614783
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5836525155203262616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6d8fa6c884f95e428c996ba3bee70f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distance: 18.57
-  angle: 22.49
-  height: 4.2
-  meshColor: {r: 1, g: 0, b: 0, a: 1}
-  scanFrequency: 30
-  layers:
-    serializedVersion: 2
-    m_Bits: 64
-  occlusionLayers:
-    serializedVersion: 2
-    m_Bits: 1
-  Objects: []
 --- !u!1 &5836525155943502468
 GameObject:
   m_ObjectHideFlags: 0
