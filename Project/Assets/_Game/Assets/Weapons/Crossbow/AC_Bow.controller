@@ -8,7 +8,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: FirstTimePickUp
-  m_Speed: 0.7
+  m_Speed: 0.8
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 484216759972899977}
@@ -87,7 +87,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Branded
-  m_Speed: 0.7
+  m_Speed: 0.6
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 3284708990220168306}
