@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,90 +8,99 @@ using UnityEngine.Events;
 
 namespace Game.Mechanics.Enemy
 {
-
     public class EnemyGhost : EnemyBase
     {   
         [SerializeField]
         SOSpriteAnimation _attackAnimation;
-        
-        [Header("More Events!")]
+
         [SerializeField]
+        [Range(0, 1)]
+        float _hiddenAlpha = .03f;
 
-        RaycastHit hit;
-        Rigidbody rb;
+        [Header("More Stats!")]
+        [SerializeField]
+        float dashForce = 50;
 
-        [SerializeField] float dashForce = 50;
-        [SerializeField] float waitTillmove = 1f;
-        [SerializeField] float dashCooldown;
+        [SerializeField]
+        float _dashLength = 1f;
 
-        [SerializeField] SpriteRenderer SR;
+        [SerializeField]
+        float _dashCooldown = 3f;
 
-        private void FixedUpdate() 
-        {
-            if(_lastAttack > dashCooldown)
-            {
-                rb.velocity = Vector3.zero;
-                _anim.LoadAnimation(_walkAnimation);
-            }
+        [Header("Colliders")]
+        [SerializeField]
+        Collider _enemyCollider;
 
-            if(_lastAttack > dashCooldown + waitTillmove)
-            {
-                _agent.isStopped = false;
-                Hidden();
-            }
+        [Header("Debug")]
+        [SerializeField]
+        [Utility.ReadOnly]
+        bool _dashing = false;
 
-            if(_lastAttack > 4)
-            {
-                NotHidden();
-            }
-
-        }
-
+        PlayerTrigger _trigger;
+        SpriteRenderer _renderer;
+        Collider _collider;
+        Rigidbody _rb;
+        
+        float _defaultAlpha;
+        
         protected override void OnAwake()
         {
             base.OnAwake();
-            rb = GetComponent<Rigidbody>();
-            Hidden();
+
+            _trigger = GetComponentInChildren<PlayerTrigger>();
+            _renderer = _anim.GetComponent<SpriteRenderer>();
+            _rb = GetComponent<Rigidbody>();
+            
+            _trigger.OnEnter.AddListener(HurtPlayer);
+            _defaultAlpha = _renderer.color.a;
         }
 
-        protected override void EnemyAttack()
+        void OnDestroy()
         {
+            _trigger.OnEnter.RemoveListener(HurtPlayer);
+        }
 
-            if (Physics.SphereCast(transform.position, 10, transform.forward, out hit, _range, ~LayerMask.NameToLayer("Player")))
+        protected override void EnemyAttack() => Dash();
+
+        void Dash()
+        {
+            _agent.isStopped = true;
+            _anim.LoadAnimation(_attackAnimation);
+            _renderer.color = new Color(1f,1f,1f,_defaultAlpha);
+            
+            Vector3 forceToApply = (PlayerController.Instance.transform.position - transform.position).normalized * dashForce;
+            _rb.AddForce(forceToApply, ForceMode.Impulse);
+            _dashing = true;
+
+            StartCoroutine(Dashing());
+
+            IEnumerator Dashing()
             {
-                _agent.isStopped = true;
-                _anim.LoadAnimation(_attackAnimation);
-                Dash();
+                yield return new WaitForSeconds(_dashLength);
+                
+                _rb.velocity = Vector3.zero;
+                _anim.LoadAnimation(_walkAnimation);
+                _dashing = false;
+
+                Color color = new Color(1f,1f,1f, _hiddenAlpha);
+                _renderer.color = color;
+                _rb.isKinematic = true;
+                _enemyCollider.enabled = false;
+                
+                yield return new WaitForSeconds(_dashCooldown);
+
+                color = new Color(1f,1f,1f,_defaultAlpha);
+                _renderer.color = color;
+                _rb.isKinematic = false;
+                _enemyCollider.enabled = true;
             }
         }
 
-        private void Dash()
+        void HurtPlayer()
         {
-            Vector3 forceToApply = transform.forward * dashForce;
-            rb.AddForce(forceToApply, ForceMode.Impulse);
-            SR.color = new Color(1f,1f,1f,.8f);
-        }
-
-        private void OnTriggerEnter(Collider other) 
-        {
-            if (other.tag == "Player")
-            {
-                PlayerController.Instance.Hurt(_attack);
-            }
-        }
-
-        private void Hidden()
-        {
-            SR.color = new Color(1f,1f,1f,.03f);
-            rb.isKinematic = true;
-            GetComponentInChildren<Collider>().enabled = false;
-        }
-
-        private void NotHidden()
-        {
-            SR.color = new Color(1f,1f,1f,.8f);
-            rb.isKinematic = false;
-            GetComponentInChildren<Collider>().enabled = true;
+            if (!_dashing) return;
+            
+            PlayerController.Instance.Hurt(_attack);
         }
     }
 }
