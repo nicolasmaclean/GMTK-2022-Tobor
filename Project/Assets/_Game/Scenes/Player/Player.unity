@@ -274,6 +274,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: PF_PlayerWrapper
       objectReference: {fileID: 0}
+    - target: {fileID: 7205205751171285402, guid: ed5f186c5548b034683e4093a33d5c10, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7205205751171285402, guid: ed5f186c5548b034683e4093a33d5c10, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8534486675143554405, guid: ed5f186c5548b034683e4093a33d5c10, type: 3}
       propertyPath: m_RootOrder
       value: 5

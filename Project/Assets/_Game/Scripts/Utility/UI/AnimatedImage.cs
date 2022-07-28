@@ -22,6 +22,9 @@ namespace Game.Utility.UI
 
         [FormerlySerializedAs("_oneShot"),SerializeField]
         public bool IsOneShot = false;
+        
+        [SerializeField]
+        public SOSpriteAnimation LoopAnimation;
 
         Image _image;
         float _timer = 0;
@@ -57,7 +60,7 @@ namespace Game.Utility.UI
 
         void Update()
         {
-            _timer += Time.deltaTime;
+            _timer += Time.unscaledDeltaTime;
 
             if (_timer > Spf)
             {
@@ -66,6 +69,7 @@ namespace Game.Utility.UI
             }
         }
 
+        bool _useLoop = false;
         void NextFrame()
         {
             _currentFrame++;
@@ -74,6 +78,13 @@ namespace Game.Utility.UI
                 if (IsOneShot)
                 {
                     return;
+                }
+
+                if (!_useLoop && LoopAnimation)
+                {
+                    _useLoop = true;
+                    Animation = LoopAnimation;
+                    LoadAnimation();
                 }
                 _currentFrame = 0;
             }

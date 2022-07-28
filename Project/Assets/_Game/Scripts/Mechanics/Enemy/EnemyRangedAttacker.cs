@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Game.Mechanics.Level;
 using UnityEngine;
 using UnityEngine.AI;
+using Game.Mechanics.Player;
 using UnityEngine.Events;
 
 namespace Game.Mechanics.Enemy
@@ -23,22 +24,35 @@ namespace Game.Mechanics.Enemy
 
         [SerializeField]
         int _shootDelay = 3;
+        
+        EnemyAISensor _sensor;
 
+        protected override void OnStart()
+        {
+            base.OnStart();
+            _sensor = GetComponentInChildren<EnemyAISensor>();
+        }
         protected override void EnemyAttack()
         {
-            _agent.isStopped = true;
-            _anim.PlayOneShot(_attackAnimation, speedMultiplier: Modifiers.AttackSpeedMultiplier, callback: () =>
+            if (_sensor.IsInSight(_player.gameObject))
             {
-                _anim.LoadAnimation(_walkAnimation);
-                _agent.isStopped = false;
-            });
+                Debug.Log("Found Human");
+                _agent.isStopped = true;
+                _anim.PlayOneShot(_attackAnimation, speedMultiplier: Modifiers.AttackSpeedMultiplier, callback: () =>
+                {
+                    _anim.LoadAnimation(_walkAnimation);
+                    _agent.isStopped = false;
+                });
 
-            StartCoroutine(WaitThen((_anim.Spf / Modifiers.AttackSpeedMultiplier) * _shootDelay, () =>
-            {
-                OnShoot?.Invoke();
-                EnemyBullet bullet = Instantiate(_bullet, _bulletSpawnPoint.transform.position, _bulletSpawnPoint.transform.rotation).GetComponent<EnemyBullet>();
-                bullet._damage = _attack;
-            }));
+                StartCoroutine(WaitThen((_anim.Spf / Modifiers.AttackSpeedMultiplier) * _shootDelay, () =>
+                {
+                    OnShoot?.Invoke();
+                    EnemyBullet bullet = Instantiate(_bullet, _bulletSpawnPoint.transform.position, _bulletSpawnPoint.transform.rotation).GetComponent<EnemyBullet>();
+                    bullet._damage = _attack;
+                }));
+            }
         }
+
+        
     }
 }
