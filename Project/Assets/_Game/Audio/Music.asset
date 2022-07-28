@@ -17,7 +17,7 @@ MonoBehaviour:
   Volume: 0.4
   StartEarly: 0
   Pitch: 1
-  Loop: 0
+  Loop: 1
   SpatialBlend: 0
   DopplerLevel: 1
   Spread: 0
