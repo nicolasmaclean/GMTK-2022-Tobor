@@ -18,22 +18,24 @@ namespace Game.Mechanics.Enemy
         [SerializeField]
         Transform _bulletSpawnPoint;
         public UnityEvent OnShoot;
-        EnemyAISensor sensor;
 
         [SerializeField]
         GameObject _bullet;
 
         [SerializeField]
         int _shootDelay = 3;
+        
+        EnemyAISensor _sensor;
 
         protected override void OnStart()
         {
             base.OnStart();
-            sensor = GetComponentInChildren<EnemyAISensor>();
+            _sensor = GetComponentInChildren<EnemyAISensor>();
         }
+
         protected override void EnemyAttack()
         {
-            if (sensor.IsInSight(_player.gameObject))
+            if (_sensor.IsInSight(_player.gameObject))
             {
                 Debug.Log("Found Human");
                 _agent.isStopped = true;
@@ -51,7 +53,5 @@ namespace Game.Mechanics.Enemy
                 }));
             }
         }
-
-        
     }
 }

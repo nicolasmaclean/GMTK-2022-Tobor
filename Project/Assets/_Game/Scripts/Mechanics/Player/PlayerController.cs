@@ -247,11 +247,11 @@ namespace Game.Mechanics.Player
 
         public void PlayPickupAnimation()
         {
-            _swordAnimator.SetBool(AT_SWORD_PICK, true);
+            _bowAnimator.SetBool(AT_BOW_PICK, true);
             
             StartCoroutine(Coroutines.WaitThen(_pickupDelay, () =>
             {
-                _bowAnimator.SetBool(AT_BOW_PICK, true);
+                _swordAnimator.SetBool(AT_SWORD_PICK, true);
             }));
         }
 
